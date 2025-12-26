@@ -1,0 +1,155 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="ProjectThreads" msdata:UseCurrentLocale="true">
+      <xs:complexType>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="ProjectThreads">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="project_id" type="xs:int" default="-1" />
+                <xs:element name="thread_id" type="xs:int" default="-1" />
+                <xs:element name="backstitch_count" type="xs:int" default="0" />
+                <xs:element name="blockstitch_count" type="xs:int" default="0" />
+                <xs:element name="knot_count" type="xs:int" default="0" />
+                <xs:element name="symbol_id" type="xs:int" default="-1" />
+                <xs:element name="is_used" type="xs:unsignedByte" default="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+      <xs:unique name="ProjectThreadsKey1" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//ProjectThreads" />
+        <xs:field xpath="project_id" />
+        <xs:field xpath="thread_id" />
+      </xs:unique>
+    </xs:element>
+  </xs:schema>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>361</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>149</symbol_id>
+    <is_used>1</is_used>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>358</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>58</symbol_id>
+    <is_used>1</is_used>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>19</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>70</symbol_id>
+    <is_used>1</is_used>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>219</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>33</symbol_id>
+    <is_used>1</is_used>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>13</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>72</symbol_id>
+    <is_used>1</is_used>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>275</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>7</symbol_id>
+    <is_used>1</is_used>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>272</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>62</symbol_id>
+    <is_used>1</is_used>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>127</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>104</symbol_id>
+    <is_used>1</is_used>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>52</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>150</symbol_id>
+    <is_used>1</is_used>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>137</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>39</symbol_id>
+    <is_used>1</is_used>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>373</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>12</symbol_id>
+    <is_used>1</is_used>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>83</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>67</symbol_id>
+    <is_used>1</is_used>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>81</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>66</symbol_id>
+    <is_used>1</is_used>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>328</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>105</symbol_id>
+    <is_used>1</is_used>
+  </ProjectThreads>
+</NewDataSet>

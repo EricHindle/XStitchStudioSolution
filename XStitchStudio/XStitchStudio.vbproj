@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C934243B-08A3-4D11-AE2D-288A7589B03D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>XStitchStudio.My.MyApplication</StartupObject>
+    <RootNamespace>XStitchStudio</RootNamespace>
+    <AssemblyName>XStitchStudio</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>false</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>XStitchStudio.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>XStitchStudio.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>MyStitch.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HindlewareLib">
+      <HintPath>..\..\HindlewareLib\bin\Release\HindlewareLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cards\FrmBuildThreadCards.Designer.vb">
+      <DependentUpon>FrmBuildThreadCards.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Cards\FrmBuildThreadCards.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cards\FrmPrintThreadCards.Designer.vb">
+      <DependentUpon>FrmPrintThreadCards.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Cards\FrmPrintThreadCards.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cards\ModCards.vb" />
+    <Compile Include="Design\FrmDesignInfo.Designer.vb">
+      <DependentUpon>FrmDesignInfo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Design\FrmDesignInfo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Design\FrmDesignSize.Designer.vb">
+      <DependentUpon>FrmDesignSize.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Design\FrmDesignSize.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Design\FrmImportImage.Designer.vb">
+      <DependentUpon>FrmImportImage.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Design\FrmImportImage.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Design\FrmStitchDesign.Designer.vb">
+      <DependentUpon>FrmStitchDesign.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Design\FrmStitchDesign.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Design\FrmStitchDisplayStyle.Designer.vb">
+      <DependentUpon>FrmStitchDisplayStyle.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Design\FrmStitchDisplayStyle.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Design\FrmText.Designer.vb">
+      <DependentUpon>FrmText.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Design\FrmText.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Design\ImageViewer.designer.vb">
+      <DependentUpon>ImageViewer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Design\ImageViewer.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Design\ModDesign.vb" />
+    <Compile Include="Domain\Builders\BackstitchBuilder.vb" />
+    <Compile Include="Domain\Builders\BeadBuilder.vb" />
+    <Compile Include="Domain\Builders\BlockStitchBuilder.vb" />
+    <Compile Include="Domain\Builders\BlockStitchQuarterBuilder.vb" />
+    <Compile Include="Domain\Builders\BrandBuilder.vb" />
+    <Compile Include="Domain\Builders\CellBuilder.vb" />
+    <Compile Include="Domain\Builders\GlobalSettingBuilder.vb" />
+    <Compile Include="Domain\Builders\KnotBuilder.vb" />
+    <Compile Include="Domain\Builders\PaletteBuilder.vb" />
+    <Compile Include="Domain\Builders\PaletteThreadBuilder.vb" />
+    <Compile Include="Domain\Builders\ProjectBeadBuilder.vb" />
+    <Compile Include="Domain\Builders\ProjectBeadCollectionBuilder.vb" />
+    <Compile Include="Domain\Builders\ProjectBuilder.vb" />
+    <Compile Include="Domain\Builders\ProjectCardThreadBuilder.vb" />
+    <Compile Include="Domain\Builders\ProjectDesignBuilder.vb" />
+    <Compile Include="Domain\Builders\ProjectThreadBuilder.vb" />
+    <Compile Include="Domain\Builders\ProjectThreadCardBuilder.vb" />
+    <Compile Include="Domain\Builders\ProjectThreadCollectionBuilder.vb" />
+    <Compile Include="Domain\Builders\ProjectWorkTimeBuilder.vb" />
+    <Compile Include="Domain\Builders\StitchBuilder.vb" />
+    <Compile Include="Domain\Builders\SymbolBuilder.vb" />
+    <Compile Include="Domain\Builders\ThreadBuilder.vb" />
+    <Compile Include="Domain\ModDataTableAdapter.vb" />
+    <Compile Include="Domain\ModXStitchStudioClasses.vb" />
+    <Compile Include="Domain\MyStitchDataSet.Designer.vb">
+      <DependentUpon>MyStitchDataSet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\MyStitchDataSet.vb">
+      <DependentUpon>MyStitchDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Objects\BackStitch.vb" />
+    <Compile Include="Domain\Objects\Bead.vb" />
+    <Compile Include="Domain\Objects\BlockStitch.vb" />
+    <Compile Include="Domain\Objects\BlockStitchQuarter.vb" />
+    <Compile Include="Domain\Objects\Brand.vb" />
+    <Compile Include="Domain\Objects\Cell.vb" />
+    <Compile Include="Domain\Objects\GlobalSetting.vb" />
+    <Compile Include="Domain\Objects\Knot.vb" />
+    <Compile Include="Domain\Objects\Palette.vb" />
+    <Compile Include="Domain\Objects\PaletteThread.vb" />
+    <Compile Include="Domain\Objects\Project.vb" />
+    <Compile Include="Domain\Objects\ProjectBead.vb" />
+    <Compile Include="Domain\Objects\ProjectBeadCollection.vb" />
+    <Compile Include="Domain\Objects\ProjectCardThread.vb" />
+    <Compile Include="Domain\Objects\ProjectDesign.vb" />
+    <Compile Include="Domain\Objects\ProjectThread.vb" />
+    <Compile Include="Domain\Objects\ProjectThreadCard.vb" />
+    <Compile Include="Domain\Objects\ProjectThreadCollection.vb" />
+    <Compile Include="Domain\Objects\ProjectWorkTime.vb" />
+    <Compile Include="Domain\Objects\Stitch.vb" />
+    <Compile Include="Domain\Objects\Symbol.vb" />
+    <Compile Include="Domain\Objects\Thread.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Palettes\FrmPaletteMaint.Designer.vb">
+      <DependentUpon>FrmPaletteMaint.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Palettes\FrmPaletteMaint.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Palettes\FrmPaletteName.Designer.vb">
+      <DependentUpon>FrmPaletteName.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Palettes\FrmPaletteName.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Palettes\ModPalettes.vb" />
+    <Compile Include="Print\FrmPrintOptions.Designer.vb">
+      <DependentUpon>FrmPrintOptions.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Print\FrmPrintOptions.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Print\FrmPrintProject.Designer.vb">
+      <DependentUpon>FrmPrintProject.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Print\FrmPrintProject.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Print\ModPrint.vb" />
+    <Compile Include="Project Files\FrmBackup.Designer.vb">
+      <DependentUpon>FrmBackup.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Project Files\FrmBackup.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Project Files\FrmRestore.Designer.vb">
+      <DependentUpon>FrmRestore.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Project Files\FrmRestore.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Project Files\ModFileHandling.vb" />
+    <Compile Include="Project\FrmImportProject.Designer.vb">
+      <DependentUpon>FrmImportProject.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Project\FrmImportProject.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Project\FrmProject.Designer.vb">
+      <DependentUpon>FrmProject.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Project\FrmProject.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Project\FrmProjectTimer.Designer.vb">
+      <DependentUpon>FrmProjectTimer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Project\FrmProjectTimer.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Project\ModProject.vb" />
+    <Compile Include="StartUp\FrmStartUp.Designer.vb">
+      <DependentUpon>FrmStartUp.vb</DependentUpon>
+    </Compile>
+    <Compile Include="StartUp\FrmStartUp.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Symbols\FrmSymbols.Designer.vb">
+      <DependentUpon>FrmSymbols.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Symbols\FrmSymbols.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Symbols\ModSymbol.vb" />
+    <Compile Include="Threads\FrmBeads.Designer.vb">
+      <DependentUpon>FrmBeads.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Threads\FrmBeads.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Threads\FrmBrands.Designer.vb">
+      <DependentUpon>FrmBrands.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Threads\FrmBrands.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Threads\FrmColourCapture.Designer.vb">
+      <DependentUpon>FrmColourCapture.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Threads\FrmColourCapture.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Threads\FrmProjectThreads.Designer.vb">
+      <DependentUpon>FrmProjectThreads.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Threads\FrmProjectThreads.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Threads\FrmThread.Designer.vb">
+      <DependentUpon>FrmThread.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Threads\FrmThread.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Threads\FrmThreadSymbols.Designer.vb">
+      <DependentUpon>FrmThreadSymbols.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Threads\FrmThreadSymbols.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Threads\ModThreads.vb" />
+    <Compile Include="Utilities\FrmCriticalError.Designer.vb">
+      <DependentUpon>FrmCriticalError.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\FrmCriticalError.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Utilities\FrmGlobalSettings.designer.vb">
+      <DependentUpon>FrmGlobalSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\FrmGlobalSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Utilities\FrmMessage.Designer.vb">
+      <DependentUpon>FrmMessage.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\FrmMessage.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Utilities\frmOptions.Designer.vb">
+      <DependentUpon>frmOptions.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\frmOptions.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Utilities\FrmSetUp.Designer.vb">
+      <DependentUpon>FrmSetUp.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\FrmSetUp.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Utilities\FrmStitchSplash.Designer.vb">
+      <DependentUpon>FrmStitchSplash.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\FrmStitchSplash.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Utilities\GlobalSettings.vb" />
+    <Compile Include="Utilities\ModCommon.vb" />
+    <Compile Include="Utilities\ModOptions.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Cards\FrmBuildThreadCards.resx">
+      <DependentUpon>FrmBuildThreadCards.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cards\FrmPrintThreadCards.resx">
+      <DependentUpon>FrmPrintThreadCards.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\FrmDesignInfo.resx">
+      <DependentUpon>FrmDesignInfo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\FrmDesignSize.resx">
+      <DependentUpon>FrmDesignSize.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\FrmImportImage.resx">
+      <DependentUpon>FrmImportImage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\FrmStitchDesign.resx">
+      <DependentUpon>FrmStitchDesign.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\FrmStitchDisplayStyle.resx">
+      <DependentUpon>FrmStitchDisplayStyle.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Design\FrmText.resx">
+      <DependentUpon>FrmText.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Palettes\FrmPaletteMaint.resx">
+      <DependentUpon>FrmPaletteMaint.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Palettes\FrmPaletteName.resx">
+      <DependentUpon>FrmPaletteName.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Print\FrmPrintOptions.resx">
+      <DependentUpon>FrmPrintOptions.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Print\FrmPrintProject.resx">
+      <DependentUpon>FrmPrintProject.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Project Files\FrmBackup.resx">
+      <DependentUpon>FrmBackup.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Project Files\FrmRestore.resx">
+      <DependentUpon>FrmRestore.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Project\FrmImportProject.resx">
+      <DependentUpon>FrmImportProject.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Project\FrmProject.resx">
+      <DependentUpon>FrmProject.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Project\FrmProjectTimer.resx">
+      <DependentUpon>FrmProjectTimer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StartUp\FrmStartUp.resx">
+      <DependentUpon>FrmStartUp.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Symbols\FrmSymbols.resx">
+      <DependentUpon>FrmSymbols.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Threads\FrmBeads.resx">
+      <DependentUpon>FrmBeads.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Threads\FrmBrands.resx">
+      <DependentUpon>FrmBrands.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Threads\FrmColourCapture.resx">
+      <DependentUpon>FrmColourCapture.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Threads\FrmProjectThreads.resx">
+      <DependentUpon>FrmProjectThreads.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Threads\FrmThread.resx">
+      <DependentUpon>FrmThread.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Threads\FrmThreadSymbols.resx">
+      <DependentUpon>FrmThreadSymbols.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utilities\FrmCriticalError.resx">
+      <DependentUpon>FrmCriticalError.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utilities\FrmGlobalSettings.resx">
+      <DependentUpon>FrmGlobalSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utilities\FrmMessage.resx">
+      <DependentUpon>FrmMessage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utilities\frmOptions.resx">
+      <DependentUpon>frmOptions.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utilities\FrmSetUp.resx">
+      <DependentUpon>FrmSetUp.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utilities\FrmStitchSplash.resx">
+      <DependentUpon>FrmStitchSplash.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".editorconfig" />
+    <None Include="Domain\MyStitchDataSet.xsc">
+      <DependentUpon>MyStitchDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Domain\MyStitchDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>MyStitchDataSet1.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="Domain\MyStitchDataSet.xss">
+      <DependentUpon>MyStitchDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MyStitch.ico" />
+    <Content Include="Resources\3qtrsbl.png" />
+    <Content Include="Resources\3qtrsbr.png" />
+    <Content Include="Resources\3qtrstl.png" />
+    <Content Include="Resources\3qtrstr.png" />
+    <Content Include="Resources\Bead.png" />
+    <Content Include="Resources\blsoff.png" />
+    <Content Include="Resources\blson.png" />
+    <Content Include="Resources\bsoff.png" />
+    <Content Include="Resources\bson.png" />
+    <Content Include="Resources\BtnBkgrd.png" />
+    <Content Include="Resources\BtnBkgrdDown.png" />
+    <Content Include="Resources\centre.png" />
+    <Content Include="Resources\centreoff.png" />
+    <Content Include="Resources\centreon.png" />
+    <Content Include="Resources\ColrBtnDown.png" />
+    <Content Include="Resources\copy.png" />
+    <Content Include="Resources\copyicon.png" />
+    <Content Include="Resources\critical.png" />
+    <Content Include="Resources\cross-stitch.png" />
+    <Content Include="Resources\cut.png" />
+    <Content Include="Resources\down24.png" />
+    <Content Include="Resources\enlarge.png" />
+    <Content Include="Resources\erase.png" />
+    <Content Include="Resources\flip.png" />
+    <Content Include="Resources\flood.png" />
+    <Content Include="Resources\footertextimage.bmp" />
+    <Content Include="Resources\fullcross.png" />
+    <Content Include="Resources\fullthickbs.png" />
+    <Content Include="Resources\fullthinbs.png" />
+    <Content Include="Resources\grid.bmp" />
+    <Content Include="Resources\grid.png" />
+    <Content Include="Resources\gridoff.png" />
+    <Content Include="Resources\gridon.png" />
+    <Content Include="Resources\halfback.png" />
+    <Content Include="Resources\halffwd.png" />
+    <Content Include="Resources\halfthickbs.png" />
+    <Content Include="Resources\halfthinbs.png" />
+    <Content Include="Resources\height.png" />
+    <Content Include="Resources\imageselect.png" />
+    <Content Include="Resources\info.png" />
+    <Content Include="Resources\knot.png" />
+    <Content Include="Resources\kntoff.png" />
+    <Content Include="Resources\knton.png" />
+    <Content Include="Resources\left24.png" />
+    <Content Include="Resources\line.png" />
+    <Content Include="Resources\MenuBtn.png" />
+    <Content Include="Resources\minus.png" />
+    <Content Include="Resources\mirror.png" />
+    <Content Include="Resources\move.png" />
+    <Content Include="Resources\paste.png" />
+    <Content Include="Resources\paste2.png" />
+    <Content Include="Resources\plus.png" />
+    <Content Include="Resources\print.png" />
+    <Content Include="Resources\qtrbl.png" />
+    <Content Include="Resources\qtrbr.png" />
+    <Content Include="Resources\qtrtl.png" />
+    <Content Include="Resources\qtrtr.png" />
+    <Content Include="Resources\quarters.png" />
+    <Content Include="Resources\redo.png" />
+    <Content Include="Resources\right24.png" />
+    <Content Include="Resources\rotate.png" />
+    <Content Include="Resources\save.png" />
+    <Content Include="Resources\shrink.png" />
+    <Content Include="Resources\singlecolour.png" />
+    <Content Include="Resources\starttimer.png" />
+    <Content Include="Resources\StatusBar.png" />
+    <Content Include="Resources\stoptimer.png" />
+    <Content Include="Resources\style0.png" />
+    <Content Include="Resources\style1.png" />
+    <Content Include="Resources\style2.png" />
+    <Content Include="Resources\style3.png" />
+    <Content Include="Resources\style4.png" />
+    <Content Include="Resources\Text.png" />
+    <Content Include="Resources\textImage.bmp" />
+    <Content Include="Resources\timer.png" />
+    <Content Include="Resources\titletextImage.bmp" />
+    <Content Include="Resources\undo.png" />
+    <Content Include="Resources\up24.png" />
+    <Content Include="Resources\width.png" />
+    <Content Include="Resources\zoom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.8.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.8.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+</Project>

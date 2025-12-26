@@ -1,0 +1,25 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="ProjectBeads" msdata:UseCurrentLocale="true">
+      <xs:complexType>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="ProjectBeads">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="project_id" type="xs:int" />
+                <xs:element name="bead_id" type="xs:int" />
+                <xs:element name="is_used" type="xs:unsignedByte" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+      <xs:unique name="ProjectBeadsKey1" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//ProjectBeads" />
+        <xs:field xpath="project_id" />
+        <xs:field xpath="bead_id" />
+      </xs:unique>
+    </xs:element>
+  </xs:schema>
+</NewDataSet>

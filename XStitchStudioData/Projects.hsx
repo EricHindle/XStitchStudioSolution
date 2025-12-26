@@ -1,0 +1,63 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="Projects" msdata:UseCurrentLocale="true">
+      <xs:complexType>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="Projects">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="project_id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="1" type="xs:int" />
+                <xs:element name="project_name" default="''">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:maxLength value="100" />
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:element>
+                <xs:element name="date_started" type="xs:dateTime" minOccurs="0" />
+                <xs:element name="date_ended" type="xs:dateTime" />
+                <xs:element name="design_width" type="xs:int" default="1" />
+                <xs:element name="design_height" type="xs:int" default="1" />
+                <xs:element name="fabric_width" type="xs:int" default="1" />
+                <xs:element name="fabric_height" type="xs:int" default="1" />
+                <xs:element name="fabric_colour" type="xs:int" />
+                <xs:element name="design_file" default="''">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:maxLength value="100" />
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:element>
+                <xs:element name="origin_x" type="xs:int" default="0" />
+                <xs:element name="origin_y" type="xs:int" default="0" />
+                <xs:element name="total_minutes" type="xs:int" default="0" />
+                <xs:element name="fabric_count" type="xs:int" default="1" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+      <xs:unique name="ProjectsKey1" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//Projects" />
+        <xs:field xpath="project_id" />
+      </xs:unique>
+    </xs:element>
+  </xs:schema>
+  <Projects>
+    <project_id>1</project_id>
+    <project_name>Choo Choo Baby</project_name>
+    <date_started>2025-11-26T19:55:41.5086387+00:00</date_started>
+    <date_ended>2025-11-26T21:28:11.497782+00:00</date_ended>
+    <design_width>127</design_width>
+    <design_height>39</design_height>
+    <fabric_width>131</fabric_width>
+    <fabric_height>43</fabric_height>
+    <fabric_colour>1</fabric_colour>
+    <design_file>1_choo_choo_baby</design_file>
+    <origin_x>4</origin_x>
+    <origin_y>4</origin_y>
+    <total_minutes>86</total_minutes>
+    <fabric_count>14</fabric_count>
+  </Projects>
+</NewDataSet>
