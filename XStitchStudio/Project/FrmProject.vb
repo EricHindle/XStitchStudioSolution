@@ -45,23 +45,7 @@ Public Class FrmProject
         KeyPreview = True
         Dim _projectFile As String = CheckRunTimeParameters()
         If _projectFile IsNot Nothing Then
-            Try
-                ModProject.OpenProjectFile(_projectFile, LblStatus)
-                If oFileProject IsNot Nothing AndAlso oFileProject.IsLoaded Then
-                    Dim _path As String = Path.GetDirectoryName(_projectFile)
-                    If _path = oDesignFolderName AndAlso IsProjectInList(oFileProject) Then
-                        OpenProjectDesign()
-                    Else
-                        If ImportProject(_projectFile) Then
-                            LoadProjectList(DgvProjects, MyBase.Name)
-                            SelectProjectInList(DgvProjects, oFileProject.ProjectId)
-                            OpenProjectDesign()
-                        End If
-                    End If
-                End If
-            Catch ex As ApplicationException
-                LogUtil.DisplayException(ex, "Error importing design file", MethodBase.GetCurrentMethod.Name)
-            End Try
+            ImportProjectFile(_projectFile, LblStatus)
         End If
     End Sub
     Private Sub SetEnabledButtons(pIsEnabled)
@@ -247,13 +231,9 @@ Public Class FrmProject
     Private Sub MnuPrintSettings_Click(sender As Object, e As EventArgs) Handles MnuPrintSettings.Click
         ShowPrintSettingsForm()
     End Sub
-    Private Sub MnuOpenSelectedProject_Click(sender As Object, e As EventArgs) Handles MnuOpenSelectedProject.Click
-        '      OpenProjectFile(oProject.ProjectId)
-    End Sub
-    Private Sub MnuOpenProjectFile_Click(sender As Object, e As EventArgs) Handles MnuOpenProjectFile.Click
-        '    Dim _filename As String = FileUtil.GetFileName(FileUtil.OpenOrSave.Open, FileUtil.FileType.HSZ, oDesignFolderName)
-         '   OpenProjectFromFile(_filename, DgvProjects, LblStatus)
-        '    OpenProjectDesign()
+    Private Sub MnuImportProjectFile_Click(sender As Object, e As EventArgs) Handles MnuImportProjectFile.Click
+        Dim _filename As String = FileUtil.GetFileName(FileUtil.OpenOrSave.Open, FileUtil.FileType.HSZ, oDesignFolderName)
+        ImportProjectFile(_filename, LblStatus)
     End Sub
     Private Sub MnuImportImage_Click(sender As Object, e As EventArgs) Handles MnuImportImage.Click
         ShowImportImageForm()
@@ -318,13 +298,31 @@ Public Class FrmProject
             UpdateProjectTime()
         End With
     End Sub
+    Private Sub ImportProjectFile(_projectFile As String, ByRef pStatus As ToolStripStatusLabel)
+        Try
+            OpenProjectFile(_projectFile, pStatus)
+            If oFileProject IsNot Nothing AndAlso oFileProject.IsLoaded Then
+                Dim _path As String = Path.GetDirectoryName(_projectFile)
+                If _path = oDesignFolderName AndAlso IsProjectInList(oFileProject) Then
+                    OpenProjectDesign()
+                Else
+                    If ImportProject(_projectFile) Then
+                        LoadProjectList(DgvProjects, MyBase.Name)
+                        SelectProjectInList(DgvProjects, oFileProject.ProjectId)
+                        OpenProjectDesign()
+                    End If
+                End If
+            End If
+        Catch ex As ApplicationException
+            LogUtil.DisplayException(ex, "Error importing design file", MethodBase.GetCurrentMethod.Name)
+        End Try
+    End Sub
     Private Sub AddInstruction(pText As String)
         AddInstruction(pText, False)
     End Sub
     Private Sub AddInstruction(pText As String, pIsLogged As Boolean)
         ModCommon.AddInstruction(pText, LblInstruction, PnlInstruction, pIsLogged, String.Empty)
     End Sub
-
     Private Function BuildProjectFromForm(pProject As Project) As Project
         Dim _fcolr As Integer = If(CbFabricColour.SelectedIndex = CbFabricColour.Items.Count - 1, PicFabricColour.BackColor.ToArgb, CbFabricColour.SelectedIndex + 1)
         Dim _project As Project = ProjectBuilder.AProject.StartingWithNothing _
@@ -569,15 +567,12 @@ Public Class FrmProject
             Beep()
         End Try
     End Sub
-
     Private Sub NudDesignWidth_ValueChanged(sender As Object, e As EventArgs) Handles NudDesignWidth.ValueChanged
         NudFabricWidth.Value = Math.Max(NudFabricWidth.Value, NudDesignWidth.Value)
     End Sub
-
     Private Sub NudDesignHeight_ValueChanged(sender As Object, e As EventArgs) Handles NudDesignHeight.ValueChanged
         NudFabricHeight.Value = Math.Max(NudFabricHeight.Value, NudDesignHeight.Value)
     End Sub
-
 
 #End Region
 End Class

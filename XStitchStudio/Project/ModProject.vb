@@ -5,6 +5,7 @@
 ' Author Eric Hindle
 '
 
+Imports System.IO
 Imports System.Reflection
 Imports HindlewareLib.Logging
 Imports XStitchStudio.Domain
@@ -66,6 +67,7 @@ Module ModProject
         _reply = "Save complete"
         Return _reply
     End Function
+
     Public Sub LoadProject(pDgv As DataGridView)
         LoadProjectTable(pDgv)
         UpdateThreadsFromDesign(oFileProjectDesign, oFileProjectThreadCollection)
@@ -152,7 +154,12 @@ Module ModProject
         If Not String.IsNullOrEmpty(pFilename) Then
             LogUtil.ShowStatus("Opening project file " & pFilename, pStatus, MethodBase.GetCurrentMethod.Name)
             If My.Computer.FileSystem.FileExists(pFilename) = True Then
-                CreateProjectArtifactsFromFileContents(pFilename, pStatus)
+                Try
+                    CreateProjectArtifactsFromFileContents(pFilename)
+                Catch ex As ApplicationException
+                    LogUtil.Problem("Invalid project file " & pFilename, MethodBase.GetCurrentMethod.Name)
+                    Throw ex
+                End Try
                 LogUtil.ShowStatus("Project Load Complete", pStatus, MethodBase.GetCurrentMethod.Name)
             Else
                 LogUtil.ShowStatus("Project file not found", pStatus, MethodBase.GetCurrentMethod.Name)
@@ -161,8 +168,8 @@ Module ModProject
             LogUtil.ShowStatus("No project file selected", pStatus)
         End If
     End Sub
-
-    Private Sub CreateProjectArtifactsFromFileContents(pFilename As String, ByRef pStatus As ToolStripStatusLabel)
+    Private Sub CreateProjectArtifactsFromFileContents(pFilename As String)
+        LogUtil.LogInfo("Extracting project artifacts from " & pFilename, MethodBase.GetCurrentMethod.Name)
         Try
             oFileProject = ProjectBuilder.AProject.StartingWithNothing.Build
             oFileProjectDesign = ProjectDesignBuilder.AProjectDesign.StartingWithNothing().Build
@@ -171,47 +178,120 @@ Module ModProject
             Dim _projectStrings As List(Of String) = ExtractDesignStrings(pFilename)
             For Each _string As String In _projectStrings
                 If _string Is Nothing Then
+                    LogUtil.Problem("Unexpected null string", MethodBase.GetCurrentMethod.Name)
                     Throw New ApplicationException("Project Design file has null string", Nothing)
-                    _string = String.Empty
                 End If
                 Select Case True
                     Case _string.StartsWith(PROJECT_HDR)
                         Dim _projectValues As String() = _string.Split(DESIGN_DELIM)
                         oFileProject = ProjectBuilder.AProject.StartingWith(_projectValues).Build
-                        If Not oFileProject.IsLoaded Then
-                            LogUtil.ShowStatus("Project not loaded", pStatus, MethodBase.GetCurrentMethod.Name)
-                            Exit For
-                        End If
+                        LogUtil.Info("Project found", MethodBase.GetCurrentMethod.Name)
                     Case _string.StartsWith(DESIGN_HDR)
                         Dim _designValues As String() = _string.Split(DESIGN_DELIM)
                         oFileProjectDesign = ProjectDesignBuilder.AProjectDesign.StartingWith(_designValues).Build
-                        If Not oFileProjectDesign.IsLoaded Then
-                            LogUtil.ShowStatus("Design not loaded", pStatus, MethodBase.GetCurrentMethod.Name)
-                            Exit For
-                        End If
+                        LogUtil.Info("Design found", MethodBase.GetCurrentMethod.Name)
                     Case _string.StartsWith(PROJECT_THREADS_HDR)
                         Dim _threadStrings As String() = _string.Trim(BLOCK_DELIM).Split(BLOCK_DELIM)
                         oFileProjectThreadCollection = ProjectThreadCollectionBuilder.AProjectThreadCollection.StartingWith(_threadStrings).Build
-                        If oFileProjectThreadCollection Is Nothing OrElse oFileProjectThreadCollection.Count = 0 Then
-                            LogUtil.ShowStatus("No threads loaded", pStatus, MethodBase.GetCurrentMethod.Name)
-                            Exit For
-                        End If
+                        LogUtil.Info("Threads found", MethodBase.GetCurrentMethod.Name)
                     Case _string.StartsWith(PROJECT_BEADS_HDR)
                         Dim _beadStrings As String() = _string.Trim(BLOCK_DELIM).Split(BLOCK_DELIM)
                         oFileProjectBeadCollection = ProjectBeadCollectionBuilder.AProjectBeadCollection.StartingWith(_beadStrings).Build
-                        If oFileProjectBeadCollection Is Nothing OrElse oFileProjectBeadCollection.Count = 0 Then
-                            LogUtil.ShowStatus("No beads loaded", pStatus, MethodBase.GetCurrentMethod.Name)
-                            Exit For
-                        End If
-
+                        LogUtil.Info("Beads found", MethodBase.GetCurrentMethod.Name)
                     Case Else
-                        LogUtil.ShowStatus("Unknown data in project file", pStatus, MethodBase.GetCurrentMethod.Name)
+                        LogUtil.Problem("Unexpected string", MethodBase.GetCurrentMethod.Name)
+                        Throw New ApplicationException("Unknown data in project file")
                 End Select
             Next
+            If oFileProjectDesign.HasBeads AndAlso oFileProjectBeadCollection.Count = 0 Then
+                LogUtil.Problem("Missing Project Beads", MethodBase.GetCurrentMethod.Name)
+                oFileProjectBeadCollection = GenerateBeadCollection(oFileProjectDesign)
+            End If
+            If (oFileProjectDesign.BlockStitches.Count > 0 Or oFileProjectDesign.BackStitches.Count > 0 Or oFileProjectDesign.HasKnots) AndAlso oFileProjectThreadCollection.Count = 0 Then
+                LogUtil.Problem("Missing Project Threads", MethodBase.GetCurrentMethod.Name)
+                oFileProjectThreadCollection = GenerateThreadCollection(oFileProjectDesign)
+            End If
+            If Not oFileProject.IsLoaded OrElse Not IsValidProject(oFileProject) Then
+                LogUtil.Problem("Invalid Project", MethodBase.GetCurrentMethod.Name)
+                Throw New ApplicationException("Project File: No valid project record")
+            End If
+            If Not oFileProjectDesign.IsLoaded OrElse Not IsValidDesign(oFileProjectDesign) Then
+                LogUtil.Problem("Invalid Design", MethodBase.GetCurrentMethod.Name)
+                Throw New ApplicationException("Project File: No valid design record")
+            End If
+            If oFileProjectThreadCollection Is Nothing OrElse oFileProjectThreadCollection.Count = 0 Then
+                LogUtil.Problem("No threads loaded", MethodBase.GetCurrentMethod.Name)
+            End If
+            If oFileProjectBeadCollection Is Nothing OrElse oFileProjectBeadCollection.Count = 0 Then
+                LogUtil.Problem("No beads loaded", MethodBase.GetCurrentMethod.Name)
+            End If
         Catch ex As ApplicationException
             Throw ex
         End Try
     End Sub
+    Private Function GenerateThreadCollection(pDesign As ProjectDesign) As ProjectThreadCollection
+        LogUtil.LogInfo("Generating Project Threads from project design", MethodBase.GetCurrentMethod.Name)
+        Dim _threadCollection As ProjectThreadCollection = ProjectThreadCollectionBuilder.AProjectThreadCollection.StartingWithNothing.Build
+        For Each _knot As Knot In pDesign.Knots
+            If Not _knot.IsBead Then
+                AddProjectThreadToCollection(pDesign.ProjectId, _knot.ThreadId, _threadCollection)
+            End If
+        Next
+        For Each _blockstitch As BlockStitch In pDesign.BlockStitches
+            For Each _qtr As BlockStitchQuarter In _blockstitch.Quarters
+                AddProjectThreadToCollection(pDesign.ProjectId, _qtr.ThreadId, _threadCollection)
+            Next
+        Next
+        For Each _backstitch As BackStitch In pDesign.BackStitches
+            AddProjectThreadToCollection(pDesign.ProjectId, _backstitch.ThreadId, _threadCollection)
+        Next
+        Return _threadCollection
+    End Function
+    Private Function GenerateBeadCollection(pDesign As ProjectDesign) As ProjectBeadCollection
+        LogUtil.LogInfo("Generating Project Beads from project design", MethodBase.GetCurrentMethod.Name)
+        Dim _beadCollection As ProjectBeadCollection = ProjectBeadCollectionBuilder.AProjectBeadCollection.StartingWithNothing.Build
+        For Each _knot As Knot In pDesign.Knots
+            If _knot.IsBead Then
+                AddProjectBeadToCollection(pDesign.ProjectId, _knot.ThreadId, _beadCollection)
+            End If
+        Next
+        Return _beadCollection
+    End Function
+    Private Sub AddProjectThreadToCollection(pProjectId As Integer, pThreadId As Integer, _threadCollection As ProjectThreadCollection)
+        Dim _projThread As ProjectThread = ProjectThreadBuilder.AProjectThread.StartingWithNothing _
+                                            .WithProjectId(pProjectId) _
+                                            .WithThreadId(pThreadId) _
+                                            .WithIsUsed(True) _
+                                            .Build
+        If Not _threadCollection.Exists(_projThread.ThreadId) Then
+            _threadCollection.Add(_projThread)
+        End If
+    End Sub
+    Private Sub AddProjectBeadToCollection(pProjectId As Integer, pBeadId As Integer, _threadCollection As ProjectBeadCollection)
+        Dim _projBead As ProjectBead = ProjectBeadBuilder.AProjectBead.StartingWithNothing _
+                                            .WithBeadId(pBeadId) _
+                                            .WithIsUsed(True) _
+                                            .Build
+        If Not _threadCollection.Exists(_projBead.BeadId) Then
+            _threadCollection.Add(_projBead)
+        End If
+    End Sub
+
+    Private Function IsValidProject(pProject As Project) As Boolean
+        Dim isValid As Boolean = True
+        If String.IsNullOrWhiteSpace(pProject.ProjectName) Then
+            isValid = False
+        End If
+        If pProject.DesignHeight < 1 Or pProject.DesignWidth < 1 Then
+            isValid = False
+        End If
+        Return isValid
+    End Function
+    Private Function IsValidDesign(pDesign As ProjectDesign) As Boolean
+        Dim isValid As Boolean = True
+
+        Return isValid
+    End Function
 
     Public Sub SetNewProjectId(pId As Integer, ByRef pProject As Project, ByRef pProjectDesign As ProjectDesign, ByRef pProjectThreadCollection As ProjectThreadCollection)
         pProject.ProjectId = pId

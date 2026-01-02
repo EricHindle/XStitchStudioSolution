@@ -92,7 +92,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("C:\ProgramData\XStitchStudio\Designs")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("C:\ProgramData\hindleware\XStitchStudio\Designs")>  _
         Public Property DesignFilePath() As String
             Get
                 Return CType(Me("DesignFilePath"),String)
@@ -164,7 +164,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("C:\ProgramData\XStitchStudio\Logs")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("C:\ProgramData\hindleware\XStitchStudio\Logs")>  _
         Public Property LogFolder() As String
             Get
                 Return CType(Me("LogFolder"),String)
@@ -212,7 +212,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("C:\ProgramData\XStitchStudio\Images")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("C:\ProgramData\hindleware\XStitchStudio\Images")>  _
         Public Property ImagePath() As String
             Get
                 Return CType(Me("ImagePath"),String)
@@ -236,7 +236,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("C:\ProgramData\XStitchStudio\Backup")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("C:\ProgramData\hindleware\XStitchStudio\Backup")>  _
         Public Property BackupPath() As String
             Get
                 Return CType(Me("BackupPath"),String)

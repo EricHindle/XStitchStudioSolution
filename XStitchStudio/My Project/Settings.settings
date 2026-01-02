@@ -12,7 +12,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="DesignFilePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\ProgramData\XStitchStudio\Designs</Value>
+      <Value Profile="(Default)">C:\ProgramData\hindleware\XStitchStudio\Designs</Value>
     </Setting>
     <Setting Name="DesignStitchDisplay" Type="System.String" Scope="User">
       <Value Profile="(Default)">4</Value>
@@ -30,7 +30,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="LogFolder" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\ProgramData\XStitchStudio\Logs</Value>
+      <Value Profile="(Default)">C:\ProgramData\hindleware\XStitchStudio\Logs</Value>
     </Setting>
     <Setting Name="isGridOn" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -42,13 +42,13 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="ImagePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\ProgramData\XStitchStudio\Images</Value>
+      <Value Profile="(Default)">C:\ProgramData\hindleware\XStitchStudio\Images</Value>
     </Setting>
     <Setting Name="BackupFormPos" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="BackupPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\ProgramData\XStitchStudio\Backup</Value>
+      <Value Profile="(Default)">C:\ProgramData\hindleware\XStitchStudio\Backup</Value>
     </Setting>
     <Setting Name="BackupAddDate" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

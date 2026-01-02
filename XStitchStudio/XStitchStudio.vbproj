@@ -66,6 +66,9 @@
   <PropertyGroup>
     <ApplicationIcon>MyStitch.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="HindlewareLib">
       <HintPath>..\..\HindlewareLib\bin\Release\HindlewareLib.dll</HintPath>
@@ -100,6 +103,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
     <Compile Include="Cards\FrmBuildThreadCards.Designer.vb">
       <DependentUpon>FrmBuildThreadCards.vb</DependentUpon>
     </Compile>
@@ -486,6 +490,7 @@
     <None Include="Domain\MyStitchDataSet.xss">
       <DependentUpon>MyStitchDataSet.xsd</DependentUpon>
     </None>
+    <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

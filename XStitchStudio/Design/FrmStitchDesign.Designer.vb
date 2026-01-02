@@ -1310,69 +1310,69 @@ Partial Class FrmStitchDesign
         'MnuOpenDesign
         '
         Me.MnuOpenDesign.Name = "MnuOpenDesign"
-        Me.MnuOpenDesign.Size = New System.Drawing.Size(148, 22)
-        Me.MnuOpenDesign.Text = "Open"
+        Me.MnuOpenDesign.Size = New System.Drawing.Size(194, 22)
+        Me.MnuOpenDesign.Text = "Open Archived Version"
         '
         'MnuSaveDesign
         '
         Me.MnuSaveDesign.Name = "MnuSaveDesign"
-        Me.MnuSaveDesign.Size = New System.Drawing.Size(148, 22)
+        Me.MnuSaveDesign.Size = New System.Drawing.Size(194, 22)
         Me.MnuSaveDesign.Text = "Save"
         '
         'MnuSaveDesignAs
         '
         Me.MnuSaveDesignAs.Name = "MnuSaveDesignAs"
-        Me.MnuSaveDesignAs.Size = New System.Drawing.Size(148, 22)
+        Me.MnuSaveDesignAs.Size = New System.Drawing.Size(194, 22)
         Me.MnuSaveDesignAs.Text = "Save As..."
         '
         'ToolStripSeparator10
         '
         Me.ToolStripSeparator10.Name = "ToolStripSeparator10"
-        Me.ToolStripSeparator10.Size = New System.Drawing.Size(145, 6)
+        Me.ToolStripSeparator10.Size = New System.Drawing.Size(191, 6)
         '
         'MnuErase
         '
         Me.MnuErase.Name = "MnuErase"
-        Me.MnuErase.Size = New System.Drawing.Size(148, 22)
+        Me.MnuErase.Size = New System.Drawing.Size(194, 22)
         Me.MnuErase.Text = "Erase Design"
         '
         'ToolStripSeparator18
         '
         Me.ToolStripSeparator18.Name = "ToolStripSeparator18"
-        Me.ToolStripSeparator18.Size = New System.Drawing.Size(145, 6)
+        Me.ToolStripSeparator18.Size = New System.Drawing.Size(191, 6)
         '
         'MnuCropDesign
         '
         Me.MnuCropDesign.Name = "MnuCropDesign"
-        Me.MnuCropDesign.Size = New System.Drawing.Size(148, 22)
+        Me.MnuCropDesign.Size = New System.Drawing.Size(194, 22)
         Me.MnuCropDesign.Text = "Crop Design"
         '
         'MnuExtendDesign
         '
         Me.MnuExtendDesign.Name = "MnuExtendDesign"
-        Me.MnuExtendDesign.Size = New System.Drawing.Size(148, 22)
+        Me.MnuExtendDesign.Size = New System.Drawing.Size(194, 22)
         Me.MnuExtendDesign.Text = "Extend Design"
         '
         'ToolStripSeparator17
         '
         Me.ToolStripSeparator17.Name = "ToolStripSeparator17"
-        Me.ToolStripSeparator17.Size = New System.Drawing.Size(145, 6)
+        Me.ToolStripSeparator17.Size = New System.Drawing.Size(191, 6)
         '
         'MnuPrint
         '
         Me.MnuPrint.Name = "MnuPrint"
-        Me.MnuPrint.Size = New System.Drawing.Size(148, 22)
+        Me.MnuPrint.Size = New System.Drawing.Size(194, 22)
         Me.MnuPrint.Text = "Print"
         '
         'ToolStripSeparator8
         '
         Me.ToolStripSeparator8.Name = "ToolStripSeparator8"
-        Me.ToolStripSeparator8.Size = New System.Drawing.Size(145, 6)
+        Me.ToolStripSeparator8.Size = New System.Drawing.Size(191, 6)
         '
         'MnuExit
         '
         Me.MnuExit.Name = "MnuExit"
-        Me.MnuExit.Size = New System.Drawing.Size(148, 22)
+        Me.MnuExit.Size = New System.Drawing.Size(194, 22)
         Me.MnuExit.Text = "Exit"
         '
         'MnuPalette

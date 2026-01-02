@@ -75,14 +75,14 @@ Partial Class FrmProject
         Me.BtnDesign = New System.Windows.Forms.Button()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.MnuButton = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MnuOpenProjectFile = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MnuOpenSelectedProject = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MnuImportProjectFile = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.MnuTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.MnuExit = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuOpenDesign = New System.Windows.Forms.ToolStripMenuItem()
+        Me.OpenDesignFromArchiveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem4 = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuThreadList = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuBeads = New System.Windows.Forms.ToolStripMenuItem()
@@ -662,7 +662,7 @@ Partial Class FrmProject
         '
         'MnuButton
         '
-        Me.MnuButton.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuOpenProjectFile, Me.MnuOpenSelectedProject, Me.ToolStripSeparator2, Me.MnuTest, Me.ToolStripSeparator1, Me.MnuExit})
+        Me.MnuButton.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuImportProjectFile, Me.ToolStripSeparator2, Me.MnuTest, Me.ToolStripSeparator1, Me.MnuExit})
         Me.MnuButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.MnuButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.MnuButton.Margin = New System.Windows.Forms.Padding(0, 0, 4, 0)
@@ -671,45 +671,39 @@ Partial Class FrmProject
         Me.MnuButton.Size = New System.Drawing.Size(53, 24)
         Me.MnuButton.Text = "Projects"
         '
-        'MnuOpenProjectFile
+        'MnuImportProjectFile
         '
-        Me.MnuOpenProjectFile.Name = "MnuOpenProjectFile"
-        Me.MnuOpenProjectFile.Size = New System.Drawing.Size(222, 22)
-        Me.MnuOpenProjectFile.Text = "Import Project File"
-        '
-        'MnuOpenSelectedProject
-        '
-        Me.MnuOpenSelectedProject.Name = "MnuOpenSelectedProject"
-        Me.MnuOpenSelectedProject.Size = New System.Drawing.Size(222, 22)
-        Me.MnuOpenSelectedProject.Text = "Reopen Selected Project File"
+        Me.MnuImportProjectFile.Name = "MnuImportProjectFile"
+        Me.MnuImportProjectFile.Size = New System.Drawing.Size(180, 22)
+        Me.MnuImportProjectFile.Text = "Import Project File"
         '
         'ToolStripSeparator2
         '
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(219, 6)
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(177, 6)
         '
         'MnuTest
         '
         Me.MnuTest.Name = "MnuTest"
-        Me.MnuTest.Size = New System.Drawing.Size(222, 22)
+        Me.MnuTest.Size = New System.Drawing.Size(180, 22)
         Me.MnuTest.Text = "Test"
         Me.MnuTest.Visible = False
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(219, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(177, 6)
         Me.ToolStripSeparator1.Visible = False
         '
         'MnuExit
         '
         Me.MnuExit.Name = "MnuExit"
-        Me.MnuExit.Size = New System.Drawing.Size(222, 22)
+        Me.MnuExit.Size = New System.Drawing.Size(180, 22)
         Me.MnuExit.Text = "Exit"
         '
         'ToolStripMenuItem1
         '
-        Me.ToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuOpenDesign})
+        Me.ToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuOpenDesign, Me.OpenDesignFromArchiveToolStripMenuItem})
         Me.ToolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
         Me.ToolStripMenuItem1.Size = New System.Drawing.Size(55, 24)
@@ -718,8 +712,14 @@ Partial Class FrmProject
         'MnuOpenDesign
         '
         Me.MnuOpenDesign.Name = "MnuOpenDesign"
-        Me.MnuOpenDesign.Size = New System.Drawing.Size(189, 22)
+        Me.MnuOpenDesign.Size = New System.Drawing.Size(216, 22)
         Me.MnuOpenDesign.Text = "Open Selected Design"
+        '
+        'OpenDesignFromArchiveToolStripMenuItem
+        '
+        Me.OpenDesignFromArchiveToolStripMenuItem.Name = "OpenDesignFromArchiveToolStripMenuItem"
+        Me.OpenDesignFromArchiveToolStripMenuItem.Size = New System.Drawing.Size(216, 22)
+        Me.OpenDesignFromArchiveToolStripMenuItem.Text = "Open Design From Archive"
         '
         'ToolStripMenuItem4
         '
@@ -952,7 +952,7 @@ Partial Class FrmProject
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.MinimumSize = New System.Drawing.Size(711, 692)
         Me.Name = "FrmProject"
-        Me.Text = "Projects"
+        Me.Text = "Cross Stitch Studio"
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
         CType(Me.DgvProjects, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1015,8 +1015,7 @@ Partial Class FrmProject
     Friend WithEvents LblEndTime As Label
     Friend WithEvents LblStartTime As Label
     Friend WithEvents Label15 As Label
-    Friend WithEvents MnuOpenProjectFile As ToolStripMenuItem
-    Friend WithEvents MnuOpenSelectedProject As ToolStripMenuItem
+    Friend WithEvents MnuImportProjectFile As ToolStripMenuItem
     Friend WithEvents Label9 As Label
     Friend WithEvents NudFabricCount As NumericUpDown
     Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
@@ -1057,4 +1056,5 @@ Partial Class FrmProject
     Friend WithEvents MnuPalettes As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator4 As ToolStripSeparator
     Friend WithEvents ToolStripSeparator5 As ToolStripSeparator
+    Friend WithEvents OpenDesignFromArchiveToolStripMenuItem As ToolStripMenuItem
 End Class

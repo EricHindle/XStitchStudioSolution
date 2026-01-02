@@ -90,7 +90,7 @@ Public NotInheritable Class FrmStartUp
         LogUtil.LogFolder = oInstallationLogFolder
         LogUtil.StartLogging()
         LogUtil.LogInfo("Completing installation", MethodBase.GetCurrentMethod.Name)
-        Dim UserDataPath As String = Path.Combine(GetFolderPath(SpecialFolder.CommonApplicationData), My.Application.Info.AssemblyName)
+        Dim UserDataPath As String = Path.Combine(GetFolderPath(SpecialFolder.CommonApplicationData), Path.Combine(My.Application.Info.CompanyName, My.Application.Info.AssemblyName))
         '    LoadDefaultPaths
         TxtBackupPath.Text = Path.Combine(UserDataPath, "Backup")
         TxtDataPath.Text = Path.Combine(UserDataPath, "Data")

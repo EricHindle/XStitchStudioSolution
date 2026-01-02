@@ -89,6 +89,26 @@ Namespace Domain.Objects
             End If
             Return _isOk
         End Function
+        Public Function HasBeads() As Boolean
+            Dim _isBeadPresent As Boolean = False
+            For Each _knot In _knots
+                If _knot.IsBead Then
+                    _isBeadPresent = True
+                    Exit For
+                End If
+            Next
+            Return _isBeadPresent
+        End Function
+        Public Function HasKnots() As Boolean
+            Dim _isKnotPresent As Boolean = False
+            For Each _knot In _knots
+                If _knot.IsBead = False Then
+                    _isKnotPresent = True
+                    Exit For
+                End If
+            Next
+            Return _isKnotPresent
+        End Function
         Public Overrides Function ToString() As String
             Dim _sb As New StringBuilder
             _sb.Append("Project Design=[") _

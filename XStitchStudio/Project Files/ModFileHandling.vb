@@ -35,6 +35,7 @@ Module ModFileHandling
     Public Const PROJECT_HDR As String = "Project:"
     Public Const PROJECT_THREADS_HDR As String = "Project Threads:"
     Public Const PROJECT_BEADS_HDR As String = "Project Beads:"
+    Private Const PROJECT_FILE_EXCEPTION As String = "Exception reading project file"
     Public Sub CheckAppPaths()
         LogUtil.LogInfo("Checking folders", MethodBase.GetCurrentMethod.Name)
         Try
@@ -177,7 +178,6 @@ Module ModFileHandling
     End Function
     Public Function ExtractDesignStrings(pDesignFullName As String) As List(Of String)
         Dim _projectStrings As New List(Of String)
-        Dim _exceptionText As String = "Exception reading project file"
         Dim _zipFile As String = pDesignFullName
         Try
             If My.Computer.FileSystem.FileExists(_zipFile) Then
@@ -205,6 +205,8 @@ Module ModFileHandling
                         End If
                     Next
                 End Using
+            Else
+                Throw New InvalidDataException()
             End If
         Catch ex As Exception When (TypeOf ex Is ArgumentException _
                                 OrElse TypeOf ex Is PathTooLongException _
@@ -214,7 +216,7 @@ Module ModFileHandling
                                 OrElse TypeOf ex Is InvalidDataException _
                                 OrElse TypeOf ex Is NotSupportedException _
                                 OrElse TypeOf ex Is ObjectDisposedException)
-            LogUtil.DisplayException(ex, _exceptionText, MethodBase.GetCurrentMethod.Name)
+            LogUtil.DisplayException(ex, PROJECT_FILE_EXCEPTION, MethodBase.GetCurrentMethod.Name)
         End Try
         Return _projectStrings
     End Function

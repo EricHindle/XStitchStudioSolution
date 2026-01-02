@@ -62,8 +62,9 @@ Namespace Domain.Builders
             End If
             Return Me
         End Function
+
         Public Function WithBeadId(pId As Integer) As ProjectBeadBuilder
-            _BeadId = pId
+            _beadId = pId
             Return Me
         End Function
         Public Function WithProjectId(pId As Integer) As ProjectBeadBuilder
