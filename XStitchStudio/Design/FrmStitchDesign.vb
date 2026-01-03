@@ -1511,7 +1511,10 @@ Public Class FrmStitchDesign
                 Next
             Next
         Else
-            Dim _tempBitmap As New Bitmap(oCurrentSelection(1).X - oCurrentSelection(0).X, oCurrentSelection(1).Y - oCurrentSelection(0).Y)
+            Dim _width As Integer = Math.Max(1, oCurrentSelection(1).X - oCurrentSelection(0).X)
+            Dim _height As Integer = Math.Max(1, oCurrentSelection(1).Y - oCurrentSelection(0).Y)
+
+            Dim _tempBitmap As New Bitmap(_width, _height)
             Using _graphics As Graphics = Graphics.FromImage(_tempBitmap)
                 Select Case oCurrentShapeType
                     Case ShapeType.Rectangle
@@ -1527,7 +1530,11 @@ Public Class FrmStitchDesign
                     For Each _y As Integer In Enumerable.Range(0, _tempBitmap.Height)
                         Dim _pixelColour As Color = _tempBitmap.GetPixel(_x, _y)
                         If _pixelColour = oCurrentThread.Thread.Colour Then
-                            AddBlockStitch(oProject, oProjectDesign, New Point(oInProgressAnchor.X + _x, oInProgressAnchor.Y + _y), oCurrentThread.Thread, BlockStitchType.Full)
+                            Dim _newX As Integer = oInProgressAnchor.X + _x
+                            Dim _newY As Integer = oInProgressAnchor.Y + _y
+                            If _newX < oProjectDesign.Columns And _newY < oProjectDesign.Rows Then
+                                AddBlockStitch(oProject, oProjectDesign, New Point(oInProgressAnchor.X + _x, oInProgressAnchor.Y + _y), oCurrentThread.Thread, BlockStitchType.Full)
+                            End If
                         End If
                     Next
                 Next
@@ -1588,8 +1595,8 @@ Public Class FrmStitchDesign
     Private Function AdjustCellOntoDesign(pCell As Cell) As Cell
         Dim pos_x As Integer = Math.Max(pCell.Position.X, -iOriginX)
         Dim pos_y As Integer = Math.Max(pCell.Position.Y, -iOriginY)
-        pos_x = Math.Min(pos_x, oProjectDesign.Columns - 1)
-        pos_y = Math.Min(pos_y, oProjectDesign.Rows - 1)
+        pos_x = Math.Min(pos_x, oProjectDesign.Columns)
+        pos_y = Math.Min(pos_y, oProjectDesign.Rows)
         Dim loc_x As Integer = (pos_x + iXOffset - topcorner.X) * iPixelsPerCell
         Dim loc_y As Integer = (pos_y + iYOffset - topcorner.Y) * iPixelsPerCell
         pCell.Position = New Point(pos_x, pos_y)
@@ -2205,8 +2212,10 @@ Public Class FrmStitchDesign
     End Sub
     Private Sub AddBlockStitchToDesign(pBlockstitch As BlockStitch)
         Dim _blockstitch As BlockStitch = BlockStitchBuilder.ABlockStitch.StartingWith(pBlockstitch).Build
-        oProjectDesign.BlockStitches.Add(pBlockstitch)
-        AddToCurrentUndoList(_blockstitch, UndoAction.Add)
+        If pBlockstitch.BlockPosition.X < oProjectDesign.Columns And pBlockstitch.BlockPosition.Y < oProjectDesign.Rows Then
+            oProjectDesign.BlockStitches.Add(pBlockstitch)
+            AddToCurrentUndoList(_blockstitch, UndoAction.Add)
+        End If
         isSaved = False
     End Sub
     Private Sub RemoveBlockStitchFromDesign(pBlockstitch As BlockStitch)
