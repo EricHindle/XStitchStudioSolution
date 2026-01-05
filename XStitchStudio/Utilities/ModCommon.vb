@@ -124,88 +124,6 @@ Friend Module ModCommon
             ' Handle control key combinations
             Dim _hotkey As Keys = e.KeyCode
             Select Case _hotkey
-                Case Keys.L
-                    ' Open Log View form
-                    ShowLog()
-                    e.Handled = True
-                Case Keys.B
-                    ' Open Backup form
-                    OpenBackupForm()
-                    e.Handled = True
-                Case Keys.O
-                    ' Open Options form
-                    OpenPreferencesForm(_form)
-                    e.Handled = True
-                'Case Keys.G
-                '    ' Open Global Settings form
-                '    OpenGlobalSettingsForm()
-                '    e.Handled = True
-                Case Keys.H
-                    ' Run housekeeping process
-                    RunHousekeeping()
-                    e.Handled = True
-                Case Keys.X
-                    _form.Close()
-                    e.Handled = True
-                Case Keys.S
-                    If pFormType = FormType.Design Then
-                        ' Save Design
-                        If TypeOf _form Is FrmStitchDesign Then
-                            SaveDesign()
-                        End If
-                        e.Handled = True
-                    End If
-                Case Keys.D
-                    If pFormType = FormType.Design Then
-                        Using _designInfo As New FrmDesignInfo()
-                            _designInfo.SelectedProject = oProject
-                            _designInfo.Design = oProjectDesign
-                            _designInfo.ShowDialog()
-                        End Using
-                        e.Handled = True
-                    End If
-                Case Keys.P
-                    ' Print
-                    If pFormType = FormType.Design Then
-                        OpenPrintForm(_form, oProject)
-                        e.Handled = True
-                    End If
-                Case Keys.I
-                    If pFormType = FormType.Project Then
-                        ' Import Image
-                        Using _import As New FrmImportImage
-                            _import.ShowDialog()
-                        End Using
-                        e.Handled = True
-                    End If
-                Case Keys.F
-                    ' Fill
-                    If pFormType = FormType.Design Then
-                        _designForm.BeginFloodFill()
-                    End If
-                    e.Handled = True
-                Case Keys.Z
-                    ' Undo
-                    If pFormType = FormType.Design Then
-                        _designForm.UndoLastAction()
-                    End If
-                    e.Handled = True
-                Case Keys.Y
-                    ' Redo
-                    If pFormType = FormType.Design Then
-                        _designForm.RedoLastUndo()
-                    End If
-                    e.Handled = True
-                Case Keys.Add
-                    If pFormType = FormType.Design Then
-                        _designForm.IncreaseMagnification()
-                        e.Handled = True
-                    End If
-                Case Keys.Subtract
-                    If pFormType = FormType.Design Then
-                        _designForm.DecreaseMagnification()
-                        e.Handled = True
-                    End If
             End Select
         End If
     End Sub
@@ -290,9 +208,12 @@ Friend Module ModCommon
     End Sub
 
     Public Sub ShowMessage(pMessageText As String, pSource As String)
-        ShowMessage(pMessageText, False, True, pSource)
+        ShowMessage(pMessageText, False, True, -1, pSource)
     End Sub
-    Public Sub ShowMessage(pMessageText As String, pIsShowclose As Boolean, pIsLogged As Boolean, pSource As String)
+    Public Sub ShowMessage(pMessageText As String, pSeconds As Decimal, pSource As String)
+        ShowMessage(pMessageText, False, True, pSeconds, pSource)
+    End Sub
+    Public Sub ShowMessage(pMessageText As String, pIsShowclose As Boolean, pIsLogged As Boolean, pSeconds As Decimal, pSource As String)
         _messageForm = New FrmMessage With {
                                 .MessageText = pMessageText,
                                 .IsShowClose = pIsShowclose,
@@ -300,6 +221,11 @@ Friend Module ModCommon
                                 .Source = pSource
             }
         _messageForm.Show()
+        Application.DoEvents()
+        If pSeconds > 0 Then
+            Threading.Thread.Sleep(pSeconds * 1000)
+            RemoveMessage()
+        End If
     End Sub
     Public Sub RemoveMessage()
         If _messageForm IsNot Nothing AndAlso _messageForm.IsDisposed = False Then

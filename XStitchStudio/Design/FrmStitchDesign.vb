@@ -5,7 +5,9 @@
 ' Author Eric Hindle
 '
 Imports System.Drawing.Imaging
+Imports System.IO
 Imports System.Reflection
+Imports HindlewareLib.Imaging
 Imports HindlewareLib.Logging
 Imports HindlewareLib.Utilities
 Imports XStitchStudio.Domain
@@ -342,12 +344,18 @@ Public Class FrmStitchDesign
                 ClearSelection()
         End Select
         DetermineUsedThreads()
+        SetUndoForChanges()
+    End Sub
+
+    Private Sub SetUndoForChanges()
         If oCurrentUndoList.Count > 0 Then
             AddActionsToUndoList(oCurrentUndoList)
             oCurrentUndoList.Clear()
             oRedoList.Clear()
             BtnRedo.Enabled = False
+            MnuRedo.Enabled = False
             BtnUndo.Enabled = True
+            MnuUndo.Enabled = True
         End If
     End Sub
     Private Sub PicDesign_MouseMove(sender As Object, e As MouseEventArgs) Handles PicDesign.MouseMove
@@ -617,7 +625,9 @@ Public Class FrmStitchDesign
                 oUndoList = New List(Of List(Of StitchAction))
                 oRedoList = New List(Of List(Of StitchAction))
                 BtnUndo.Enabled = False
+                MnuUndo.Enabled = False
                 BtnRedo.Enabled = False
+                MnuRedo.Enabled = False
                 RedrawDesign(False)
             End If
         End Using
@@ -707,6 +717,46 @@ Public Class FrmStitchDesign
     End Sub
     Private Sub MnuErase_Click(sender As Object, e As EventArgs) Handles MnuErase.Click
         EraseDesign()
+    End Sub
+    Private Sub MnuExportBitmap_Click(sender As Object, e As EventArgs) Handles MnuExportBitmap.Click
+        Dim _filename As String = ImageUtil.GetImageFileName(FileUtil.OpenOrSave.Save, ImageUtil.ImageType.BMP, My.Settings.ImagePath)
+        If Not String.IsNullOrEmpty(_filename) Then
+            SaveDesignToBmpImage(_filename)
+        End If
+    End Sub
+    Private Sub MnuExportJpeg_Click(sender As Object, e As EventArgs) Handles MnuExportJpeg.Click
+        Dim _filename As String = ImageUtil.GetImageFileName(FileUtil.OpenOrSave.Save, ImageUtil.ImageType.JPEG, My.Settings.ImagePath)
+        If Not String.IsNullOrEmpty(_filename) Then
+            SaveDesignToJpegImage(_filename)
+        End If
+    End Sub
+    Private Sub MnuCheckDesign_Click(sender As Object, e As EventArgs) Handles MnuCheckDesign.Click
+        LogUtil.LogInfo("Checking design for errors", MyBase.Name)
+        Dim _blockErrors As List(Of BlockStitch) = FindBlockstitchErrors()
+        Dim _backErrors As List(Of BackStitch) = FindBackstitchErrors()
+        Dim _knotErrors As List(Of Knot) = FindKnotErrors()
+        If _blockErrors.Count > 0 Or _backErrors.Count > 0 Or _knotErrors.Count > 0 Then
+            ShowMessage("Stitches found outside the design. Removing errors.", False, True, 1.5, MyBase.Name)
+            For Each _blockstitch As BlockStitch In _blockErrors
+                RemoveBlockStitchFromDesign(_blockstitch)
+            Next
+            For Each _backstitch As BackStitch In _backErrors
+                RemoveBackStitchFromDesign(_backstitch)
+            Next
+            For Each _knot As Knot In _knotErrors
+                RemoveKnotFromDesign(_knot)
+            Next
+            SetUndoForChanges()
+            ShowMessage("Errors removed. Now save the design.", False, True, 2, MyBase.Name)
+        Else
+            ShowMessage("No errors found.", 1.5, MyBase.Name)
+        End If
+    End Sub
+    Private Sub MnuUndo_Click(sender As Object, e As EventArgs) Handles MnuUndo.Click
+        UndoLastAction()
+    End Sub
+    Private Sub MnuRedo_Click(sender As Object, e As EventArgs) Handles MnuRedo.Click
+        RedoLastUndo()
     End Sub
 
 #End Region
@@ -940,6 +990,14 @@ Public Class FrmStitchDesign
             ToggleKnots()
         End If
     End Sub
+    Private Sub MnuShowLog_Click(sender As Object, e As EventArgs) Handles MnuShowLog.Click
+        ShowLog()
+    End Sub
+
+    Private Sub MnuBackup_Click(sender As Object, e As EventArgs) Handles MnuBackup.Click
+        OpenBackupForm()
+    End Sub
+
 #Region "begin actions"
     Private Sub BeginCopy()
         oCurrentAction = DesignAction.Copy
@@ -1050,7 +1108,9 @@ Public Class FrmStitchDesign
         oUndoList = New List(Of List(Of StitchAction))
         oRedoList = New List(Of List(Of StitchAction))
         BtnUndo.Enabled = False
+        MnuUndo.Enabled = False
         BtnRedo.Enabled = False
+        MnuRedo.Enabled = False
         BtnPrint.Enabled = False
         oStitchDisplayStyle = My.Settings.DesignStitchDisplay
         SetDisplayStyleImage()
@@ -1064,7 +1124,6 @@ Public Class FrmStitchDesign
         If oProject.IsLoaded Then
             InitialisePalette()
             ShowMessage("Loading " & oProject.ProjectName & " ...", MyBase.Name)
-            Application.DoEvents()
             Dim _isPaletteChanged As Boolean
             LoadProjectDesignFromFile(oProject, PicDesign, isGridOn, isCentreOn, _isPaletteChanged, isCentreMarksOn)
             If _isPaletteChanged Then
@@ -1385,7 +1444,6 @@ Public Class FrmStitchDesign
     Private Sub ShowPrintForm()
         OpenPrintForm(Me, oProject)
     End Sub
-
     Private Sub SaveProjectThreadsAsPalette(pNewName As String)
         LogUtil.ShowStatus("Saving palette", LblStatus, MyBase.Name)
         If Not String.IsNullOrEmpty(pNewName.Trim) Then
@@ -1415,6 +1473,69 @@ Public Class FrmStitchDesign
             AddNewPaletteThread(_paletteThread)
         Next
     End Sub
+    Private Sub SaveDesignToBmpImage(filename As String)
+        Dim _bitmap As New Bitmap(oProject.DesignWidth, oProject.DesignHeight)
+        Try
+            For oRow As Integer = 0 To _bitmap.Height - 1
+                For oCol As Integer = 0 To _bitmap.Width - 1
+                    Dim _color As Color = oFabricColour
+                    _bitmap.SetPixel(oCol, oRow, _color)
+                Next
+            Next
+            For Each _blockstitch As BlockStitch In oProjectDesign.BlockStitches
+                Dim _x As Integer = _blockstitch.BlockLocation.X + oProject.OriginX
+                Dim _y As Integer = _blockstitch.BlockLocation.Y + oProject.OriginY
+                Dim _color As Color = _blockstitch.ProjThread.Thread.Colour
+                _bitmap.SetPixel(_x, _y, _color)
+            Next
+            ImageUtil.SaveImage(_bitmap, Path.GetDirectoryName(filename), Path.GetFileName(filename), ImageUtil.ImageType.BMP)
+            ShowMessage("Design saved to bitmap", 2, MyBase.Name)
+        Catch ex As Exception
+            LogUtil.DisplayException(ex, "Error while saving design image", MyBase.Name)
+        End Try
+    End Sub
+    Private Sub SaveDesignToJpegImage(filename As String)
+        If oDesignBitmap IsNot Nothing Then
+            ImageUtil.SaveImage(oDesignBitmap, Path.GetDirectoryName(filename), Path.GetFileName(filename), ImageUtil.ImageType.JPEG)
+            ShowMessage("Design saved to jpeg", 2, MyBase.Name)
+        End If
+    End Sub
+    Private Function FindKnotErrors() As List(Of Knot)
+        Dim _knotErrors As New List(Of Knot)
+        For Each _knot As Knot In oProjectDesign.Knots
+            Dim _x As Integer = _knot.BlockLocation.X + oProject.OriginX
+            Dim _y As Integer = _knot.BlockLocation.Y + oProject.OriginY
+            If _x >= oProject.DesignWidth Or _y >= oProject.DesignHeight Or _x < 0 Or _y < 0 Then
+                _knotErrors.Add(_knot)
+            End If
+        Next
+        Return _knotErrors
+    End Function
+    Private Function FindBackstitchErrors() As List(Of BackStitch)
+        Dim _backErrors As New List(Of BackStitch)
+        For Each _backstitch As BackStitch In oProjectDesign.BackStitches
+            Dim _fromX As Integer = _backstitch.FromBlockLocation.X + oProject.OriginX
+            Dim _fromY As Integer = _backstitch.FromBlockLocation.Y + oProject.OriginY
+            Dim _toX As Integer = _backstitch.ToBlockLocation.X + oProject.OriginX
+            Dim _toY As Integer = _backstitch.ToBlockLocation.Y + oProject.OriginY
+            If _fromX >= oProject.DesignWidth Or _fromY >= oProject.DesignHeight Or _fromX < 0 Or _fromY < 0 _
+                Or _toX >= oProject.DesignWidth Or _toY >= oProject.DesignHeight Or _toX < 0 Or _toY < 0 Then
+                _backErrors.Add(_backstitch)
+            End If
+        Next
+        Return _backErrors
+    End Function
+    Private Function FindBlockstitchErrors() As List(Of BlockStitch)
+        Dim _blockErrors As New List(Of BlockStitch)
+        For Each _blockstitch As BlockStitch In oProjectDesign.BlockStitches
+            Dim _x As Integer = _blockstitch.BlockLocation.X + oProject.OriginX
+            Dim _y As Integer = _blockstitch.BlockLocation.Y + oProject.OriginY
+            If _x >= oProject.DesignWidth Or _y >= oProject.DesignHeight Or _x < 0 Or _y < 0 Then
+                _blockErrors.Add(_blockstitch)
+            End If
+        Next
+        Return _blockErrors
+    End Function
 #Region "mouse action"
     Private Sub StartSelection(pCell As Cell)
         pCell = AdjustCellOntoDesign(pCell)
@@ -2034,7 +2155,9 @@ Public Class FrmStitchDesign
             oRedoList.Clear()
             oCurrentUndoList.Clear()
             BtnRedo.Enabled = False
+            MnuRedo.Enabled = False
             BtnUndo.Enabled = False
+            MnuUndo.Enabled = False
             RedrawDesign(False)
         End If
     End Sub
@@ -2051,7 +2174,6 @@ Public Class FrmStitchDesign
         oProjectDesign.BackStitches.Remove(pBackstitch)
         AddToCurrentUndoList(_backstitch, UndoAction.Remove)
         isSaved = False
-        '      RedrawDesign()
     End Sub
     Private Function FindBackstitches(pActionPoint As Point) As List(Of BackStitch)
         Dim _list As List(Of BackStitch) = oProjectDesign.BackStitches.FindAll(Function(p) p.FromBlockLocation = pActionPoint _
@@ -2578,8 +2700,10 @@ Public Class FrmStitchDesign
             oUndoList.Remove(_stitchActions)
             If oUndoList.Count = 0 Then
                 BtnUndo.Enabled = False
+                MnuUndo.Enabled = False
             End If
             BtnRedo.Enabled = True
+            MnuRedo.Enabled = True
             RedrawDesign(False)
         End If
     End Sub
@@ -2637,8 +2761,10 @@ Public Class FrmStitchDesign
             oRedoList.Remove(_stitchActions)
             If oRedoList.Count = 0 Then
                 BtnRedo.Enabled = False
+                MnuRedo.Enabled = False
             End If
             BtnUndo.Enabled = True
+            MnuUndo.Enabled = True
             RedrawDesign(False)
         End If
     End Sub

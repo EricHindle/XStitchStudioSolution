@@ -52,7 +52,7 @@ Module ModFileHandling
         End Try
     End Sub
     Public Sub RunHousekeeping()
-        LogUtil.Info("Housekeeping started", MethodBase.GetCurrentMethod.Name)
+        ShowMessage("Running Housekeeping", MethodBase.GetCurrentMethod.Name)
         Dim retentionPeriod As Integer = My.Settings.FileRetentionPeriod
         If My.Settings.isHousekeepLogs Then
             LogUtil.Info("Tidying log files", MethodBase.GetCurrentMethod.Name)
@@ -67,6 +67,7 @@ Module ModFileHandling
             TidyFiles(oDataArchiveFolderName, "*" & DATA_ARC_EXT)
         End If
         LogUtil.Info("Housekeeping complete", MethodBase.GetCurrentMethod.Name)
+        RemoveMessage()
     End Sub
     Public Sub TidyFiles(ByVal sFolder As String, ByVal sPattern As String)
         TidyFiles(sFolder, sPattern, False)

@@ -257,6 +257,9 @@ Public Class FrmProject
     Private Sub MnuGlobalSettings_Click(sender As Object, e As EventArgs) Handles MnuGlobalSettings.Click
         OpenSettingsForm()
     End Sub
+    Private Sub HousekeepingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles HousekeepingToolStripMenuItem.Click
+        RunHousekeeping()
+    End Sub
 #End Region
 #Region "functions"
     Private Sub InitialiseForm()

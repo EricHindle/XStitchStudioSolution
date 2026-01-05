@@ -111,6 +111,7 @@ Partial Class FrmProject
         Me.MnuPreferences = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuPrintSettings = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuGlobalSettings = New System.Windows.Forms.ToolStripMenuItem()
+        Me.HousekeepingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PnlButtons = New System.Windows.Forms.Panel()
         Me.LblInstruction = New System.Windows.Forms.Label()
         Me.PnlInstruction = New System.Windows.Forms.Panel()
@@ -674,32 +675,34 @@ Partial Class FrmProject
         'MnuImportProjectFile
         '
         Me.MnuImportProjectFile.Name = "MnuImportProjectFile"
-        Me.MnuImportProjectFile.Size = New System.Drawing.Size(180, 22)
+        Me.MnuImportProjectFile.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.I), System.Windows.Forms.Keys)
+        Me.MnuImportProjectFile.Size = New System.Drawing.Size(208, 22)
         Me.MnuImportProjectFile.Text = "Import Project File"
         '
         'ToolStripSeparator2
         '
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(177, 6)
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(205, 6)
         '
         'MnuTest
         '
         Me.MnuTest.Name = "MnuTest"
-        Me.MnuTest.Size = New System.Drawing.Size(180, 22)
+        Me.MnuTest.Size = New System.Drawing.Size(208, 22)
         Me.MnuTest.Text = "Test"
         Me.MnuTest.Visible = False
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(177, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(205, 6)
         Me.ToolStripSeparator1.Visible = False
         '
         'MnuExit
         '
         Me.MnuExit.Name = "MnuExit"
-        Me.MnuExit.Size = New System.Drawing.Size(180, 22)
-        Me.MnuExit.Text = "Exit"
+        Me.MnuExit.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Q), System.Windows.Forms.Keys)
+        Me.MnuExit.Size = New System.Drawing.Size(208, 22)
+        Me.MnuExit.Text = "Quit"
         '
         'ToolStripMenuItem1
         '
@@ -731,52 +734,55 @@ Partial Class FrmProject
         'MnuThreadList
         '
         Me.MnuThreadList.Name = "MnuThreadList"
-        Me.MnuThreadList.Size = New System.Drawing.Size(198, 22)
+        Me.MnuThreadList.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.T), System.Windows.Forms.Keys)
+        Me.MnuThreadList.Size = New System.Drawing.Size(238, 22)
         Me.MnuThreadList.Text = "Full Thread List"
         '
         'MnuBeads
         '
         Me.MnuBeads.Name = "MnuBeads"
-        Me.MnuBeads.Size = New System.Drawing.Size(198, 22)
+        Me.MnuBeads.Size = New System.Drawing.Size(238, 22)
         Me.MnuBeads.Text = "Full Bead List"
         '
         'ToolStripSeparator3
         '
         Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
-        Me.ToolStripSeparator3.Size = New System.Drawing.Size(195, 6)
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(235, 6)
         '
         'MnuProjectThreads
         '
         Me.MnuProjectThreads.Name = "MnuProjectThreads"
-        Me.MnuProjectThreads.Size = New System.Drawing.Size(198, 22)
+        Me.MnuProjectThreads.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.P), System.Windows.Forms.Keys)
+        Me.MnuProjectThreads.Size = New System.Drawing.Size(238, 22)
         Me.MnuProjectThreads.Text = "Project Palette"
         '
         'MnuProjectThreadSymbols
         '
         Me.MnuProjectThreadSymbols.Name = "MnuProjectThreadSymbols"
-        Me.MnuProjectThreadSymbols.Size = New System.Drawing.Size(198, 22)
+        Me.MnuProjectThreadSymbols.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
+        Me.MnuProjectThreadSymbols.Size = New System.Drawing.Size(238, 22)
         Me.MnuProjectThreadSymbols.Text = "Project Palette Symbols"
         '
         'ToolStripSeparator5
         '
         Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
-        Me.ToolStripSeparator5.Size = New System.Drawing.Size(195, 6)
+        Me.ToolStripSeparator5.Size = New System.Drawing.Size(235, 6)
         '
         'MnuPalettes
         '
         Me.MnuPalettes.Name = "MnuPalettes"
-        Me.MnuPalettes.Size = New System.Drawing.Size(198, 22)
+        Me.MnuPalettes.Size = New System.Drawing.Size(238, 22)
         Me.MnuPalettes.Text = "Stored Palettes"
         '
         'ToolStripSeparator4
         '
         Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-        Me.ToolStripSeparator4.Size = New System.Drawing.Size(195, 6)
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(235, 6)
         '
         'MnuBrands
         '
         Me.MnuBrands.Name = "MnuBrands"
-        Me.MnuBrands.Size = New System.Drawing.Size(198, 22)
+        Me.MnuBrands.Size = New System.Drawing.Size(238, 22)
         Me.MnuBrands.Text = "Brand List"
         '
         'ToolStripMenuItem10
@@ -808,13 +814,13 @@ Partial Class FrmProject
         'MnuBuildCards
         '
         Me.MnuBuildCards.Name = "MnuBuildCards"
-        Me.MnuBuildCards.Size = New System.Drawing.Size(174, 22)
+        Me.MnuBuildCards.Size = New System.Drawing.Size(180, 22)
         Me.MnuBuildCards.Text = "Build Thread Cards"
         '
         'MnuPrintCards
         '
         Me.MnuPrintCards.Name = "MnuPrintCards"
-        Me.MnuPrintCards.Size = New System.Drawing.Size(174, 22)
+        Me.MnuPrintCards.Size = New System.Drawing.Size(180, 22)
         Me.MnuPrintCards.Text = "Print Thread Cards"
         '
         'MnuImportImage
@@ -825,7 +831,7 @@ Partial Class FrmProject
         '
         'SettingsToolStripMenuItem
         '
-        Me.SettingsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem17, Me.ToolStripMenuItem20, Me.ToolStripMenuItem23})
+        Me.SettingsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem17, Me.ToolStripMenuItem20, Me.ToolStripMenuItem23, Me.HousekeepingToolStripMenuItem})
         Me.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem"
         Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(47, 24)
         Me.SettingsToolStripMenuItem.Text = "Tools"
@@ -834,65 +840,77 @@ Partial Class FrmProject
         '
         Me.ToolStripMenuItem17.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuShowLog, Me.MnuDebug})
         Me.ToolStripMenuItem17.Name = "ToolStripMenuItem17"
-        Me.ToolStripMenuItem17.Size = New System.Drawing.Size(157, 22)
+        Me.ToolStripMenuItem17.Size = New System.Drawing.Size(193, 22)
         Me.ToolStripMenuItem17.Text = "Logging"
         '
         'MnuShowLog
         '
         Me.MnuShowLog.Name = "MnuShowLog"
-        Me.MnuShowLog.Size = New System.Drawing.Size(128, 22)
+        Me.MnuShowLog.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.L), System.Windows.Forms.Keys)
+        Me.MnuShowLog.Size = New System.Drawing.Size(180, 22)
         Me.MnuShowLog.Text = "Show Log"
         '
         'MnuDebug
         '
         Me.MnuDebug.CheckOnClick = True
         Me.MnuDebug.Name = "MnuDebug"
-        Me.MnuDebug.Size = New System.Drawing.Size(128, 22)
+        Me.MnuDebug.Size = New System.Drawing.Size(180, 22)
         Me.MnuDebug.Text = "Debug On"
         '
         'ToolStripMenuItem20
         '
         Me.ToolStripMenuItem20.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuBackup, Me.MnuRestore})
         Me.ToolStripMenuItem20.Name = "ToolStripMenuItem20"
-        Me.ToolStripMenuItem20.Size = New System.Drawing.Size(157, 22)
+        Me.ToolStripMenuItem20.Size = New System.Drawing.Size(193, 22)
         Me.ToolStripMenuItem20.Text = "Backup/Restore"
         '
         'MnuBackup
         '
         Me.MnuBackup.Name = "MnuBackup"
-        Me.MnuBackup.Size = New System.Drawing.Size(113, 22)
+        Me.MnuBackup.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.B), System.Windows.Forms.Keys)
+        Me.MnuBackup.Size = New System.Drawing.Size(180, 22)
         Me.MnuBackup.Text = "Backup"
         '
         'MnuRestore
         '
         Me.MnuRestore.Name = "MnuRestore"
-        Me.MnuRestore.Size = New System.Drawing.Size(113, 22)
+        Me.MnuRestore.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
+        Me.MnuRestore.Size = New System.Drawing.Size(180, 22)
         Me.MnuRestore.Text = "Restore"
         '
         'ToolStripMenuItem23
         '
         Me.ToolStripMenuItem23.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuPreferences, Me.MnuPrintSettings, Me.MnuGlobalSettings})
         Me.ToolStripMenuItem23.Name = "ToolStripMenuItem23"
-        Me.ToolStripMenuItem23.Size = New System.Drawing.Size(157, 22)
+        Me.ToolStripMenuItem23.Size = New System.Drawing.Size(193, 22)
         Me.ToolStripMenuItem23.Text = "Preferences"
         '
         'MnuPreferences
         '
         Me.MnuPreferences.Name = "MnuPreferences"
-        Me.MnuPreferences.Size = New System.Drawing.Size(153, 22)
-        Me.MnuPreferences.Text = "Preferences"
+        Me.MnuPreferences.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
+        Me.MnuPreferences.Size = New System.Drawing.Size(195, 22)
+        Me.MnuPreferences.Text = "Options"
         '
         'MnuPrintSettings
         '
         Me.MnuPrintSettings.Name = "MnuPrintSettings"
-        Me.MnuPrintSettings.Size = New System.Drawing.Size(153, 22)
+        Me.MnuPrintSettings.Size = New System.Drawing.Size(195, 22)
         Me.MnuPrintSettings.Text = "Print Settings"
         '
         'MnuGlobalSettings
         '
         Me.MnuGlobalSettings.Name = "MnuGlobalSettings"
-        Me.MnuGlobalSettings.Size = New System.Drawing.Size(153, 22)
+        Me.MnuGlobalSettings.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.G), System.Windows.Forms.Keys)
+        Me.MnuGlobalSettings.Size = New System.Drawing.Size(195, 22)
         Me.MnuGlobalSettings.Text = "Global Settings"
+        '
+        'HousekeepingToolStripMenuItem
+        '
+        Me.HousekeepingToolStripMenuItem.Name = "HousekeepingToolStripMenuItem"
+        Me.HousekeepingToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.H), System.Windows.Forms.Keys)
+        Me.HousekeepingToolStripMenuItem.Size = New System.Drawing.Size(193, 22)
+        Me.HousekeepingToolStripMenuItem.Text = "Housekeeping"
         '
         'PnlButtons
         '
@@ -1057,4 +1075,5 @@ Partial Class FrmProject
     Friend WithEvents ToolStripSeparator4 As ToolStripSeparator
     Friend WithEvents ToolStripSeparator5 As ToolStripSeparator
     Friend WithEvents OpenDesignFromArchiveToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents HousekeepingToolStripMenuItem As ToolStripMenuItem
 End Class

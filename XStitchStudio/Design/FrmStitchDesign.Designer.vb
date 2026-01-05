@@ -120,6 +120,9 @@ Partial Class FrmStitchDesign
         Me.MnuExtendDesign = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator17 = New System.Windows.Forms.ToolStripSeparator()
         Me.MnuPrint = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExportImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MnuExportBitmap = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MnuExportJpeg = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator8 = New System.Windows.Forms.ToolStripSeparator()
         Me.MnuExit = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuPalette = New System.Windows.Forms.ToolStripMenuItem()
@@ -141,6 +144,9 @@ Partial Class FrmStitchDesign
         Me.MnuFlipSelection = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuMirrorSelection = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuRotate = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator20 = New System.Windows.Forms.ToolStripSeparator()
+        Me.MnuUndo = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MnuRedo = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuThreads = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuPickColour = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuChangeColour = New System.Windows.Forms.ToolStripMenuItem()
@@ -175,6 +181,9 @@ Partial Class FrmStitchDesign
         Me.MnuTools = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuOptions = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuShow = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MnuCheckDesign = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MnuShowLog = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MnuBackup = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.ScDesign, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ScDesign.Panel1.SuspendLayout()
         Me.ScDesign.Panel2.SuspendLayout()
@@ -1302,7 +1311,7 @@ Partial Class FrmStitchDesign
         '
         'MnuDesign
         '
-        Me.MnuDesign.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuOpenDesign, Me.MnuSaveDesign, Me.MnuSaveDesignAs, Me.ToolStripSeparator10, Me.MnuErase, Me.ToolStripSeparator18, Me.MnuCropDesign, Me.MnuExtendDesign, Me.ToolStripSeparator17, Me.MnuPrint, Me.ToolStripSeparator8, Me.MnuExit})
+        Me.MnuDesign.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuOpenDesign, Me.MnuSaveDesign, Me.MnuSaveDesignAs, Me.ToolStripSeparator10, Me.MnuErase, Me.ToolStripSeparator18, Me.MnuCropDesign, Me.MnuExtendDesign, Me.ToolStripSeparator17, Me.MnuPrint, Me.ExportImageToolStripMenuItem, Me.ToolStripSeparator8, Me.MnuExit})
         Me.MnuDesign.Name = "MnuDesign"
         Me.MnuDesign.Size = New System.Drawing.Size(55, 20)
         Me.MnuDesign.Text = "Design"
@@ -1316,6 +1325,7 @@ Partial Class FrmStitchDesign
         'MnuSaveDesign
         '
         Me.MnuSaveDesign.Name = "MnuSaveDesign"
+        Me.MnuSaveDesign.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
         Me.MnuSaveDesign.Size = New System.Drawing.Size(194, 22)
         Me.MnuSaveDesign.Text = "Save"
         '
@@ -1361,8 +1371,28 @@ Partial Class FrmStitchDesign
         'MnuPrint
         '
         Me.MnuPrint.Name = "MnuPrint"
+        Me.MnuPrint.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.P), System.Windows.Forms.Keys)
         Me.MnuPrint.Size = New System.Drawing.Size(194, 22)
         Me.MnuPrint.Text = "Print"
+        '
+        'ExportImageToolStripMenuItem
+        '
+        Me.ExportImageToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuExportBitmap, Me.MnuExportJpeg})
+        Me.ExportImageToolStripMenuItem.Name = "ExportImageToolStripMenuItem"
+        Me.ExportImageToolStripMenuItem.Size = New System.Drawing.Size(194, 22)
+        Me.ExportImageToolStripMenuItem.Text = "Export Image"
+        '
+        'MnuExportBitmap
+        '
+        Me.MnuExportBitmap.Name = "MnuExportBitmap"
+        Me.MnuExportBitmap.Size = New System.Drawing.Size(112, 22)
+        Me.MnuExportBitmap.Text = "Bitmap"
+        '
+        'MnuExportJpeg
+        '
+        Me.MnuExportJpeg.Name = "MnuExportJpeg"
+        Me.MnuExportJpeg.Size = New System.Drawing.Size(112, 22)
+        Me.MnuExportJpeg.Text = "JPEG"
         '
         'ToolStripSeparator8
         '
@@ -1372,8 +1402,9 @@ Partial Class FrmStitchDesign
         'MnuExit
         '
         Me.MnuExit.Name = "MnuExit"
+        Me.MnuExit.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Q), System.Windows.Forms.Keys)
         Me.MnuExit.Size = New System.Drawing.Size(194, 22)
-        Me.MnuExit.Text = "Exit"
+        Me.MnuExit.Text = "Quit"
         '
         'MnuPalette
         '
@@ -1436,7 +1467,7 @@ Partial Class FrmStitchDesign
         '
         'MnuEdit
         '
-        Me.MnuEdit.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuCopySelection, Me.MnuMoveSelection, Me.MnuCutSelection, Me.MnuPaste, Me.ToolStripSeparator9, Me.MnuFlipSelection, Me.MnuMirrorSelection, Me.MnuRotate})
+        Me.MnuEdit.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuCopySelection, Me.MnuMoveSelection, Me.MnuCutSelection, Me.MnuPaste, Me.ToolStripSeparator9, Me.MnuFlipSelection, Me.MnuMirrorSelection, Me.MnuRotate, Me.ToolStripSeparator20, Me.MnuUndo, Me.MnuRedo})
         Me.MnuEdit.Name = "MnuEdit"
         Me.MnuEdit.Size = New System.Drawing.Size(39, 20)
         Me.MnuEdit.Text = "Edit"
@@ -1444,49 +1475,71 @@ Partial Class FrmStitchDesign
         'MnuCopySelection
         '
         Me.MnuCopySelection.Name = "MnuCopySelection"
-        Me.MnuCopySelection.Size = New System.Drawing.Size(108, 22)
+        Me.MnuCopySelection.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
+        Me.MnuCopySelection.Size = New System.Drawing.Size(144, 22)
         Me.MnuCopySelection.Text = "Copy"
         '
         'MnuMoveSelection
         '
         Me.MnuMoveSelection.Name = "MnuMoveSelection"
-        Me.MnuMoveSelection.Size = New System.Drawing.Size(108, 22)
+        Me.MnuMoveSelection.Size = New System.Drawing.Size(144, 22)
         Me.MnuMoveSelection.Text = "Move"
         '
         'MnuCutSelection
         '
         Me.MnuCutSelection.Name = "MnuCutSelection"
-        Me.MnuCutSelection.Size = New System.Drawing.Size(108, 22)
+        Me.MnuCutSelection.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.X), System.Windows.Forms.Keys)
+        Me.MnuCutSelection.Size = New System.Drawing.Size(144, 22)
         Me.MnuCutSelection.Text = "Cut"
         '
         'MnuPaste
         '
         Me.MnuPaste.Name = "MnuPaste"
-        Me.MnuPaste.Size = New System.Drawing.Size(108, 22)
+        Me.MnuPaste.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.V), System.Windows.Forms.Keys)
+        Me.MnuPaste.Size = New System.Drawing.Size(144, 22)
         Me.MnuPaste.Text = "Paste"
         '
         'ToolStripSeparator9
         '
         Me.ToolStripSeparator9.Name = "ToolStripSeparator9"
-        Me.ToolStripSeparator9.Size = New System.Drawing.Size(105, 6)
+        Me.ToolStripSeparator9.Size = New System.Drawing.Size(141, 6)
         '
         'MnuFlipSelection
         '
         Me.MnuFlipSelection.Name = "MnuFlipSelection"
-        Me.MnuFlipSelection.Size = New System.Drawing.Size(108, 22)
+        Me.MnuFlipSelection.Size = New System.Drawing.Size(144, 22)
         Me.MnuFlipSelection.Text = "Flip"
         '
         'MnuMirrorSelection
         '
         Me.MnuMirrorSelection.Name = "MnuMirrorSelection"
-        Me.MnuMirrorSelection.Size = New System.Drawing.Size(108, 22)
+        Me.MnuMirrorSelection.Size = New System.Drawing.Size(144, 22)
         Me.MnuMirrorSelection.Text = "Mirror"
         '
         'MnuRotate
         '
         Me.MnuRotate.Name = "MnuRotate"
-        Me.MnuRotate.Size = New System.Drawing.Size(108, 22)
+        Me.MnuRotate.Size = New System.Drawing.Size(144, 22)
         Me.MnuRotate.Text = "Rotate"
+        '
+        'ToolStripSeparator20
+        '
+        Me.ToolStripSeparator20.Name = "ToolStripSeparator20"
+        Me.ToolStripSeparator20.Size = New System.Drawing.Size(141, 6)
+        '
+        'MnuUndo
+        '
+        Me.MnuUndo.Name = "MnuUndo"
+        Me.MnuUndo.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Z), System.Windows.Forms.Keys)
+        Me.MnuUndo.Size = New System.Drawing.Size(144, 22)
+        Me.MnuUndo.Text = "Undo"
+        '
+        'MnuRedo
+        '
+        Me.MnuRedo.Name = "MnuRedo"
+        Me.MnuRedo.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Y), System.Windows.Forms.Keys)
+        Me.MnuRedo.Size = New System.Drawing.Size(144, 22)
+        Me.MnuRedo.Text = "Redo"
         '
         'MnuThreads
         '
@@ -1572,6 +1625,7 @@ Partial Class FrmStitchDesign
         'MnuFloodFill
         '
         Me.MnuFloodFill.Name = "MnuFloodFill"
+        Me.MnuFloodFill.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.F), System.Windows.Forms.Keys)
         Me.MnuFloodFill.Size = New System.Drawing.Size(178, 22)
         Me.MnuFloodFill.Text = "Flood Fill"
         '
@@ -1584,6 +1638,7 @@ Partial Class FrmStitchDesign
         'MnuText
         '
         Me.MnuText.Name = "MnuText"
+        Me.MnuText.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.T), System.Windows.Forms.Keys)
         Me.MnuText.Size = New System.Drawing.Size(40, 20)
         Me.MnuText.Text = "Text"
         '
@@ -1597,18 +1652,23 @@ Partial Class FrmStitchDesign
         'MnuRedraw
         '
         Me.MnuRedraw.Name = "MnuRedraw"
+        Me.MnuRedraw.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
         Me.MnuRedraw.Size = New System.Drawing.Size(173, 22)
         Me.MnuRedraw.Text = "Redraw"
         '
         'MnuZoomIn
         '
         Me.MnuZoomIn.Name = "MnuZoomIn"
+        Me.MnuZoomIn.ShortcutKeyDisplayString = "Ctrl +"
+        Me.MnuZoomIn.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Oemplus), System.Windows.Forms.Keys)
         Me.MnuZoomIn.Size = New System.Drawing.Size(173, 22)
         Me.MnuZoomIn.Text = "Zoom In"
         '
         'MnuZoomOut
         '
         Me.MnuZoomOut.Name = "MnuZoomOut"
+        Me.MnuZoomOut.ShortcutKeyDisplayString = "Ctrl -"
+        Me.MnuZoomOut.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.OemMinus), System.Windows.Forms.Keys)
         Me.MnuZoomOut.Size = New System.Drawing.Size(173, 22)
         Me.MnuZoomOut.Text = "Zoom Out"
         '
@@ -1692,22 +1752,45 @@ Partial Class FrmStitchDesign
         '
         'MnuTools
         '
-        Me.MnuTools.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuOptions, Me.MnuShow})
+        Me.MnuTools.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuOptions, Me.MnuShow, Me.MnuCheckDesign, Me.MnuShowLog, Me.MnuBackup})
         Me.MnuTools.Name = "MnuTools"
+        Me.MnuTools.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.B), System.Windows.Forms.Keys)
         Me.MnuTools.Size = New System.Drawing.Size(47, 20)
         Me.MnuTools.Text = "Tools"
         '
         'MnuOptions
         '
         Me.MnuOptions.Name = "MnuOptions"
-        Me.MnuOptions.Size = New System.Drawing.Size(176, 22)
+        Me.MnuOptions.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
+        Me.MnuOptions.Size = New System.Drawing.Size(218, 22)
         Me.MnuOptions.Text = "Options"
         '
         'MnuShow
         '
         Me.MnuShow.Name = "MnuShow"
-        Me.MnuShow.Size = New System.Drawing.Size(176, 22)
+        Me.MnuShow.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.D), System.Windows.Forms.Keys)
+        Me.MnuShow.Size = New System.Drawing.Size(218, 22)
         Me.MnuShow.Text = "Design Information"
+        '
+        'MnuCheckDesign
+        '
+        Me.MnuCheckDesign.Name = "MnuCheckDesign"
+        Me.MnuCheckDesign.Size = New System.Drawing.Size(218, 22)
+        Me.MnuCheckDesign.Text = "Check Design"
+        '
+        'MnuShowLog
+        '
+        Me.MnuShowLog.Name = "MnuShowLog"
+        Me.MnuShowLog.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.L), System.Windows.Forms.Keys)
+        Me.MnuShowLog.Size = New System.Drawing.Size(218, 22)
+        Me.MnuShowLog.Text = "Show Log"
+        '
+        'MnuBackup
+        '
+        Me.MnuBackup.Name = "MnuBackup"
+        Me.MnuBackup.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.B), System.Windows.Forms.Keys)
+        Me.MnuBackup.Size = New System.Drawing.Size(218, 22)
+        Me.MnuBackup.Text = "Backup"
         '
         'FrmStitchDesign
         '
@@ -1908,4 +1991,13 @@ Partial Class FrmStitchDesign
     Friend WithEvents BtnText As ToolStripButton
     Friend WithEvents ToolStripSeparator13 As ToolStripSeparator
     Friend WithEvents ToolStripSeparator18 As ToolStripSeparator
+    Friend WithEvents ExportImageToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents MnuExportBitmap As ToolStripMenuItem
+    Friend WithEvents MnuExportJpeg As ToolStripMenuItem
+    Friend WithEvents MnuCheckDesign As ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator20 As ToolStripSeparator
+    Friend WithEvents MnuUndo As ToolStripMenuItem
+    Friend WithEvents MnuRedo As ToolStripMenuItem
+    Friend WithEvents MnuShowLog As ToolStripMenuItem
+    Friend WithEvents MnuBackup As ToolStripMenuItem
 End Class
