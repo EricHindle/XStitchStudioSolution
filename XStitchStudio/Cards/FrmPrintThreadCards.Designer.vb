@@ -43,6 +43,7 @@ Partial Class FrmPrintThreadCards
         Me.BtnResetImage = New System.Windows.Forms.Button()
         Me.PnlInstruction = New System.Windows.Forms.Panel()
         Me.LblInstruction = New System.Windows.Forms.Label()
+        Me.LblTextSizer = New System.Windows.Forms.Label()
         CType(Me.PicThreadCard, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.DgvProjects, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -302,11 +303,24 @@ Partial Class FrmPrintThreadCards
         Me.LblInstruction.Text = "      "
         Me.LblInstruction.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'LblTextSizer
+        '
+        Me.LblTextSizer.AutoSize = True
+        Me.LblTextSizer.Font = New System.Drawing.Font("Tahoma", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblTextSizer.Location = New System.Drawing.Point(20, 266)
+        Me.LblTextSizer.Margin = New System.Windows.Forms.Padding(0)
+        Me.LblTextSizer.Name = "LblTextSizer"
+        Me.LblTextSizer.Size = New System.Drawing.Size(27, 10)
+        Me.LblTextSizer.TabIndex = 161
+        Me.LblTextSizer.Text = "Label9"
+        Me.LblTextSizer.Visible = False
+        '
         'FrmPrintThreadCards
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(978, 555)
+        Me.Controls.Add(Me.LblTextSizer)
         Me.Controls.Add(Me.PnlInstruction)
         Me.Controls.Add(Me.BtnResetImage)
         Me.Controls.Add(Me.Label2)
@@ -356,4 +370,5 @@ Partial Class FrmPrintThreadCards
     Friend WithEvents BtnResetImage As Button
     Friend WithEvents PnlInstruction As Panel
     Friend WithEvents LblInstruction As Label
+    Friend WithEvents LblTextSizer As Label
 End Class

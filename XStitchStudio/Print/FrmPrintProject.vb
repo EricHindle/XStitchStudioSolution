@@ -28,8 +28,6 @@ Public Class FrmPrintProject
     End Enum
 #End Region
 #Region "constants"
-    Private Const PRODUCT_TEXT As String = "created using Cross Stitch Studio [@ XStitch-Studio.co.uk]"
-    Private Const PRODUCT_TEXT_WIDTH As Integer = 700
 #End Region
 #Region "variables"
     Private gap As Integer

@@ -224,6 +224,7 @@ Public Class FrmPrintThreadCards
             _left_x = colWidth * _col
             _right_x = _left_x
             _cardGraphics.DrawLine(LINE_PEN, New Point(_left_x, _top_y), New Point(_right_x, _bottom_y))
+            AddProduct(New Point(_left_x + 20, sourceBitmap.Height - topmargin - 20))
         Next
         Dim _rowct As Integer = 10
         _left_x = 0
@@ -242,9 +243,13 @@ Public Class FrmPrintThreadCards
                 _cardGraphics.DrawEllipse(LINE_PEN, _holerectangle)
             Next
         Next
+        AddProduct(New Point(oLeftMargin + 20, sourceBitmap.Height - topmargin - 20))
         PicThreadCard.Image = sourceBitmap
         PicThreadCard.Refresh()
         _nextCol = 0
+    End Sub
+    Private Sub AddProduct(pPoint As Point)
+        _cardGraphics.DrawString(PRODUCT_TEXT, My.Settings.PrintFooterFont, Brushes.Black, New Point(pPoint))
     End Sub
     Private Sub AddCardToImage(pList As List(Of ProjectCardThread))
         Dim oRowCt As Integer = 10
