@@ -1,5 +1,5 @@
 ﻿' Hindleware
-' Copyright (c) 2025 Eric Hindle
+' Copyright (c) 2025-6 Eric Hindle
 ' All rights reserved.
 '
 ' Author Eric Hindle
@@ -78,7 +78,6 @@ Public Class FrmProjectThreads
             LoadBeadList()
         End If
     End Sub
-
 
 #End Region
 #Region "functions"
@@ -422,7 +421,7 @@ Public Class FrmProjectThreads
                     Next
                 End If
             Else
-                    LogUtil.ShowStatus("No threads in palette", LblStatus, True)
+                LogUtil.ShowStatus("No threads in palette", LblStatus, True)
             End If
         Else
             LogUtil.ShowStatus("No palette selected", LblStatus, True)

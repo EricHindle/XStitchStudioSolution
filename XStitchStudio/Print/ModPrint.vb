@@ -1,5 +1,5 @@
 ﻿' Hindleware
-' Copyright (c) 2025 Eric Hindle
+' Copyright (c) 2025-6 Eric Hindle
 ' All rights reserved.
 '
 ' Author Eric Hindle
@@ -11,6 +11,7 @@ Module ModPrint
 #Region "constants"
     Public Const PRINT_DPI As Integer = 300.0F
     Public Const FONT_PPI As Integer = 72.0F
+    Public Const SCREEN_DPI As Integer = 93.0F
     Public Const A4_WIDTH As Integer = 2480
     Public Const A4_HEIGHT As Integer = 3508
 #End Region
@@ -63,7 +64,7 @@ Module ModPrint
         ' Set print margins in dots
         oPageTitleHeight = If(isPrintHeader, (oPrintTitlefont.Size * PRINT_DPI) / FONT_PPI, 0) + 20
         oPageTextHeight = (oPrintTextfont.Size * PRINT_DPI) / FONT_PPI
-        oPageFooterHeight = If(isPrintFooter, (oPrintFooterfont.Size * PRINT_DPI) / FONT_PPI, 0) + 20
+        oPageFooterHeight = ((oPrintFooterfont.Size * PRINT_DPI) / FONT_PPI) + 20
         oPageLeftMargin = Math.Max((pLeftMargin * PRINT_DPI) - oPrinterHardMarginX, 0)
         oPageRightMargin = Math.Max((pRightMargin * PRINT_DPI) - oPrinterHardMarginX, 0)
         oPageTopMargin = Math.Max((pTopMargin * PRINT_DPI) - oPrinterHardMarginY, 0)

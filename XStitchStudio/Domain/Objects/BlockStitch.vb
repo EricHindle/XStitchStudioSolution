@@ -1,9 +1,10 @@
 ﻿' Hindleware
-' Copyright (c) 2025 Eric Hindle
+' Copyright (c) 2025-6 Eric Hindle
 ' All rights reserved.
 '
 ' Author Eric Hindle
 '
+
 Imports System.Text
 Namespace Domain.Objects
 

@@ -1,11 +1,10 @@
 ﻿' Hindleware
-' Copyright (c) 2025 Eric Hindle
+' Copyright (c) 2025-6 Eric Hindle
 ' All rights reserved.
 '
 ' Author Eric Hindle
 '
 
-Imports System.IO
 Imports System.Reflection
 Imports HindlewareLib.Logging
 Imports XStitchStudio.Domain

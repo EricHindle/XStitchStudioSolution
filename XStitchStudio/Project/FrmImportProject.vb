@@ -1,17 +1,16 @@
 ﻿' Hindleware
-' Copyright (c) 2025 Eric Hindle
+' Copyright (c) 2025-6 Eric Hindle
 ' All rights reserved.
 '
 ' Author Eric Hindle
 '
 
-Imports System.Net.Mime.MediaTypeNames
+Imports System.IO
 Imports System.Reflection
 Imports HindlewareLib.Logging
+Imports XStitchStudio.Domain
 Imports XStitchStudio.Domain.Builders
 Imports XStitchStudio.Domain.Objects
-Imports XStitchStudio.Domain
-Imports System.IO
 Public Class FrmImportProject
 #Region "properties"
     Private _projectFilename As String
@@ -203,8 +202,6 @@ Public Class FrmImportProject
                                                     .Build()
         Return _project
     End Function
-
-
 
 #End Region
 End Class

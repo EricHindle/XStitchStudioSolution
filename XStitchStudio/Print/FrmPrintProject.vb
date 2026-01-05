@@ -1,5 +1,5 @@
 ﻿' Hindleware
-' Copyright (c) 2025 Eric Hindle
+' Copyright (c) 2025-6 Eric Hindle
 ' All rights reserved.
 '
 ' Author Eric Hindle
@@ -437,7 +437,11 @@ Public Class FrmPrintProject
         If isPrintFooter Then
             pPageGraphics.DrawString(pFooterText, oPrintFooterfont, oTextBrush, New Point(oLeftMargin, oFooterPos))
         End If
-        pPageGraphics.DrawString(PRODUCT_TEXT, oPrintFooterfont, oTextBrush, New Point(pSize.Width - oRightMargin - PRODUCT_TEXT_WIDTH, oFooterPos))
+        LblTextSizer.Font = BtnFooterFont.Font
+        LblTextSizer.Text = PRODUCT_TEXT
+
+        Dim _productTextWidth As Integer = (LblTextSizer.Width * PRINT_DPI) / SCREEN_DPI
+        pPageGraphics.DrawString(PRODUCT_TEXT, oPrintFooterfont, oTextBrush, New Point(pSize.Width - oRightMargin - _productTextWidth, oFooterPos))
     End Sub
     Private Sub PrintRowColumnNumbers(pPage As Page, pPageGraphics As Graphics)
         Dim _widthInColumns As Integer = pPage.BottomRight.X - pPage.TopLeft.X

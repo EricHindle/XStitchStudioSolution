@@ -1,5 +1,5 @@
 ﻿' Hindleware
-' Copyright (c) 2025 Eric Hindle
+' Copyright (c) 2025-6 Eric Hindle
 ' All rights reserved.
 '
 ' Author Eric Hindle
@@ -105,14 +105,39 @@ Public Class FrmImportImage
                     ClearPalette()
                 End If
                 oTargetImage = ImageUtil.ResizeImage(oSelectedImage, NudDesignWidth.Value, NudDesignHeight.Value)
-                    iPixelsPerCell = Math.Min(PicDesign.Width / NudDesignWidth.Value, PicDesign.Height / NudDesignHeight.Value)
-                    Dim _width As Integer = NudDesignWidth.Value * iPixelsPerCell
-                    Dim _height As Integer = NudDesignHeight.Value * iPixelsPerCell
-                    oDesignBitmap = New Bitmap(_width, _height)
-                    oDesignGraphics = Graphics.FromImage(oDesignBitmap)
+                iPixelsPerCell = Math.Min(PicDesign.Width / NudDesignWidth.Value, PicDesign.Height / NudDesignHeight.Value)
+                Dim _width As Integer = NudDesignWidth.Value * iPixelsPerCell
+                Dim _height As Integer = NudDesignHeight.Value * iPixelsPerCell
+                oDesignBitmap = New Bitmap(_width, _height)
+                oDesignGraphics = Graphics.FromImage(oDesignBitmap)
+                oProjectDesign = ProjectDesignBuilder.AProjectDesign().StartingWithNothing.WithRows(NudDesignHeight.Value).WithColumns(NudDesignWidth.Value).Build
+                DrawGrid(oProjectDesign, True, True, True)
+                PicDesign.Invalidate()
+                For Each y As Integer In Enumerable.Range(0, oTargetImage.Size.Height)
+                    For Each x As Integer In Enumerable.Range(0, oTargetImage.Size.Width)
+                        Dim _cellColor As Color = oTargetImage.GetPixel(x, y)
+                        Dim _thread As Thread = GetNearestThread(_cellColor)
+                        Dim _blockstitch As BlockStitch = GenerateBlockstitchForThread(x, y, _thread)
+                        AddBlockstitchToDesign(_blockstitch, oProjectDesign)
+                        DrawImportBlockStitch(_blockstitch)
+                    Next
+                    LogUtil.ShowStatus(String.Format("Importing row {0} of {1}", y + 1, oTargetImage.Size.Height), LblStatus)
+                    PicDesign.Invalidate()
+                    Application.DoEvents()
+                Next
+
+                'oPaletteList.Sort(Function(pPaletteThread1 As PaletteThread, pPaletteThread2 As PaletteThread)
+                '                      Return pPaletteThread1.Thread.Colour.ToArgb.CompareTo(pPaletteThread2.Thread.Colour.ToArgb)
+                '                  End Function)
+                oPaletteList.Sort(Function(pPaletteThread1 As PaletteThread, pPaletteThread2 As PaletteThread)
+                                      Return pPaletteThread1.StitchCount.CompareTo(pPaletteThread2.StitchCount)
+                                  End Function)
+                oPaletteList.Reverse()
+                If NudMaxThreads.Value > 0 AndAlso NudMaxThreads.Value < oPaletteList.Count Then
+                    oPaletteList.RemoveRange(NudMaxThreads.Value - 1, oPaletteList.Count - NudMaxThreads.Value)
+                    ChkPaletteOnly.Checked = True
                     oProjectDesign = ProjectDesignBuilder.AProjectDesign().StartingWithNothing.WithRows(NudDesignHeight.Value).WithColumns(NudDesignWidth.Value).Build
                     DrawGrid(oProjectDesign, True, True, True)
-                    PicDesign.Invalidate()
                     For Each y As Integer In Enumerable.Range(0, oTargetImage.Size.Height)
                         For Each x As Integer In Enumerable.Range(0, oTargetImage.Size.Width)
                             Dim _cellColor As Color = oTargetImage.GetPixel(x, y)
@@ -125,42 +150,17 @@ Public Class FrmImportImage
                         PicDesign.Invalidate()
                         Application.DoEvents()
                     Next
-
-                    'oPaletteList.Sort(Function(pPaletteThread1 As PaletteThread, pPaletteThread2 As PaletteThread)
-                    '                      Return pPaletteThread1.Thread.Colour.ToArgb.CompareTo(pPaletteThread2.Thread.Colour.ToArgb)
-                    '                  End Function)
-                    oPaletteList.Sort(Function(pPaletteThread1 As PaletteThread, pPaletteThread2 As PaletteThread)
-                                          Return pPaletteThread1.StitchCount.CompareTo(pPaletteThread2.StitchCount)
-                                      End Function)
-                    oPaletteList.Reverse()
-                    If NudMaxThreads.Value > 0 AndAlso NudMaxThreads.Value < oPaletteList.Count Then
-                        oPaletteList.RemoveRange(NudMaxThreads.Value - 1, oPaletteList.Count - NudMaxThreads.Value)
-                        ChkPaletteOnly.Checked = True
-                        oProjectDesign = ProjectDesignBuilder.AProjectDesign().StartingWithNothing.WithRows(NudDesignHeight.Value).WithColumns(NudDesignWidth.Value).Build
-                        DrawGrid(oProjectDesign, True, True, True)
-                        For Each y As Integer In Enumerable.Range(0, oTargetImage.Size.Height)
-                            For Each x As Integer In Enumerable.Range(0, oTargetImage.Size.Width)
-                                Dim _cellColor As Color = oTargetImage.GetPixel(x, y)
-                                Dim _thread As Thread = GetNearestThread(_cellColor)
-                                Dim _blockstitch As BlockStitch = GenerateBlockstitchForThread(x, y, _thread)
-                                AddBlockstitchToDesign(_blockstitch, oProjectDesign)
-                                DrawImportBlockStitch(_blockstitch)
-                            Next
-                            LogUtil.ShowStatus(String.Format("Importing row {0} of {1}", y + 1, oTargetImage.Size.Height), LblStatus)
-                            PicDesign.Invalidate()
-                            Application.DoEvents()
-                        Next
-                    End If
-                    ThreadLayoutPanel.Controls.Clear()
-                    For Each _thread As PaletteThread In oPaletteList
-                        AddThreadToPalette(_thread)
-                    Next
-                    If CbPalettes.SelectedIndex < 0 Then
-                        ChkPaletteOnly.Checked = False
-                    End If
-                    LogUtil.ShowStatus("Image import complete", LblStatus)
-                Else
-                    LogUtil.ShowStatus("No image selected", LblStatus, True)
+                End If
+                ThreadLayoutPanel.Controls.Clear()
+                For Each _thread As PaletteThread In oPaletteList
+                    AddThreadToPalette(_thread)
+                Next
+                If CbPalettes.SelectedIndex < 0 Then
+                    ChkPaletteOnly.Checked = False
+                End If
+                LogUtil.ShowStatus("Image import complete", LblStatus)
+            Else
+                LogUtil.ShowStatus("No image selected", LblStatus, True)
             End If
         End If
     End Sub

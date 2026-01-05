@@ -1,4 +1,10 @@
-﻿Imports System
+﻿' Hindleware
+' Copyright (c) 2025-6 Eric Hindle
+' All rights reserved.
+'
+' Author Eric Hindle
+'
+
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 
@@ -12,7 +18,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("Cross Stitch Design Studio")>
 <Assembly: AssemblyCompany("hindleware")>
 <Assembly: AssemblyProduct("XStitchStudio")>
-<Assembly: AssemblyCopyright("Copyright ©Eric Hindle  2025")>
+<Assembly: AssemblyCopyright("Copyright ©Eric Hindle  2025-6")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>

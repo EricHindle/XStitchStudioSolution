@@ -1,9 +1,10 @@
 ﻿' Hindleware
-' Copyright (c) 2025 Eric Hindle
+' Copyright (c) 2025-6 Eric Hindle
 ' All rights reserved.
 '
 ' Author Eric Hindle
 '
+
 Imports Newtonsoft.Json
 Namespace Domain.Objects
     Public Class ProjectWorkTime

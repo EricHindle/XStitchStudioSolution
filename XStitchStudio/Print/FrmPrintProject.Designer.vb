@@ -91,6 +91,7 @@ Partial Class FrmPrintProject
         Me.FontDialog1 = New System.Windows.Forms.FontDialog()
         Me.BtnPrintAll = New System.Windows.Forms.Button()
         Me.BtnPrintKey = New System.Windows.Forms.Button()
+        Me.LblTextSizer = New System.Windows.Forms.Label()
         Me.StatusStrip1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         CType(Me.PicDesign, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -775,11 +776,24 @@ Partial Class FrmPrintProject
         Me.BtnPrintKey.Text = "Print Key"
         Me.BtnPrintKey.UseVisualStyleBackColor = False
         '
+        'LblTextSizer
+        '
+        Me.LblTextSizer.AutoSize = True
+        Me.LblTextSizer.Font = New System.Drawing.Font("Tahoma", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblTextSizer.Location = New System.Drawing.Point(20, 625)
+        Me.LblTextSizer.Margin = New System.Windows.Forms.Padding(0)
+        Me.LblTextSizer.Name = "LblTextSizer"
+        Me.LblTextSizer.Size = New System.Drawing.Size(27, 10)
+        Me.LblTextSizer.TabIndex = 17
+        Me.LblTextSizer.Text = "Label9"
+        Me.LblTextSizer.Visible = False
+        '
         'FrmPrintProject
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(762, 681)
+        Me.Controls.Add(Me.LblTextSizer)
         Me.Controls.Add(Me.BtnPrintKey)
         Me.Controls.Add(Me.BtnPrintAll)
         Me.Controls.Add(Me.PnlDesignPicture)
@@ -883,4 +897,5 @@ Partial Class FrmPrintProject
     Friend WithEvents GroupBox6 As GroupBox
     Friend WithEvents RbLandscape As RadioButton
     Friend WithEvents RbPortrait As RadioButton
+    Friend WithEvents LblTextSizer As Label
 End Class
