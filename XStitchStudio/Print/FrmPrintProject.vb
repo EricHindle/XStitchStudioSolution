@@ -27,6 +27,10 @@ Public Class FrmPrintProject
         Left
     End Enum
 #End Region
+#Region "constants"
+    Private Const PRODUCT_TEXT As String = "created using Cross Stitch Studio [@ XStitch-Studio.co.uk]"
+    Private Const PRODUCT_TEXT_WIDTH As Integer = 700
+#End Region
 #Region "variables"
     Private gap As Integer
     Private isComponentInitialised As Boolean
@@ -426,13 +430,14 @@ Public Class FrmPrintProject
         If isPrintHeader Then
             pPageGraphics.DrawString(TxtTitle.Text, oPrintTitlefont, oTextBrush, New Point(oLeftMargin, oPageTopMargin))
         End If
+        Dim oFooterPos As Integer = pSize.Height - oBottomMargin
+        If isPrintColumnNumbers Then
+            oFooterPos += oPageFooterHeight
+        End If
         If isPrintFooter Then
-            Dim oFooterPos As Integer = pSize.Height - oBottomMargin
-            If isPrintColumnNumbers Then
-                oFooterPos += oPageFooterHeight
-            End If
             pPageGraphics.DrawString(pFooterText, oPrintFooterfont, oTextBrush, New Point(oLeftMargin, oFooterPos))
         End If
+        pPageGraphics.DrawString(PRODUCT_TEXT, oPrintFooterfont, oTextBrush, New Point(pSize.Width - oRightMargin - PRODUCT_TEXT_WIDTH, oFooterPos))
     End Sub
     Private Sub PrintRowColumnNumbers(pPage As Page, pPageGraphics As Graphics)
         Dim _widthInColumns As Integer = pPage.BottomRight.X - pPage.TopLeft.X
