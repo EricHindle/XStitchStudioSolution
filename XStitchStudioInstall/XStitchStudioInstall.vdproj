@@ -914,9 +914,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:Cross Stitch Studio"
+        "ProductName" = "8:CrossStitch Studio"
         "ProductCode" = "8:{16B38F1E-771A-45EF-94D5-A572ACCCE513}"
-        "PackageCode" = "8:{D755EB98-76AC-421F-867F-706D7559ED3E}"
+        "PackageCode" = "8:{F8ED9EB7-9F7F-4387-BDB6-8B985300BAB2}"
         "UpgradeCode" = "8:{CB905F24-9995-4063-9549-E2529BE921C0}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -927,11 +927,11 @@
         "Manufacturer" = "8:hindleware"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:Cross Stitch Studio Installation"
+        "Title" = "8:CrossStitch Studio Installation"
         "Subject" = "8:"
         "ARPCONTACT" = "8:Eric Hindle"
         "Keywords" = "8:"
-        "ARPCOMMENTS" = "8:Cross Stitch pattern design studio"
+        "ARPCOMMENTS" = "8:CrossStitch pattern design studio"
         "ARPURLINFOABOUT" = "8:https://www.hindleware.co.uk/"
         "ARPPRODUCTICON" = "8:_77E1FE748EED46EC9BA92F24F495D5DE"
         "ARPIconIndex" = "3:0"
@@ -1038,7 +1038,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_1749A0A911BC45E5BC145423F0CAF912"
             {
-            "Name" = "8:Cross Stitch Studio"
+            "Name" = "8:CrossStitch Studio"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -1052,7 +1052,7 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_BD0FB4A0DB814A7391C13BF8585428B3"
             {
-            "Name" = "8:Cross Stitch Studio"
+            "Name" = "8:CrossStitch Studio"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"

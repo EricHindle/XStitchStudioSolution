@@ -210,12 +210,12 @@ Partial Class FrmBuildThreadCards
         '
         Me.NudMaxThreads.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.NudMaxThreads.Location = New System.Drawing.Point(277, 371)
-        Me.NudMaxThreads.Maximum = New Decimal(New Integer() {20, 0, 0, 0})
+        Me.NudMaxThreads.Maximum = New Decimal(New Integer() {9, 0, 0, 0})
         Me.NudMaxThreads.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.NudMaxThreads.Name = "NudMaxThreads"
         Me.NudMaxThreads.Size = New System.Drawing.Size(46, 26)
         Me.NudMaxThreads.TabIndex = 137
-        Me.NudMaxThreads.Value = New Decimal(New Integer() {10, 0, 0, 0})
+        Me.NudMaxThreads.Value = New Decimal(New Integer() {9, 0, 0, 0})
         '
         'LblMaxThreads
         '

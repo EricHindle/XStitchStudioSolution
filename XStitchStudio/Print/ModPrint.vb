@@ -14,7 +14,7 @@ Module ModPrint
     Public Const SCREEN_DPI As Integer = 93.0F
     Public Const A4_WIDTH As Integer = 2480
     Public Const A4_HEIGHT As Integer = 3508
-    Public Const PRODUCT_TEXT As String = "created using Cross Stitch Studio [@ XStitch-Studio.co.uk]"
+    Public Const PRODUCT_TEXT As String = "created using CrossStitch Studio [@ XStitch-Studio.co.uk]"
 #End Region
 #Region "variables"
     Friend oPagesize As Size

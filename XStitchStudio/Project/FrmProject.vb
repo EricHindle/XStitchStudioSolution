@@ -311,7 +311,7 @@ Public Class FrmProject
                 Else
                     If ImportProject(_projectFile) Then
                         LoadProjectList(DgvProjects, MyBase.Name)
-                        SelectProjectInList(DgvProjects, oFileProject.ProjectId)
+                        SelectProjectInList(DgvProjects, oProject.ProjectId)
                         OpenProjectDesign()
                     End If
                 End If

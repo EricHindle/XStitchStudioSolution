@@ -118,7 +118,7 @@ Public Class FrmBuildThreadCards
             End If
             Dim oCardThreadList As New List(Of ProjectCardThread)
             Dim _totalThreadCount As Integer = DgvThreads.Rows.Count
-            Dim _newCardCt As Integer = Math.Ceiling(_totalThreadCount / NUMBER_OF_ROWS)
+            Dim _newCardCt As Integer = Math.Ceiling(_totalThreadCount / NudMaxThreads.Value)
             NudMaxThreads.Value = Math.Ceiling(_totalThreadCount / _newCardCt)
             For Each oRow As DataGridViewRow In DgvThreads.Rows
                 Dim _threadId As Integer = oRow.Cells(threadId.Name).Value
@@ -149,8 +149,13 @@ Public Class FrmBuildThreadCards
         For Each oRow As DataGridViewRow In DgvThreads.Rows
             Dim _cell As DataGridViewCheckBoxCell = oRow.Cells(threadselected.Name)
             If _cell.Value = True Then
-                AddThreadToCard(oRow)
-                _cell.Value = False
+                If DgvCardThreads.Rows.Count < NudMaxThreads.Value Then
+                    AddThreadToCard(oRow)
+                    _cell.Value = False
+                Else
+                    LogUtil.ShowStatus("Card has max. threads", LblStatus, True)
+                    Exit For
+                End If
             End If
         Next
         UpdateProjectThreadCard(DgvCardThreads, oSelectedProject.ProjectId, oSelectedCardNo, isShowStock)
@@ -159,8 +164,12 @@ Public Class FrmBuildThreadCards
         RemoveThreadFromCard(DgvCardThreads.Rows(e.RowIndex))
     End Sub
     Private Sub DgvThreads_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DgvThreads.CellDoubleClick
-        AddThreadToCard(DgvThreads.Rows(e.RowIndex))
-        UpdateProjectThreadCard(DgvCardThreads, oSelectedProject.ProjectId, oSelectedCardNo, isShowStock)
+        If DgvCardThreads.Rows.Count < NudMaxThreads.Value Then
+            AddThreadToCard(DgvThreads.Rows(e.RowIndex))
+            UpdateProjectThreadCard(DgvCardThreads, oSelectedProject.ProjectId, oSelectedCardNo, isShowStock)
+        Else
+            LogUtil.ShowStatus("Card already has max. threads", LblStatus, True)
+        End If
     End Sub
     Private Sub BtnRemoveThread_Click(sender As Object, e As EventArgs) Handles BtnRemoveThread.Click
         LogUtil.LogInfo("Removing thread from card", MyBase.Name)

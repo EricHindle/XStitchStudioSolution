@@ -14,8 +14,8 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Cross Stitch Studio")>
-<Assembly: AssemblyDescription("Cross Stitch Design Studio")>
+<Assembly: AssemblyTitle("CrossStitch Studio")>
+<Assembly: AssemblyDescription("CrossStitch Design Studio")>
 <Assembly: AssemblyCompany("hindleware")>
 <Assembly: AssemblyProduct("XStitchStudio")>
 <Assembly: AssemblyCopyright("Copyright ©Eric Hindle  2025-6")>
