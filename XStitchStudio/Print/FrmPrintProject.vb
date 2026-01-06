@@ -429,15 +429,11 @@ Public Class FrmPrintProject
             pPageGraphics.DrawString(TxtTitle.Text, oPrintTitlefont, oTextBrush, New Point(oLeftMargin, oPageTopMargin))
         End If
         Dim oFooterPos As Integer = pSize.Height - oBottomMargin
-        If isPrintColumnNumbers Then
-            oFooterPos += oPageFooterHeight
-        End If
         If isPrintFooter Then
             pPageGraphics.DrawString(pFooterText, oPrintFooterfont, oTextBrush, New Point(oLeftMargin, oFooterPos))
         End If
         LblTextSizer.Font = BtnFooterFont.Font
         LblTextSizer.Text = PRODUCT_TEXT
-
         Dim _productTextWidth As Integer = (LblTextSizer.Width * PRINT_DPI) / SCREEN_DPI
         pPageGraphics.DrawString(PRODUCT_TEXT, oPrintFooterfont, oTextBrush, New Point(pSize.Width - oRightMargin - _productTextWidth, oFooterPos))
     End Sub

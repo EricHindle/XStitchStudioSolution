@@ -9,6 +9,7 @@ Imports HindlewareLib.Logging
 Imports XStitchStudio.Domain
 Imports XStitchStudio.Domain.Objects
 Module ModCards
+    Public Const NUMBER_OF_ROWS As Integer = 9
     Public isCardsLoading As Boolean
     Public Sub OpenBuildCardsForm(pProject As Project)
         Using _buildCards As New FrmBuildThreadCards

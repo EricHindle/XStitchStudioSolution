@@ -29,6 +29,7 @@ Public Class FrmPrintThreadCards
     Private CARD_COLOUR As Brush = Brushes.White
     Private Const PANEL_MAX_WIDTH As Integer = 325
     Private Const COLUMNS_FULL As String = "All columns full"
+
 #End Region
 #Region "properties"
     Private _selectedProject As Project
@@ -101,8 +102,9 @@ Public Class FrmPrintThreadCards
         ' DRAW THE IMAGE scaled to the print area
 
         ' Set margins to allow for printers hard margins
-        leftmargin = e.PageSettings.HardMarginX * 3
-        topmargin = e.PageSettings.HardMarginY * 3
+        leftmargin = e.PageSettings.HardMarginY / 100 * PRINT_DPI
+        topmargin = e.PageSettings.HardMarginX / 100 * PRINT_DPI
+
         Dim targetWidth As Integer = sourceBitmap.Width - leftmargin
         Dim targetHeight As Integer = sourceBitmap.Height - topmargin
 
@@ -140,10 +142,13 @@ Public Class FrmPrintThreadCards
     Private Sub InitialiseForm()
         GetFormPos(Me, My.Settings.PrintThreadCardsFormPos)
         iPanelMax = PANEL_MAX_WIDTH
+        isLandscape = True
+        InitialisePrintDocument()
         sourceBitmap = New Bitmap(A4_WIDTH_PIXELS, A4_HEIGHT_PIXELS)
         sourceBitmap.SetResolution(PRINT_DPI, PRINT_DPI)
-        leftmargin = oPrintDoc.DefaultPageSettings.HardMarginX * 3
-        topmargin = oPrintDoc.DefaultPageSettings.HardMarginY * 3
+        leftmargin = oPrintDoc.DefaultPageSettings.HardMarginY / 100 * PRINT_DPI
+        topmargin = oPrintDoc.DefaultPageSettings.HardMarginX / 100 * PRINT_DPI
+
         SetPictureWidth()
         LoadProjectList(DgvProjects, MyBase.Name)
         AddInstruction(SELECT_PROJECT)
@@ -224,9 +229,9 @@ Public Class FrmPrintThreadCards
             _left_x = colWidth * _col
             _right_x = _left_x
             _cardGraphics.DrawLine(LINE_PEN, New Point(_left_x, _top_y), New Point(_right_x, _bottom_y))
-            AddProduct(New Point(_left_x + 20, sourceBitmap.Height - topmargin - 20))
+            AddProduct(New Point(_left_x + 20, sourceBitmap.Height - (topmargin * 2) - 20))
         Next
-        Dim _rowct As Integer = 10
+        Dim _rowct As Integer = NUMBER_OF_ROWS
         _left_x = 0
         _right_x = sourceBitmap.Width
         ' Horizontal lines
@@ -243,7 +248,7 @@ Public Class FrmPrintThreadCards
                 _cardGraphics.DrawEllipse(LINE_PEN, _holerectangle)
             Next
         Next
-        AddProduct(New Point(oLeftMargin + 20, sourceBitmap.Height - topmargin - 20))
+        AddProduct(New Point(leftmargin + 20, sourceBitmap.Height - (topmargin * 2) - 20))
         PicThreadCard.Image = sourceBitmap
         PicThreadCard.Refresh()
         _nextCol = 0
@@ -252,7 +257,7 @@ Public Class FrmPrintThreadCards
         _cardGraphics.DrawString(PRODUCT_TEXT, My.Settings.PrintFooterFont, Brushes.Black, New Point(pPoint))
     End Sub
     Private Sub AddCardToImage(pList As List(Of ProjectCardThread))
-        Dim oRowCt As Integer = 10
+        Dim oRowCt As Integer = NUMBER_OF_ROWS
         Dim oColCt As Integer = NudColCt.Value
         Dim oColWidth As Integer = A4_WIDTH_PIXELS / oColCt
         Dim _topMargin As Integer = (sourceBitmap.Height - (HOLEPUNCH_HOLE_GAP * (oRowCt - 1))) / 2

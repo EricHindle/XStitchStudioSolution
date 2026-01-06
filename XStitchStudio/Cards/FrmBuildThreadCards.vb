@@ -118,7 +118,7 @@ Public Class FrmBuildThreadCards
             End If
             Dim oCardThreadList As New List(Of ProjectCardThread)
             Dim _totalThreadCount As Integer = DgvThreads.Rows.Count
-            Dim _newCardCt As Integer = Math.Ceiling(_totalThreadCount / 10)
+            Dim _newCardCt As Integer = Math.Ceiling(_totalThreadCount / NUMBER_OF_ROWS)
             NudMaxThreads.Value = Math.Ceiling(_totalThreadCount / _newCardCt)
             For Each oRow As DataGridViewRow In DgvThreads.Rows
                 Dim _threadId As Integer = oRow.Cells(threadId.Name).Value
