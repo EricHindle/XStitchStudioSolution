@@ -281,6 +281,12 @@
     <Compile Include="Project\FrmProject.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Project\FrmProjectInfo.Designer.vb">
+      <DependentUpon>FrmProjectInfo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Project\FrmProjectInfo.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Project\FrmProjectTimer.Designer.vb">
       <DependentUpon>FrmProjectTimer.vb</DependentUpon>
     </Compile>
@@ -432,6 +438,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Project\FrmProject.resx">
       <DependentUpon>FrmProject.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Project\FrmProjectInfo.resx">
+      <DependentUpon>FrmProjectInfo.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Project\FrmProjectTimer.resx">
       <DependentUpon>FrmProjectTimer.vb</DependentUpon>

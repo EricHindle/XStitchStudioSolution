@@ -32,7 +32,7 @@ Public Class FrmStitchDesign
     Private oRedoList As New List(Of List(Of StitchAction))
     Private isLoading As Boolean
     Private isLoadComplete As Boolean
-
+    Private isProjectHasThreads As Boolean
     Private isComponentInitialised As Boolean
     Private oCurrentAction As DesignAction = DesignAction.none
     Private oCurrentStitchType As DesignAction = DesignAction.none
@@ -84,10 +84,6 @@ Public Class FrmStitchDesign
         LogUtil.LogInfo("Opening design", MyBase.Name)
         RestoreFormLayout()
         InitialiseForm()
-        If My.Settings.isTimerAutoStart Then
-            StartProjectTimer(oProject)
-        End If
-        KeyPreview = True
     End Sub
     Private Sub MyBase_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         KeyHandler(Me, FormType.Design, e)
@@ -1187,26 +1183,44 @@ Public Class FrmStitchDesign
         PicBeadColour.BackColor = Me.BackColor
         LblCurrentAction.Text = String.Empty
         If oProject.IsLoaded Then
-            InitialisePalette()
-            ShowMessage("Loading " & oProject.ProjectName & " ...", MyBase.Name)
-            Dim _isPaletteChanged As Boolean
-            LoadProjectDesignFromFile(oProject, PicDesign, isGridOn, isCentreOn, _isPaletteChanged, isCentreMarksOn)
-            If _isPaletteChanged Then
+            LogUtil.LogInfo(oProject.ProjectName, MethodBase.GetCurrentMethod.Name)
+            CheckProjectHasThreads()
+            If isProjectHasThreads Then
                 InitialisePalette()
+                ShowMessage("Loading " & oProject.ProjectName & " ...", MyBase.Name)
+                Dim _isPaletteChanged As Boolean
+                LoadProjectDesignFromFile(oProject, PicDesign, isGridOn, isCentreOn, _isPaletteChanged, isCentreMarksOn)
+                If _isPaletteChanged Then
+                    InitialisePalette()
+                End If
+                CalculateScrollBarMaximumValues()
+                RemoveMessage()
+                ClearStatus()
+                Me.Text = oProject.ProjectName
+                PicDesign.Enabled = True
+                InitialiseTimer()
+                CalculateOffsetForCentre(oDesignBitmap)
+                If My.Settings.isTimerAutoStart Then
+                    StartProjectTimer(oProject)
+                End If
+                KeyPreview = True
+            Else
+                LogUtil.LogInfo("Project has no threads. Design not loaded.", MyBase.Name)
+                Close()
             End If
-            CalculateScrollBarMaximumValues()
-            RemoveMessage()
-            ClearStatus()
-            Me.Text = oProject.ProjectName
         Else
             MsgBox("No project found", MsgBoxStyle.Exclamation, "Error")
             Close()
         End If
-        PicDesign.Enabled = True
-        InitialiseTimer()
-        CalculateOffsetForCentre(oDesignBitmap)
         isLoading = False
     End Sub
+    Private Sub CheckProjectHasThreads()
+        LogUtil.LogInfo("Checking project threads", MyBase.Name)
+        oProjectThreads = FindProjectThreads(oProject.ProjectId)
+        oProjectBeads = FindProjectBeads(oProject.ProjectId)
+        isProjectHasThreads = SetProjectHasThreads()
+    End Sub
+
     Friend Sub LoadDesignSettings()
         SetIsCentreOn()
         SetIsGridOn()
@@ -1221,16 +1235,18 @@ Public Class FrmStitchDesign
         Dim _stitchDisplayStyle As StitchDisplayStyle = My.Settings.PaletteStitchDisplay
         If isComponentInitialised Then
             LoadThreadPalette(_stitchDisplayStyle)
-            LoadBeadPalette()
+            If isProjectHasThreads Then
+                LoadBeadPalette()
+            End If
         End If
-        Return isOK
+            Return isOK
     End Function
     Private Sub LoadThreadPalette(_stitchDisplayStyle As StitchDisplayStyle)
         ThreadLayoutPanel.Controls.Clear()
         oProjectThreads = FindProjectThreads(oProject.ProjectId)
         oProjectBeads = FindProjectBeads(oProject.ProjectId)
-        If IsProjectHasThreads() Then
-            oProjectThreads.Threads.Sort(Function(x As ProjectThread, y As ProjectThread) x.Thread.SortNumber.CompareTo(y.Thread.SortNumber))
+
+        oProjectThreads.Threads.Sort(Function(x As ProjectThread, y As ProjectThread) x.Thread.SortNumber.CompareTo(y.Thread.SortNumber))
             Dim _panelWidth As Integer = ThreadLayoutPanel.Width
             Dim _panelHeight As Integer = ThreadLayoutPanel.Height
             Dim _threadCt As Integer = oProjectThreads.Count
@@ -1298,7 +1314,7 @@ Public Class FrmStitchDesign
             If _firstPicThread IsNot Nothing Then
                 SelectThreadPaletteColour(_firstPicThread)
             End If
-        End If
+
     End Sub
     Private Sub LoadBeadPalette()
         BeadLayoutPanel.Controls.Clear()
@@ -1419,19 +1435,22 @@ Public Class FrmStitchDesign
             End If
         End If
     End Sub
-    Private Function IsProjectHasThreads() As Boolean
-        Dim isHasThreads As Boolean = True
-        Do While oProjectThreads.Count = 0
-            If MsgBox("Select threads to continue with the project?", MsgBoxStyle.OkCancel Or MsgBoxStyle.Question, "No Project Threads") = MsgBoxResult.Cancel Then
-                isHasThreads = False
-                Close()
-                Return isHasThreads
-                Exit Function
-            End If
-            OpenProjectThreadsForm()
-            oProjectThreads = FindProjectThreads(oProject.ProjectId)
-        Loop
-        Return isHasThreads
+    Private Function SetProjectHasThreads() As Boolean
+        Dim hasThreads As Boolean = False
+        If oProjectThreads.Count = 0 Then
+            Do While oProjectThreads.Count = 0
+                If MsgBox("Select threads to continue with the project?", MsgBoxStyle.YesNo Or MsgBoxStyle.Question, "No Project Threads") = MsgBoxResult.No Then
+                    hasThreads = False
+                    LogUtil.LogInfo("No threads added to project.", MyBase.Name)
+                    Exit Do
+                End If
+                OpenProjectThreadsForm()
+                oProjectThreads = FindProjectThreads(oProject.ProjectId)
+            Loop
+        Else
+            hasThreads = True
+        End If
+        Return hasThreads
     End Function
     Private Sub SetDisplayStyleImage()
         Select Case oStitchDisplayStyle
@@ -2661,6 +2680,7 @@ Public Class FrmStitchDesign
         Dim _knot As Knot = KnotBuilder.AKnot.StartingWith(pKnot).Build
         oProjectDesign.Knots.Add(pKnot)
         AddToCurrentUndoList(_knot, UndoAction.Add)
+        isSaved = False
     End Sub
     Private Function RemoveExistingKnot(pCell As Cell) As Knot
         LogUtil.Debug("Removing knot/bead", MyBase.Name)

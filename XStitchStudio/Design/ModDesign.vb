@@ -114,8 +114,8 @@ Module ModDesign
     Friend iOldHScrollbarValue As Integer = 0
     Friend iOldVScrollbarValue As Integer = 0
     Friend oFabricColour As Color
-    Friend oFabricBrush As SolidBrush
-    Friend oFabricPen As Pen
+    Friend oFabricBrush As SolidBrush = Brushes.White
+    Friend oFabricPen As New Pen(oFabricBrush, 1)
     Friend oSelectionPenColour As Color
     Friend oSelectionPenWidth As Single
     Friend oSelectionPenDefaultWidth As Single

@@ -377,5 +377,8 @@
     <Setting Name="SplitDistPalette3" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">390</Value>
     </Setting>
+    <Setting Name="ProjectInfoFormPos" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

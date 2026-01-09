@@ -92,6 +92,12 @@ Module ModProject
             _printSettings.ShowDialog()
         End Using
     End Sub
+    Public Sub ShowProjectInfo(pProject As Project)
+        Using _ProjectInfo As New FrmProjectInfo()
+            _ProjectInfo.SelectedProject = pProject
+            _ProjectInfo.ShowDialog()
+        End Using
+    End Sub
     Private Sub UpdateThreadsFromDesign(oFileProjectDesign As ProjectDesign, oFileProjectThreadCollection As ProjectThreadCollection)
         LogUtil.LogInfo("Updating threads from design", MethodBase.GetCurrentMethod.Name)
         For Each _stitch As Stitch In oFileProjectDesign.BlockStitches
@@ -118,7 +124,6 @@ Module ModProject
         End If
         AddMissingProjectThread(pProjectThread, pFileProjectThreadCollection)
     End Sub
-
     Private Sub AddMissingProjectThread(pThread As ProjectThread, pFileProjectThreadCollection As ProjectThreadCollection)
         Dim _foundThread As ProjectThread = CType(pFileProjectThreadCollection.Threads.Find(Function(p) p.Thread.ThreadId = pThread.ThreadId), ProjectThread)
         If oFileProjectThreadCollection.Threads.Find(Function(p) p.Thread.ThreadId = pThread.ThreadId) Is Nothing Then
@@ -278,6 +283,7 @@ Module ModProject
     End Sub
     Private Sub AddProjectBeadToCollection(pProjectId As Integer, pBeadId As Integer, _threadCollection As ProjectBeadCollection)
         Dim _projBead As ProjectBead = ProjectBeadBuilder.AProjectBead.StartingWithNothing _
+                                            .WithProjectId(pProjectId) _
                                             .WithBeadId(pBeadId) _
                                             .WithIsUsed(True) _
                                             .Build
@@ -285,7 +291,6 @@ Module ModProject
             _threadCollection.Add(_projBead)
         End If
     End Sub
-
     Private Function IsValidProject(pProject As Project) As Boolean
         Dim isValid As Boolean = True
         If String.IsNullOrWhiteSpace(pProject.ProjectName) Then
@@ -301,7 +306,6 @@ Module ModProject
 
         Return isValid
     End Function
-
     Public Sub SetNewProjectId(pId As Integer, ByRef pProject As Project, ByRef pProjectDesign As ProjectDesign, ByRef pProjectThreadCollection As ProjectThreadCollection)
         pProject.ProjectId = pId
         pProjectDesign.ProjectId = pId
@@ -333,7 +337,6 @@ Module ModProject
         Next
         pDgv.ClearSelection()
     End Sub
-
     Private Sub AddProjectRow(ByRef pDgv As DataGridView, oProject As Project)
         Dim oRow As DataGridViewRow = pDgv.Rows(pDgv.Rows.Add())
         oRow.Cells(pDgv.Columns(0).Name).Value = oProject.ProjectId

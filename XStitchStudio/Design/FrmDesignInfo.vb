@@ -50,18 +50,29 @@ Public Class FrmDesignInfo
     Private Sub BtnClose_Click(sender As Object, e As EventArgs) Handles BtnClose.Click
         Close()
     End Sub
-
     Private Sub FrmDesignInfo_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         LogUtil.LogInfo("Closing", MyBase.Name)
         SaveFormLayout()
     End Sub
-
     Private Sub FrmDesignInfo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LogUtil.LogInfo("ProjectThread maintenence", MyBase.Name)
+        LogUtil.LogInfo("Design Information", MyBase.Name)
         RestoreFormLayout()
         isLoading = True
         InitialiseForm()
         isLoading = False
+    End Sub
+    Private Sub ChkShowStock_CheckedChanged(sender As Object, e As EventArgs) Handles ChkShowStock.CheckedChanged
+        isShowStock = ChkShowStock.Checked
+        LoadThreadList()
+    End Sub
+    Private Sub ChkShowBlock_CheckedChanged(sender As Object, e As EventArgs) Handles ChkShowBlock.CheckedChanged
+        SetPanelVisibility()
+    End Sub
+    Private Sub ChkShowBack_CheckedChanged(sender As Object, e As EventArgs) Handles ChkShowBack.CheckedChanged
+        SetPanelVisibility()
+    End Sub
+    Private Sub ChkShowKnots_CheckedChanged(sender As Object, e As EventArgs) Handles ChkShowKnots.CheckedChanged
+        SetPanelVisibility()
     End Sub
 #End Region
 #Region "subroutines"
@@ -273,23 +284,6 @@ Public Class FrmDesignInfo
         Next
         Return Nothing
     End Function
-
-    Private Sub ChkShowStock_CheckedChanged(sender As Object, e As EventArgs) Handles ChkShowStock.CheckedChanged
-        isShowStock = ChkShowStock.Checked
-        LoadThreadList()
-    End Sub
-
-    Private Sub ChkShowBlock_CheckedChanged(sender As Object, e As EventArgs) Handles ChkShowBlock.CheckedChanged
-        SetPanelVisibility()
-    End Sub
-
-    Private Sub ChkShowBack_CheckedChanged(sender As Object, e As EventArgs) Handles ChkShowBack.CheckedChanged
-        SetPanelVisibility()
-    End Sub
-
-    Private Sub ChkShowKnots_CheckedChanged(sender As Object, e As EventArgs) Handles ChkShowKnots.CheckedChanged
-        SetPanelVisibility()
-    End Sub
     Private Sub SetPanelVisibility()
         Dim isHideBlock As Boolean = Not ChkShowBlock.Checked
         Dim isHideBack As Boolean = Not ChkShowBack.Checked

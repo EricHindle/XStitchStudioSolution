@@ -257,7 +257,7 @@ Public Class FrmProject
     Private Sub MnuGlobalSettings_Click(sender As Object, e As EventArgs) Handles MnuGlobalSettings.Click
         OpenSettingsForm()
     End Sub
-    Private Sub HousekeepingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles HousekeepingToolStripMenuItem.Click
+    Private Sub MnuHousekeeping_Click(sender As Object, e As EventArgs) Handles MnuHousekeeping.Click
         RunHousekeeping()
     End Sub
 #End Region
@@ -576,6 +576,10 @@ Public Class FrmProject
     Private Sub NudDesignHeight_ValueChanged(sender As Object, e As EventArgs) Handles NudDesignHeight.ValueChanged
         NudFabricHeight.Value = Math.Max(NudFabricHeight.Value, NudDesignHeight.Value)
     End Sub
-
+    Private Sub MnuProjectInfo_Click(sender As Object, e As EventArgs) Handles MnuProjectInfo.Click
+        If _selectedProject IsNot Nothing AndAlso _selectedProject.IsLoaded Then
+            ShowProjectInfo(_selectedProject)
+        End If
+    End Sub
 #End Region
 End Class
