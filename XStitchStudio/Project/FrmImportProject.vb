@@ -156,7 +156,6 @@ Public Class FrmImportProject
             End If
         Next
     End Sub
-
     Private Sub AddProjectThreads()
         For Each oThread As ProjectThread In oFileProjectThreadCollection.Threads
             Dim _thread As ProjectThread = FindProjectThread(oThread.ProjectId, oThread.ThreadId)

@@ -21,6 +21,7 @@ Friend Module ModCommon
     Public oDataArchiveFolderName As String
     Public oDesignFolderName As String
     Public oDesignArchiveFolderName As String
+    Public oMotifFolderName As String
     Public oImageFolderName As String
     Public oBackupFolderName As String
     Public oBackupArchiveFolderName As String
@@ -175,6 +176,7 @@ Friend Module ModCommon
         oDailyArchivePath = Path.Combine(oDataArchiveFolderName, "DailyDataHistory")
         oDesignFolderName = My.Settings.DesignFilePath
         oDesignArchiveFolderName = Path.Combine(oDesignFolderName, "Archive")
+        oMotifFolderName = Path.Combine(oDesignFolderName, "Motifs")
         oImageFolderName = My.Settings.ImagePath
         oBackupFolderName = My.Settings.BackupPath
         oBackupArchiveFolderName = Path.Combine(oBackupFolderName, "Archive")

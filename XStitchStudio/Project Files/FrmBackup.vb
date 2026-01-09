@@ -22,12 +22,14 @@ Public Class FrmBackup
     Private dataPath As String
     Private optionsPath As String
     Private designPath As String
+    Private motifPath As String
     Private imagePath As String
     Private oProjectList As List(Of Project)
     Private isFormInitialised As Boolean
     Private tableCheckCount As Integer
     Private designCheckCount As Integer
     Private imageCheckCount As Integer
+    Private motifCheckCount As Integer
     Private isParentCheck As Boolean
 #End Region
 #Region "form control handlers"
@@ -76,7 +78,8 @@ Public Class FrmBackup
         tableCheckCount = CountCheckedNodes(TvDatatables.Nodes(0), TABLE_TAG)
         imageCheckCount = CountCheckedNodes(TvImages.Nodes(0), IMAGE_TAG)
         designCheckCount = CountCheckedNodes(TvDesigns.Nodes(0), DESIGN_TAG)
-        If tableCheckCount + imageCheckCount + designCheckCount > 0 Then
+        motifCheckCount = CountCheckedNodes(TvDesigns.Nodes(1), MOTIF_TAG)
+        If tableCheckCount + imageCheckCount + designCheckCount + motifCheckCount > 0 Then
             Dim isOKToBackup As Boolean = CheckPaths()
             If isOKToBackup Then
                 AddProgress("Backup started", 1, 1)
@@ -92,6 +95,10 @@ Public Class FrmBackup
                 If designCheckCount > 0 Then
                     AddProgress("Designs backup", 2, 2)
                     DesignBackup()
+                End If
+                If motifCheckCount > 0 Then
+                    AddProgress("Motifs backup", 2, 2)
+                    MotifBackup()
                 End If
                 AddProgress("Backup complete", 1, 1)
             End If
@@ -172,6 +179,7 @@ Public Class FrmBackup
     Friend Sub SelectAll()
         TvDatatables.Nodes(0).Checked = True
         TvDesigns.Nodes(0).Checked = True
+        TvDesigns.Nodes(1).Checked = True
         TvImages.Nodes(0).Checked = True
     End Sub
     Friend Sub ClearAll()
@@ -192,11 +200,18 @@ Public Class FrmBackup
     Private Sub FillDesignTree()
         TvDesigns.Nodes.Clear()
         Dim _designNode As TreeNode = TvDesigns.Nodes.Add("Design files")
-        Dim _filepath As String = My.Settings.DesignFilePath
+        Dim _filepath As String = oDesignFolderName
         Dim fileList As IReadOnlyCollection(Of String) = My.Computer.FileSystem.GetFiles(_filepath)
         For Each _filename As String In fileList
             Dim _fname As String = Path.GetFileName(_filename)
             Dim _fileNode As TreeNode = _designNode.Nodes.Add(DESIGN_TAG & _filename, _fname)
+        Next
+        _designNode = TvDesigns.Nodes.Add("Motif files")
+        _filepath = oMotifFolderName
+        fileList = My.Computer.FileSystem.GetFiles(_filepath)
+        For Each _filename As String In fileList
+            Dim _fname As String = Path.GetFileName(_filename)
+            Dim _fileNode As TreeNode = _designNode.Nodes.Add(MOTIF_TAG & _filename, _fname)
         Next
     End Sub
     Public Sub FillTableTree()
@@ -225,10 +240,12 @@ Public Class FrmBackup
                     backupPath = TxtBackupPath.Text.Trim
                     imagePath = Path.Combine(backupPath, "images")
                     designPath = Path.Combine(backupPath, "designs")
+                    motifPath = Path.Combine(backupPath, "motifs")
                     dataPath = Path.Combine(backupPath, "data")
                     If chkAddDate.Checked Then
                         dataPath = Path.Combine(dataPath, Format(Today, "yyyyMMdd"))
                         designPath = Path.Combine(designPath, Format(Today, "yyyyMMdd"))
+                        motifPath = Path.Combine(motifPath, Format(Today, "yyyyMMdd"))
                     End If
                     If Not CheckPathExists(backupPath) Then
                         isOKToBackup = False
@@ -237,6 +254,8 @@ Public Class FrmBackup
                     ElseIf Not CheckPathExists(imagePath) Then
                         isOKToBackup = False
                     ElseIf Not CheckPathExists(designPath) Then
+                        isOKToBackup = False
+                    ElseIf Not CheckPathExists(motifPath) Then
                         isOKToBackup = False
                     End If
                 Else
@@ -291,6 +310,20 @@ Public Class FrmBackup
             End If
         Next
         oDesignNode.Checked = False
+        PbCopyProgress.Visible = False
+    End Sub
+    Private Sub MotifBackup()
+        Dim oMotifNode As TreeNode = TvDesigns.Nodes(1)
+        DisplayProgressBar(oMotifNode)
+        AddProgress(oMotifNode.Text, 3, 2)
+        For Each oNode As TreeNode In oMotifNode.Nodes
+            If oNode.Checked Then
+                If oNode.Name.StartsWith(MOTIF_TAG) Then
+                    BackupFile(oNode, motifPath, MOTIF_TAG)
+                End If
+            End If
+        Next
+        oMotifNode.Checked = False
         PbCopyProgress.Visible = False
     End Sub
     Private Sub DataBackup()

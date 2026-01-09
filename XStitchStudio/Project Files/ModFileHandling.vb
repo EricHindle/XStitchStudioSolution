@@ -26,12 +26,14 @@ Module ModFileHandling
     Public Const DATA_ARC_EXT As String = ".hsg"
     Public Const DATA_ZIP_EXT As String = ".hsf"
     Public Const DATA_EXT As String = ".hsx"
+    Public Const MOTIF_EXT As String = ".hsm"
     Public Const DESIGN_DELIM As String = "^"
     Public Const LIST_DELIM As String = "|"
     Public Const BLOCK_DELIM As String = "~"
     Public Const STITCH_DELIM As String = "]"
     Public Const POINT_DELIM As String = "/"
     Public Const DESIGN_HDR As String = "Design:"
+    Public Const MOTIF_HDR As String = "Motif:"
     Public Const PROJECT_HDR As String = "Project:"
     Public Const PROJECT_THREADS_HDR As String = "Project Threads:"
     Public Const PROJECT_BEADS_HDR As String = "Project Beads:"
@@ -42,6 +44,7 @@ Module ModFileHandling
             CreateFolder(oDataFolderName, True)
             CreateFolder(oDesignFolderName, True)
             CreateFolder(oDesignArchiveFolderName, True)
+            CreateFolder(oMotifFolderName, True)
             CreateFolder(oImageFolderName, True)
             CreateFolder(oBackupFolderName, True)
             CreateFolder(oBackupArchiveFolderName, True)
@@ -174,6 +177,40 @@ Module ModFileHandling
             Throw New ApplicationException("Copy file failed for " & pFullname, ex)
         End Try
     End Sub
+    Public Function ExtractMotifString(pMotifFullName As String) As String
+        Dim oMotifString As String = String.Empty
+        Dim _zipFile As String = pMotifFullName
+        Try
+            If My.Computer.FileSystem.FileExists(_zipFile) Then
+                Using _archiveFile As ZipArchive = ZipFile.OpenRead(_zipFile)
+                    If _archiveFile.Entries.Count > 0 Then
+                        Dim _entry As ZipArchiveEntry = _archiveFile.Entries.Last
+                        Using _input As New StreamReader(_entry.Open())
+                            oMotifString = _input.ReadLine()
+                        End Using
+                        If Not oMotifString.StartsWith(MOTIF_HDR) Then
+                            Throw New InvalidDataException("Not a Motif string")
+                        End If
+                    Else
+                        Throw New InvalidDataException("Empty motif file")
+                    End If
+                End Using
+            Else
+                Throw New InvalidDataException("Motif file does not exist")
+            End If
+        Catch ex As Exception When (TypeOf ex Is ArgumentException _
+                                OrElse TypeOf ex Is PathTooLongException _
+                                OrElse TypeOf ex Is DirectoryNotFoundException _
+                                OrElse TypeOf ex Is IOException _
+                                OrElse TypeOf ex Is UnauthorizedAccessException _
+                                OrElse TypeOf ex Is InvalidDataException _
+                                OrElse TypeOf ex Is NotSupportedException _
+                                OrElse TypeOf ex Is ObjectDisposedException)
+            LogUtil.DisplayException(ex, PROJECT_FILE_EXCEPTION, MethodBase.GetCurrentMethod.Name)
+            oMotifString = String.Empty
+        End Try
+        Return oMotifString
+    End Function
     Public Function OpenDesignFile(pDesignPathName As String, pDesignFileName As String) As List(Of String)
         Return ExtractDesignStrings(Path.Combine(pDesignPathName, pDesignFileName))
     End Function
@@ -221,8 +258,38 @@ Module ModFileHandling
         End Try
         Return _projectStrings
     End Function
-    Public Function SaveDesignDelimited(pProject As Project, pDesign As ProjectDesign, pThreads As ProjectThreadCollection, pBeads As ProjectBeadCollection, pDesignFileName As String) As Boolean
-        Dim isOK As Boolean
+    Public Function SaveMotifDelimited(pMotif As Motif, pMotifFileName As String) As ActionResponse
+        Dim _response As New ActionResponse
+        Dim _motifEntryName As String = Path.GetFileNameWithoutExtension(pMotifFileName)
+        Try
+            RemoveFile(pMotifFileName)
+            Using _fs As New FileStream(pMotifFileName, FileMode.Create)
+            End Using
+            LogUtil.LogInfo("Opening zip file " & pMotifFileName, MethodBase.GetCurrentMethod.Name)
+            Using zipToOpen As New FileStream(pMotifFileName, FileMode.Open)
+                Using archive As New ZipArchive(zipToOpen, ZipArchiveMode.Update)
+                    ' Save the motif file
+                    LogUtil.LogInfo("Saving Motif to " & _motifEntryName, MethodBase.GetCurrentMethod.Name)
+                    Dim motifEntry As ZipArchiveEntry = archive.CreateEntry(_motifEntryName)
+                    Using _output As New StreamWriter(motifEntry.Open())
+                        _output.WriteLine(pMotif.ToSaveString)
+                        _output.Close()
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception When TypeOf ex Is ApplicationException _
+                                OrElse TypeOf ex Is ArgumentException _
+                                OrElse TypeOf ex Is IOException _
+                                OrElse TypeOf ex Is NotSupportedException _
+                                OrElse TypeOf ex Is Security.SecurityException _
+                                OrElse TypeOf ex Is UnauthorizedAccessException
+            LogUtil.LogException(ex, "Exception initialising motif file " & pMotifFileName, MethodBase.GetCurrentMethod.Name)
+            _response = New ActionResponse("Error saving motif", ResponseType.Err)
+        End Try
+        Return _response
+    End Function
+    Public Function SaveDesignDelimited(pProject As Project, pDesign As ProjectDesign, pThreads As ProjectThreadCollection, pBeads As ProjectBeadCollection, pDesignFileName As String) As ActionResponse
+        Dim _response As New ActionResponse("Design saved OK", ResponseType.OK)
         Dim _designEntryName As String = pDesignFileName & DESIGN_EXT
         Dim _designFile As String = Path.Combine(oDesignFolderName, _designEntryName)
         Dim _projectEntryName As String = pDesignFileName & PROJECT_EXT
@@ -232,7 +299,6 @@ Module ModFileHandling
         Dim _projectBeadsEntryName As String = pDesignFileName & PROJECT_BEADS_EXT
         Dim _projectBeadsFile As String = Path.Combine(oDesignFolderName, _projectBeadsEntryName)
         Dim _zipFile As String = Path.Combine(oDesignFolderName, pDesignFileName & DESIGN_ZIP_EXT)
-
         Try
             RemoveFile(_zipFile)
             Using _fs As New FileStream(_zipFile, FileMode.Create)
@@ -244,45 +310,56 @@ Module ModFileHandling
                                 OrElse TypeOf ex Is Security.SecurityException _
                                 OrElse TypeOf ex Is UnauthorizedAccessException
             LogUtil.LogException(ex, "Exception initialising archive file " & _zipFile, MethodBase.GetCurrentMethod.Name)
+            _response = New ActionResponse("Error removing old file", ResponseType.Warning)
         End Try
-        LogUtil.LogInfo("Opening zip file " & _zipFile, MethodBase.GetCurrentMethod.Name)
-        Using zipToOpen As New FileStream(_zipFile, FileMode.Open)
-            Using archive As New ZipArchive(zipToOpen, ZipArchiveMode.Update)
-                ' Save the project file
-                LogUtil.LogInfo("Saving project to " & _projectEntryName, MethodBase.GetCurrentMethod.Name)
-                Dim projectEntry As ZipArchiveEntry = archive.CreateEntry(_projectEntryName)
-                Using _output As New StreamWriter(projectEntry.Open())
-                    _output.WriteLine(pProject.ToSaveString)
-                    _output.Close()
-                End Using
-                ' Save the design file
-                LogUtil.LogInfo("Saving design to " & _designEntryName, MethodBase.GetCurrentMethod.Name)
-                Dim designEntry As ZipArchiveEntry = archive.CreateEntry(_designEntryName)
-                Using _output As New StreamWriter(designEntry.Open())
-                    _output.WriteLine(pDesign.ToSaveString)
-                    _output.Close()
-                End Using
-                ' Save the threads file
-                If pThreads IsNot Nothing AndAlso pThreads.Count > 0 Then
-                    LogUtil.LogInfo("Saving project threads to " & _projectThreadsEntryName, MethodBase.GetCurrentMethod.Name)
-                    Dim threadsEntry As ZipArchiveEntry = archive.CreateEntry(_projectThreadsEntryName)
-                    Using _output As New StreamWriter(threadsEntry.Open())
-                        _output.WriteLine(pThreads.ToSaveString)
+        Try
+            LogUtil.LogInfo("Opening zip file " & _zipFile, MethodBase.GetCurrentMethod.Name)
+            Using zipToOpen As New FileStream(_zipFile, FileMode.Open)
+                Using archive As New ZipArchive(zipToOpen, ZipArchiveMode.Update)
+                    ' Save the project file
+                    LogUtil.LogInfo("Saving project to " & _projectEntryName, MethodBase.GetCurrentMethod.Name)
+                    Dim projectEntry As ZipArchiveEntry = archive.CreateEntry(_projectEntryName)
+                    Using _output As New StreamWriter(projectEntry.Open())
+                        _output.WriteLine(pProject.ToSaveString)
                         _output.Close()
                     End Using
-                End If
-                ' Save the beads file
-                If pBeads IsNot Nothing AndAlso pBeads.Count > 0 Then
-                    LogUtil.LogInfo("Saving project beads to " & _projectBeadsEntryName, MethodBase.GetCurrentMethod.Name)
-                    Dim beadsEntry As ZipArchiveEntry = archive.CreateEntry(_projectBeadsEntryName)
-                    Using _output As New StreamWriter(beadsEntry.Open())
-                        _output.WriteLine(pBeads.ToSaveString)
+                    ' Save the design file
+                    LogUtil.LogInfo("Saving design to " & _designEntryName, MethodBase.GetCurrentMethod.Name)
+                    Dim designEntry As ZipArchiveEntry = archive.CreateEntry(_designEntryName)
+                    Using _output As New StreamWriter(designEntry.Open())
+                        _output.WriteLine(pDesign.ToSaveString)
                         _output.Close()
                     End Using
-                End If
+                    ' Save the threads file
+                    If pThreads IsNot Nothing AndAlso pThreads.Count > 0 Then
+                        LogUtil.LogInfo("Saving project threads to " & _projectThreadsEntryName, MethodBase.GetCurrentMethod.Name)
+                        Dim threadsEntry As ZipArchiveEntry = archive.CreateEntry(_projectThreadsEntryName)
+                        Using _output As New StreamWriter(threadsEntry.Open())
+                            _output.WriteLine(pThreads.ToSaveString)
+                            _output.Close()
+                        End Using
+                    End If
+                    ' Save the beads file
+                    If pBeads IsNot Nothing AndAlso pBeads.Count > 0 Then
+                        LogUtil.LogInfo("Saving project beads to " & _projectBeadsEntryName, MethodBase.GetCurrentMethod.Name)
+                        Dim beadsEntry As ZipArchiveEntry = archive.CreateEntry(_projectBeadsEntryName)
+                        Using _output As New StreamWriter(beadsEntry.Open())
+                            _output.WriteLine(pBeads.ToSaveString)
+                            _output.Close()
+                        End Using
+                    End If
+                End Using
             End Using
-        End Using
-        Return isOK
+        Catch ex As Exception When TypeOf ex Is ApplicationException _
+                                OrElse TypeOf ex Is ArgumentException _
+                                OrElse TypeOf ex Is IOException _
+                                OrElse TypeOf ex Is NotSupportedException _
+                                OrElse TypeOf ex Is Security.SecurityException _
+                                OrElse TypeOf ex Is UnauthorizedAccessException
+            LogUtil.LogException(ex, "Exception saving design file " & _zipFile, MethodBase.GetCurrentMethod.Name)
+            _response = New ActionResponse("Error saving file", ResponseType.Err)
+        End Try
+        Return _response
     End Function
     Public Function RemoveDesignFile(pProject As Project)
         Dim isOK As Boolean

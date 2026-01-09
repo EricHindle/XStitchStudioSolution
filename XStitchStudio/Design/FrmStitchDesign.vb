@@ -75,6 +75,8 @@ Public Class FrmStitchDesign
     Private iFloodFillCount As Integer
     Private isFloodCancelled As Boolean
 
+    Private oMotifFilename As String
+
 #End Region
 #Region "form control event handlers"
 #Region "form events"
@@ -216,10 +218,15 @@ Public Class FrmStitchDesign
                             EndRotate(_cell)
                         Case DesignAction.Text
                             EndPaste(_cell)
+                        Case DesignAction.PlaceMotif
+                            AddMissingThreadsToProject()
+                            EndPaste(_cell)
                     End Select
-                    ClearSelection()
+                    If oCurrentAction <> DesignAction.PlaceMotif Then
+                        ClearSelection()
+                    End If
                 Else
-                    Select Case oCurrentAction
+                        Select Case oCurrentAction
                         Case DesignAction.Copy,
                                  DesignAction.Cut,
                                  DesignAction.Flip,
@@ -227,16 +234,24 @@ Public Class FrmStitchDesign
                                  DesignAction.Move,
                                  DesignAction.Zoom,
                                  DesignAction.Rotate,
-                                 DesignAction.DrawShape
-
+                                 DesignAction.DrawShape,
+                                 DesignAction.SaveMotif
                             StartSelection(_cell)
                     End Select
                 End If
             Else
                 Select Case oCurrentAction
-                    Case DesignAction.Copy, DesignAction.Move, DesignAction.Paste, DesignAction.Rotate
+                    Case DesignAction.Copy,
+                                 DesignAction.Cut,
+                                 DesignAction.Flip,
+                                 DesignAction.Mirror,
+                                 DesignAction.Move,
+                                 DesignAction.Zoom,
+                                 DesignAction.Rotate,
+                                 DesignAction.DrawShape,
+                                 DesignAction.SaveMotif,
+                                 DesignAction.PlaceMotif
                         ClearSelection()
-
                 End Select
             End If
         End If
@@ -347,7 +362,6 @@ Public Class FrmStitchDesign
         DetermineUsedThreads()
         SetUndoForChanges()
     End Sub
-
     Private Sub SetUndoForChanges()
         If oCurrentUndoList.Count > 0 Then
             AddActionsToUndoList(oCurrentUndoList)
@@ -620,7 +634,8 @@ Public Class FrmStitchDesign
             _designSize.ShowDialog()
             If _designSize.IsChanged = True Then
                 AmendProject(oProject)
-                LblStatus.Text = SaveDesign()
+                Dim _response As ActionResponse = SaveDesign()
+                ShowStatus(_response)
                 iOriginX = oProject.OriginX
                 iOriginY = oProject.OriginY
                 oUndoList = New List(Of List(Of StitchAction))
@@ -760,6 +775,44 @@ Public Class FrmStitchDesign
         RedoLastUndo()
     End Sub
 
+    Private Sub MnuPlaceMotif_Click(sender As Object, e As EventArgs) Handles MnuPlaceMotif.Click
+        LoadMotifIntoSelectedStitches()
+        BeginPlaceMotif()
+    End Sub
+    Private Sub MnuSaveMotif_Click(sender As Object, e As EventArgs) Handles MnuSaveMotif.Click
+        BeginSaveArea()
+    End Sub
+    Private Sub MnuDrawSingleMotif_Click(sender As Object, e As EventArgs)
+
+    End Sub
+    Private Sub MnuDrawMotifLine_Click(sender As Object, e As EventArgs) Handles MnuDrawMotifLine.Click
+
+    End Sub
+    Private Sub MnuDrawMotifBorder_Click(sender As Object, e As EventArgs) Handles MnuDrawMotifBorder.Click
+
+    End Sub
+    Private Sub MnuBlockStitches_CheckedChanged(sender As Object, e As EventArgs) Handles MnuBlockStitches.CheckedChanged
+        If MnuBlockStitches.Checked <> isBlocksOn Then
+            ToggleBlocks()
+        End If
+    End Sub
+    Private Sub MnuBackStitches_CheckedChanged(sender As Object, e As EventArgs) Handles MnuBackStitches.CheckedChanged
+        If MnuBackStitches.Checked <> isBackStitchOn Then
+            ToggleBackstitches()
+        End If
+    End Sub
+    Private Sub MnuKnots_CheckedChanged(sender As Object, e As EventArgs) Handles MnuKnots.CheckedChanged
+        If MnuKnots.Checked <> isKnotsOn Then
+            ToggleKnots()
+        End If
+    End Sub
+    Private Sub MnuShowLog_Click(sender As Object, e As EventArgs) Handles MnuShowLog.Click
+        ShowLog()
+    End Sub
+    Private Sub MnuBackup_Click(sender As Object, e As EventArgs) Handles MnuBackup.Click
+        OpenBackupForm()
+    End Sub
+
 #End Region
 #Region "stitch buttons"
     Private Sub BtnFullStitch_Click(sender As Object, e As EventArgs) Handles BtnFullStitch.Click
@@ -879,7 +932,8 @@ Public Class FrmStitchDesign
 #End Region
 #Region "action buttons"
     Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
-        LblStatus.Text = SaveDesign()
+        Dim _response As ActionResponse = SaveDesign()
+        ShowStatus(_response)
     End Sub
     Private Sub BtnPrint_Click(sender As Object, e As EventArgs) Handles BtnPrint.Click
         ShowPrintForm()
@@ -976,31 +1030,22 @@ Public Class FrmStitchDesign
     Private Sub PicKnotsOn_Click(sender As Object, e As EventArgs) Handles PicKnotsOn.Click
         ToggleKnots()
     End Sub
-    Private Sub MnuBlockStitches_CheckedChanged(sender As Object, e As EventArgs) Handles MnuBlockStitches.CheckedChanged
-        If MnuBlockStitches.Checked <> isBlocksOn Then
-            ToggleBlocks()
-        End If
-    End Sub
-    Private Sub MnuBackStitches_CheckedChanged(sender As Object, e As EventArgs) Handles MnuBackStitches.CheckedChanged
-        If MnuBackStitches.Checked <> isBackStitchOn Then
-            ToggleBackstitches()
-        End If
-    End Sub
-    Private Sub MnuKnots_CheckedChanged(sender As Object, e As EventArgs) Handles MnuKnots.CheckedChanged
-        If MnuKnots.Checked <> isKnotsOn Then
-            ToggleKnots()
-        End If
-    End Sub
-    Private Sub MnuShowLog_Click(sender As Object, e As EventArgs) Handles MnuShowLog.Click
-        ShowLog()
-    End Sub
-
-    Private Sub MnuBackup_Click(sender As Object, e As EventArgs) Handles MnuBackup.Click
-        OpenBackupForm()
-    End Sub
 
 #Region "begin actions"
+    Private Sub BeginSaveArea()
+        ClearStatus()
+        oMotifFilename = FileUtil.GetFileName(FileUtil.OpenOrSave.Save, FileUtil.FileType.HSM, oMotifFolderName)
+        If Not String.IsNullOrWhiteSpace(oMotifFilename) Then
+            oCurrentAction = DesignAction.SaveMotif
+            LblCurrentAction.Text = "Saving selected stitches as motif"
+            oCurrentStitchType = DesignAction.none
+            SelectionMessage("Select area to save")
+        Else
+            ShowStatus(New ActionResponse("Motif Save cancelled", ResponseType.Info))
+        End If
+    End Sub
     Private Sub BeginCopy()
+        ClearStatus()
         oCurrentAction = DesignAction.Copy
         LblCurrentAction.Text = "Copy selected stitches"
         oCurrentStitchType = DesignAction.none
@@ -1008,6 +1053,7 @@ Public Class FrmStitchDesign
         SelectionMessage("Select area to copy")
     End Sub
     Private Sub BeginZoom()
+        ClearStatus()
         oCurrentAction = DesignAction.Zoom
         LblCurrentAction.Text = "Zoom into selected area"
         oCurrentStitchType = DesignAction.none
@@ -1015,6 +1061,7 @@ Public Class FrmStitchDesign
         SelectionMessage("Select area to zoom into")
     End Sub
     Private Sub BeginMove()
+        ClearStatus()
         oCurrentAction = DesignAction.Move
         LblCurrentAction.Text = "Move selected stitches"
         oCurrentStitchType = DesignAction.none
@@ -1022,6 +1069,7 @@ Public Class FrmStitchDesign
         SelectionMessage("Select area to move")
     End Sub
     Private Sub BeginCut()
+        ClearStatus()
         oCurrentAction = DesignAction.Cut
         LblCurrentAction.Text = "Cut selected stitches"
         oCurrentStitchType = DesignAction.none
@@ -1029,11 +1077,21 @@ Public Class FrmStitchDesign
         SelectionMessage("Select area to cut")
     End Sub
     Private Sub BeginPaste()
+        ClearStatus()
         oCurrentAction = DesignAction.Paste
         LblCurrentAction.Text = "Paste stitches"
         oCurrentStitchType = DesignAction.none
         StitchButtonSelected()
         SelectionMessage("Select location to paste")
+        isMoveInProgress = True
+    End Sub
+    Private Sub BeginPlaceMotif()
+        ClearStatus()
+        oCurrentAction = DesignAction.PlaceMotif
+        LblCurrentAction.Text = "Place Motif"
+        oCurrentStitchType = DesignAction.none
+        StitchButtonSelected()
+        SelectionMessage("Select location to place motif")
         isMoveInProgress = True
     End Sub
     Private Sub BeginFlip()
@@ -1051,6 +1109,7 @@ Public Class FrmStitchDesign
         SelectionMessage("Select area to mirror")
     End Sub
     Private Sub BeginRotate()
+        ClearStatus()
         oCurrentAction = DesignAction.Rotate
         LblCurrentAction.Text = "Rotate selected stitches"
         oCurrentStitchType = DesignAction.none
@@ -1072,21 +1131,25 @@ Public Class FrmStitchDesign
         SelectionMessage("Click on stitch to delete colour")
     End Sub
     Private Sub BeginPickColour()
+        ClearStatus()
         oCurrentAction = DesignAction.PickColour
         LblCurrentAction.Text = "Pick colour of selected stitch"
         SelectionMessage("Click on stitch to select colour")
     End Sub
     Private Sub BeginChangeColour()
+        ClearStatus()
         oCurrentAction = DesignAction.ChangeColour
         LblCurrentAction.Text = "Change colour"
         SelectionMessage("Click on stitch to change colour")
     End Sub
     Friend Sub BeginFloodFill()
+        ClearStatus()
         oCurrentAction = DesignAction.Fill
         LblCurrentAction.Text = "Fill area"
         SelectionMessage("Click in area to fill")
     End Sub
     Private Sub BeginClearArea()
+        ClearStatus()
         oCurrentAction = DesignAction.Clear
         LblCurrentAction.Text = "Clear area"
         SelectionMessage("Click in area to clear")
@@ -1132,7 +1195,8 @@ Public Class FrmStitchDesign
             End If
             CalculateScrollBarMaximumValues()
             RemoveMessage()
-            LblStatus.Text = String.Empty
+            ClearStatus()
+            Me.Text = oProject.ProjectName
         Else
             MsgBox("No project found", MsgBoxStyle.Exclamation, "Error")
             Close()
@@ -1445,13 +1509,43 @@ Public Class FrmStitchDesign
     Private Sub ShowPrintForm()
         OpenPrintForm(Me, oProject)
     End Sub
+    Private Sub LoadMotifIntoSelectedStitches()
+        ClearStatus()
+        oMotifFilename = FileUtil.GetFileName(FileUtil.OpenOrSave.Open, FileUtil.FileType.HSM, oMotifFolderName)
+        Dim oMotifString As String = ExtractMotifString(oMotifFilename)
+        Dim _motif As Motif = LoadMotifFromMotifString(oMotifString)
+        oCurrentSelectedBackstitch = _motif.BackStitches
+        oCurrentSelectedBlockStitch = _motif.BlockStitches
+        oCurrentSelectedKnot = _motif.Knots
+        oInProgressAnchor = New Point(0, 0)
+        oInProgressTerminus = New Point(_motif.Columns, _motif.Rows)
+        oCurrentSelection = New Point() {oInProgressAnchor, oInProgressTerminus}
+    End Sub
+
+    Private Sub AddMissingThreadsToProject()
+        AddMissingThreads(oCurrentSelectedBlockStitch)
+        AddMissingThreads(oCurrentSelectedBackstitch)
+        AddMissingBeads(oCurrentSelectedKnot)
+        InitialisePalette()
+    End Sub
+
+    Private Function LoadMotifFromMotifString(oMotifString As String) As Motif
+        Dim oMotif As New Motif
+        If Not String.IsNullOrEmpty(oMotifString) Then
+            If oMotifString.StartsWith(MOTIF_HDR) Then
+                Dim _motifValues As String() = oMotifString.Split(DESIGN_DELIM)
+                oMotif = MotifBuilder.AMotif.StartingWith(_motifValues).Build
+            End If
+        End If
+        Return oMotif
+    End Function
     Private Sub SaveProjectThreadsAsPalette(pNewName As String)
         LogUtil.ShowStatus("Saving palette", LblStatus, MyBase.Name)
         If Not String.IsNullOrEmpty(pNewName.Trim) Then
             Dim _paletteId As Integer = AddNewPalette(pNewName.Trim)
             SavePaletteThreads(_paletteId)
         Else
-            LogUtil.ShowStatus("No palette name", LblStatus, MyBase.Name)
+            ShowStatus(New ActionResponse("No palette name", ResponseType.Err))
         End If
     End Sub
     Private Sub SavePaletteThreads(pPaletteId As Integer)
@@ -1537,6 +1631,27 @@ Public Class FrmStitchDesign
         Next
         Return _blockErrors
     End Function
+    Private Sub ShowStatus(pResponse As ActionResponse)
+        ShowStatus(pResponse, False)
+    End Sub
+    Private Sub ShowStatus(pResponse As ActionResponse, pIsLogged As Boolean)
+        LblStatus.Text = pResponse.ResponseText
+        LblStatus.BackColor = TableLayoutPanel1.BackColor
+        LblStatus.ForeColor = TableLayoutPanel1.ForeColor
+        Select Case pResponse.ResponseType
+            Case ResponseType.Info
+                LblStatus.ForeColor = Color.Blue
+            Case ResponseType.Err
+                LblStatus.BackColor = Color.Red
+                LblStatus.ForeColor = Color.White
+        End Select
+        If pIsLogged Then
+            LogUtil.LogInfo(pResponse.ResponseText, MyBase.Name)
+        End If
+    End Sub
+    Private Sub ClearStatus()
+        ShowStatus(New ActionResponse())
+    End Sub
 #Region "mouse action"
     Private Sub StartSelection(pCell As Cell)
         pCell = AdjustCellOntoDesign(pCell)
@@ -1556,10 +1671,6 @@ Public Class FrmStitchDesign
             DrawSelectionInProgress(pCell.Position)
             SelectionMessage("Selection in progress")
         End If
-        'If isMoveInProgress Then
-        '    DrawSelectionInProgress(pCell.Position)
-        '    SelectionMessage("Relocation in progress")
-        'End If
     End Sub
     Private Sub SetPasteDestination(e As MouseEventArgs, pCell As Cell)
         oPasteDestination = pCell.Position
@@ -1572,7 +1683,7 @@ Public Class FrmStitchDesign
                 _width = oInProgressTerminus.Y - oInProgressAnchor.Y - 1
                 _height = oInProgressTerminus.X - oInProgressAnchor.X - 1
             End If
-            If oCurrentAction = DesignAction.Paste And oCurrentSelection.Length > 1 Then
+            If (oCurrentAction = DesignAction.Paste Or oCurrentAction = DesignAction.PlaceMotif) And oCurrentSelection.Length > 1 Then
                 _width = oCurrentSelection(1).X - oCurrentSelection(0).X - 1
                 _height = oCurrentSelection(1).Y - oCurrentSelection(0).Y - 1
             End If
@@ -1618,6 +1729,9 @@ Public Class FrmStitchDesign
                 ClearSelection()
             Case DesignAction.DrawShape
                 PlaceShape(oCurrentShapeType, oInProgressAnchor, oInProgressTerminus)
+                ClearSelection()
+            Case DesignAction.SaveMotif
+                SaveSelectedCells()
                 ClearSelection()
         End Select
     End Sub
@@ -1808,12 +1922,43 @@ Public Class FrmStitchDesign
         oCurrentSelectedBackstitch = New List(Of BackStitch)
         For Each _bkst As BackStitch In oProjectDesign.BackStitches
             If _bkst.FromBlockLocation.X >= _from_x And _bkst.FromBlockLocation.X <= _to_x _
-                And _bkst.FromBlockLocation.Y >= _from_y And _bkst.FromBlockLocation.Y <= _to_y Then
+                And _bkst.FromBlockLocation.Y >= _from_y And _bkst.FromBlockLocation.Y <= _to_y _
+              And _bkst.ToBlockLocation.X >= _from_x And _bkst.ToBlockLocation.X <= _to_x _
+                And _bkst.ToBlockLocation.Y >= _from_y And _bkst.ToBlockLocation.Y <= _to_y Then
                 oCurrentSelectedBackstitch.Add(_bkst)
             End If
         Next
-
     End Sub
+    Private Sub SaveSelectedCells()
+        Dim _width As Integer = oInProgressTerminus.X - oInProgressAnchor.X
+        Dim _height As Integer = oInProgressTerminus.Y - oInProgressAnchor.Y
+        Dim _motif As Motif = MotifBuilder.AMotif.StartingWithNothing() _
+                                                        .WithColumns(_width) _
+                                                        .WithRows(_height) _
+                                                        .WithBlockstitches(oCurrentSelectedBlockStitch) _
+                                                        .WithBackstitches(oCurrentSelectedBackstitch) _
+                                                        .WithKnots(oCurrentSelectedKnot) _
+                                                        .Build
+        AdjustMotifToZeroOrigin(_motif, oInProgressAnchor)
+        ShowMessage("Saving selected area as Motif", MyBase.Name)
+        Dim _response As ActionResponse = SaveMotifToFile(_motif, oMotifFilename)
+        RemoveMessage()
+        ShowMessage("Motif saved", 1.5, MyBase.Name)
+        ShowStatus(_response, True)
+    End Sub
+    Private Sub AdjustMotifToZeroOrigin(pMotif As Motif, pInProgressAnchor As Point)
+        For Each _blockstitch As BlockStitch In pMotif.BlockStitches
+            _blockstitch.BlockLocation = New Point(_blockstitch.BlockLocation.X - pInProgressAnchor.X, _blockstitch.BlockLocation.Y - pInProgressAnchor.Y)
+        Next
+        For Each _backstitch As BackStitch In pMotif.BackStitches
+            _backstitch.FromBlockLocation = New Point(_backstitch.FromBlockLocation.X - pInProgressAnchor.X, _backstitch.FromBlockLocation.Y - pInProgressAnchor.Y)
+            _backstitch.ToBlockLocation = New Point(_backstitch.ToBlockLocation.X - pInProgressAnchor.X, _backstitch.ToBlockLocation.Y - pInProgressAnchor.Y)
+        Next
+        For Each _knot As Knot In pMotif.Knots
+            _knot.BlockLocation = New Point(_knot.BlockLocation.X - pInProgressAnchor.X, _knot.BlockLocation.Y - pInProgressAnchor.Y)
+        Next
+    End Sub
+
 #End Region
 #Region "drawing image"
     Private Sub RedrawDesign()

@@ -11,7 +11,9 @@ Imports HindlewareLib.Imaging
 Imports HindlewareLib.Logging
 Imports XStitchStudio.Domain
 Imports XStitchStudio.Domain.Builders
+Imports XStitchStudio.Domain.ModDataTableAdapter
 Imports XStitchStudio.Domain.Objects
+Imports XStitchStudio.MyStitchDataSet
 Module ModDesign
 #Region "constants"
     Public oFabricColourList As List(Of Color) = {Color.White, Color.Linen, Color.AliceBlue, Color.MistyRose}.ToList
@@ -82,6 +84,8 @@ Module ModDesign
         Clear
         DrawShape
         Text
+        SaveMotif
+        PlaceMotif
         none
     End Enum
 #End Region
@@ -621,7 +625,7 @@ Module ModDesign
         Dim _image As Image = New Bitmap(1, 1)
         Dim _projectThread As ProjectThread = CType(oProjectThreads.Threads.Find(Function(p) p.ThreadId = pBlockStitch.ProjThread.ThreadId), ProjectThread)
         If _projectThread Is Nothing Then
-            LogUtil.DisplayStatusMessage("Bead missing from project :" & vbCrLf & pBlockStitch.ProjThread.Thread.ToString, Nothing, "MakeImage", False)
+            LogUtil.DisplayStatusMessage("Thread missing from project :" & vbCrLf & pBlockStitch.ProjThread.Thread.ToString, Nothing, "MakeImage", False)
         Else
             Dim _symbol As Symbol = FindSymbolById(_projectThread.SymbolId)
             _image = ImageUtil.ResizeImage(_symbol.SymbolImage, pPixels, pPixels)
@@ -909,5 +913,62 @@ Module ModDesign
         End If
         Return _textBlock
     End Function
+    Public Sub AddMissingBeads(pKnotList As List(Of Knot))
+        For Each oKnot As Knot In pKnotList
+            If oKnot.IsBead Then
+                Dim _thread As ProjectThread = FindProjectBead(oProject.ProjectId, oKnot.ThreadId)
+                If Not _thread.IsLoaded Then
+                    Dim _projbead As ProjectBead = ProjectBeadBuilder.AProjectBead.StartingWithNothing _
+                        .WithProjectId(oProject.ProjectId) _
+                        .WithBeadId(oKnot.ThreadId) _
+                        .WithIsUsed(True).Build
+                    AddNewProjectBead(_projbead)
+                End If
+            End If
+        Next
+        LoadDataTableFromXml(ModDataTableAdapter.Tables.ProjectBeads.ToString)
+    End Sub
+    Public Sub AddMissingThreads(pStitchList As List(Of BackStitch))
+        For Each oStitch As BackStitch In pStitchList
+            Dim _stitch As Stitch = CType(oStitch, Stitch)
+            AddMissingThread(_stitch)
+        Next
+        LoadDataTableFromXml(ModDataTableAdapter.Tables.ProjectThreads.ToString)
+    End Sub
+    Public Sub AddMissingThreads(pStitchList As List(Of BlockStitch))
+        For Each oStitch As BlockStitch In pStitchList
+            Dim _stitch As Stitch = CType(oStitch, Stitch)
+            AddMissingThread(_stitch)
+        Next
+        LoadDataTableFromXml(ModDataTableAdapter.Tables.ProjectThreads.ToString)
+    End Sub
+    Private Sub AddMissingThread(oStitch As Stitch)
+        Dim _thread As ProjectThread = FindProjectThread(oProject.ProjectId, oStitch.ThreadId)
+        If Not _thread.IsLoaded Then
+            Dim _projThread As ProjectThread = ProjectThreadBuilder.AProjectThread.StartingWithNothing _
+                .WithProjectId(oProject.ProjectId) _
+                .WithThreadId(oStitch.ThreadId) _
+                .WithSymbolId(FindRandomSymbol()) _
+                .WithIsUsed(True).Build
+            AddNewProjectThread(_projThread)
+        End If
+    End Sub
+    Private Function FindRandomSymbol() As Integer
+        Dim _list As List(Of Symbol) = GetSymbolsList()
+        Dim index As Integer = CInt(Math.Floor((_list.Count) * Rnd()))
+        Return _list(index).SymbolId
+    End Function
+    Public Sub AddMissingThreads(pStitchList As List(Of Stitch))
+        For Each oStitch As Stitch In pStitchList
+            Dim _thread As ProjectThread = FindProjectThread(oProject.ProjectId, oStitch.ThreadId)
+            If Not _thread.IsLoaded Then
+                Dim _projThread As ProjectThread = ProjectThreadBuilder.AProjectThread.StartingWithNothing _
+                    .WithProjectId(oProject.ProjectId) _
+                    .WithThreadId(oStitch.ThreadId) _
+                    .WithIsUsed(True).Build
+                AddNewProjectThread(_projThread)
+            End If
+        Next
+    End Sub
 #End Region
 End Module

@@ -628,7 +628,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:HindlewareLib, Version=1.13.11.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:HindlewareLib, Version=1.13.13.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_911CE736B514E1995B11041EFD573876"
@@ -916,7 +916,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:CrossStitch Studio"
         "ProductCode" = "8:{16B38F1E-771A-45EF-94D5-A572ACCCE513}"
-        "PackageCode" = "8:{F8ED9EB7-9F7F-4387-BDB6-8B985300BAB2}"
+        "PackageCode" = "8:{57BA1AEE-177B-4D4B-A546-413458EC65DF}"
         "UpgradeCode" = "8:{CB905F24-9995-4063-9549-E2529BE921C0}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"

@@ -37,6 +37,7 @@ Public Class FrmRestore
     Private oSourceDataPath As String
     Private oSourceImagePath As String
     Private oSourceDesignPath As String
+    Private oSourceMotifPath As String
     Private isInitializeComponentComplete As Boolean
     Private isLoading As Boolean
 
@@ -75,6 +76,7 @@ Public Class FrmRestore
             If result = MsgBoxResult.Yes Then
                 ImageRestore()
                 DesignRestore()
+                MotifRestore()
                 If DataTableRestore() > 0 Then
                     IsRestartRequired = True
                     Close()
@@ -136,16 +138,15 @@ Public Class FrmRestore
         oSourceImagePath = Path.Combine(TxtBackupPath.Text.Trim, "images")
         oSourceDataPath = Path.Combine(TxtBackupPath.Text.Trim, "data")
         oSourceDesignPath = Path.Combine(TxtBackupPath.Text.Trim, "designs")
+        oSourceMotifPath = Path.Combine(TxtBackupPath.Text.Trim, "motifs")
     End Sub
     Private Sub SetTargetPaths()
-        oDataFolderName = My.Settings.DataFilePath
-        oDesignFolderName = My.Settings.DesignFilePath
-        oImageFolderName = My.Settings.ImagePath
         AddProgress("Checking folders")
         Try
             CreateFolder(oDataFolderName, True)
             CreateFolder(oDesignFolderName, True)
             CreateFolder(oImageFolderName, True)
+            CreateFolder(oMotifFolderName, True)
         Catch ex As ApplicationException
             Throw ex
         End Try
@@ -154,17 +155,18 @@ Public Class FrmRestore
         FillDataTree()
         FillDesignTree()
         FillImageTree()
+        FillMotifTree()
     End Sub
     Private Sub FillDataTree()
         Dim _topNode As TreeNode = Nothing
         If My.Computer.FileSystem.DirectoryExists(oSourceDataPath) Then
             TvDataSets.Nodes.Clear()
             _topNode = TvDataSets.Nodes.Add("Data")
-            LoadTree(TvDataSets, TABLE_TAG, oSourceDataPath, DATA_EXT)
+            LoadTree(_topNode, TABLE_TAG, oSourceDataPath, DATA_EXT)
             _topNode.Expand()
         End If
     End Sub
-    Private Sub LoadTree(pTree As TreeView, pTag As String, pBackupSource As String, pExt As String)
+    Private Sub LoadTree(pTopNode As TreeNode, pTag As String, pBackupSource As String, pExt As String)
         Dim oDirInfo As DirectoryInfo = My.Computer.FileSystem.GetDirectoryInfo(pBackupSource)
         Dim oFolderList As List(Of DirectoryInfo) = oDirInfo.GetDirectories("*", SearchOption.AllDirectories).ToList
         oFolderList.Sort(Function(x As DirectoryInfo, y As DirectoryInfo) x.Name.CompareTo(y.Name))
@@ -173,7 +175,7 @@ Public Class FrmRestore
                 Dim _dirDate As Date = Date.ParseExact(_folderinfo.Name, "yyyyMMdd", System.Globalization.DateTimeFormatInfo.InvariantInfo)
                 Dim _dirDateString As String = Format(_dirDate, "dd MMM yyyy")
                 Dim _foldername As String = _folderinfo.Name
-                Dim _dateNode As TreeNode = pTree.Nodes(0).Nodes.Add(pTag & _foldername, _dirDateString)
+                Dim _dateNode As TreeNode = pTopNode.Nodes.Add(pTag & _foldername, _dirDateString)
                 Dim _dirInfo As DirectoryInfo = My.Computer.FileSystem.GetDirectoryInfo(_folderinfo.FullName)
                 Dim oFileList As List(Of FileInfo) = _dirInfo.GetFiles("*" & pExt, SearchOption.TopDirectoryOnly).ToList
                 oFileList.Sort(Function(x As FileInfo, y As FileInfo) x.Name.CompareTo(y.Name))
@@ -209,7 +211,15 @@ Public Class FrmRestore
         If My.Computer.FileSystem.DirectoryExists(oSourceDesignPath) Then
             TvDesigns.Nodes.Clear()
             _topNode = TvDesigns.Nodes.Add("Designs")
-            LoadTree(TvDesigns, DESIGN_TAG, oSourceDesignPath, DESIGN_ZIP_EXT)
+            LoadTree(_topNode, DESIGN_TAG, oSourceDesignPath, DESIGN_ZIP_EXT)
+            _topNode.Expand()
+        End If
+    End Sub
+    Private Sub FillMotifTree()
+        Dim _topNode As TreeNode = Nothing
+        If My.Computer.FileSystem.DirectoryExists(oSourceDesignPath) Then
+            _topNode = TvDesigns.Nodes.Add("Motifs")
+            LoadTree(_topNode, MOTIF_TAG, oSourceMotifPath, MOTIF_EXT)
             _topNode.Expand()
         End If
     End Sub
@@ -286,6 +296,28 @@ Public Class FrmRestore
             AddProgress("Design restore complete")
         End If
         Return _designCt
+    End Function
+    Private Function MotifRestore() As Integer
+        Dim _motifCt As Integer = 0
+        For Each oDateNode As TreeNode In TvDesigns.Nodes(1).Nodes
+            For Each oNode As TreeNode In oDateNode.Nodes
+                If oNode.Checked Then
+                    _motifCt += 1
+                End If
+            Next
+        Next
+        If _motifCt > 0 Then
+            AddProgress("Motif restore (" & CStr(_motifCt) & " motifs)")
+            For Each oDateNode As TreeNode In TvDesigns.Nodes(1).Nodes
+                For Each oNode As TreeNode In oDateNode.Nodes
+                    If oNode.Checked Then
+                        RestoreFile(oNode, MOTIF_TAG, oMotifFolderName)
+                    End If
+                Next
+            Next
+            AddProgress("motif restore complete")
+        End If
+        Return _motifCt
     End Function
     Private Sub RestoreFile(pNode As TreeNode, pTag As String, pDestination As String)
         Try

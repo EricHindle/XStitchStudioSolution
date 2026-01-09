@@ -15,6 +15,14 @@ Namespace Domain.Objects
             Remove
             ChangeThread
         End Enum
+        Friend Enum ResponseType
+            OK
+            Info
+            Warning
+            Err
+            Critical
+            None
+        End Enum
 #End Region
 #Region "classes"
         Friend Class StitchAction
@@ -185,6 +193,34 @@ Namespace Domain.Objects
                 _stitches = New List(Of BlockStitch)
                 _width = 0
                 _height = 0
+            End Sub
+        End Class
+        Friend Class ActionResponse
+            Private _responseText As String
+            Private _responseType As ResponseType
+            Public Property ResponseType() As ResponseType
+                Get
+                    Return _responseType
+                End Get
+                Set(ByVal value As ResponseType)
+                    _responseType = value
+                End Set
+            End Property
+            Public Property ResponseText() As String
+                Get
+                    Return _responseText
+                End Get
+                Set(ByVal value As String)
+                    _responseText = value
+                End Set
+            End Property
+            Public Sub New()
+                _responseText = String.Empty
+                _responseType = ResponseType.None
+            End Sub
+            Public Sub New(pText As String, pType As ResponseType)
+                _responseText = pText
+                _responseType = pType
             End Sub
         End Class
 #End Region

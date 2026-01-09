@@ -814,13 +814,13 @@ Partial Class FrmProject
         'MnuBuildCards
         '
         Me.MnuBuildCards.Name = "MnuBuildCards"
-        Me.MnuBuildCards.Size = New System.Drawing.Size(180, 22)
+        Me.MnuBuildCards.Size = New System.Drawing.Size(174, 22)
         Me.MnuBuildCards.Text = "Build Thread Cards"
         '
         'MnuPrintCards
         '
         Me.MnuPrintCards.Name = "MnuPrintCards"
-        Me.MnuPrintCards.Size = New System.Drawing.Size(180, 22)
+        Me.MnuPrintCards.Size = New System.Drawing.Size(174, 22)
         Me.MnuPrintCards.Text = "Print Thread Cards"
         '
         'MnuImportImage
@@ -847,14 +847,14 @@ Partial Class FrmProject
         '
         Me.MnuShowLog.Name = "MnuShowLog"
         Me.MnuShowLog.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.L), System.Windows.Forms.Keys)
-        Me.MnuShowLog.Size = New System.Drawing.Size(180, 22)
+        Me.MnuShowLog.Size = New System.Drawing.Size(166, 22)
         Me.MnuShowLog.Text = "Show Log"
         '
         'MnuDebug
         '
         Me.MnuDebug.CheckOnClick = True
         Me.MnuDebug.Name = "MnuDebug"
-        Me.MnuDebug.Size = New System.Drawing.Size(180, 22)
+        Me.MnuDebug.Size = New System.Drawing.Size(166, 22)
         Me.MnuDebug.Text = "Debug On"
         '
         'ToolStripMenuItem20
@@ -868,14 +868,14 @@ Partial Class FrmProject
         '
         Me.MnuBackup.Name = "MnuBackup"
         Me.MnuBackup.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.B), System.Windows.Forms.Keys)
-        Me.MnuBackup.Size = New System.Drawing.Size(180, 22)
+        Me.MnuBackup.Size = New System.Drawing.Size(154, 22)
         Me.MnuBackup.Text = "Backup"
         '
         'MnuRestore
         '
         Me.MnuRestore.Name = "MnuRestore"
         Me.MnuRestore.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
-        Me.MnuRestore.Size = New System.Drawing.Size(180, 22)
+        Me.MnuRestore.Size = New System.Drawing.Size(154, 22)
         Me.MnuRestore.Text = "Restore"
         '
         'ToolStripMenuItem23
@@ -970,7 +970,7 @@ Partial Class FrmProject
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.MinimumSize = New System.Drawing.Size(711, 692)
         Me.Name = "FrmProject"
-        Me.Text = "Cross Stitch Studio"
+        Me.Text = "CrossStitch Studio"
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
         CType(Me.DgvProjects, System.ComponentModel.ISupportInitialize).EndInit()

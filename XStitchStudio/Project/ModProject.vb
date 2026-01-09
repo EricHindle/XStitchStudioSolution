@@ -36,37 +36,44 @@ Module ModProject
     Public oFileProjectDesign As ProjectDesign
     Public oFileProjectThreadCollection As ProjectThreadCollection
     Public oFileProjectBeadCollection As ProjectBeadCollection
-    Public Function SaveDesign() As String
-        Dim _reply As String
+    Public Function SaveDesign() As ActionResponse
+        Dim _reply As New ActionResponse
         If oProject.IsLoaded Then
             If String.IsNullOrEmpty(oProject.DesignFileName) Then
                 oProject.DesignFileName = MakeFilename(oProject)
                 AmendProject(oProject)
             End If
             _reply = SaveDesignToFile(oProject.DesignFileName)
-        Else
-            _reply = "No project selected"
-            Beep()
         End If
         Return _reply
     End Function
-    Public Function SaveDesignToFile(pFilename As String) As String
-        Dim _reply As String = String.Empty
+    Public Function SaveDesignToFile(pFilename As String) As ActionResponse
+        Dim _reply As New ActionResponse
         LogUtil.Info("Saving design", MethodBase.GetCurrentMethod.Name)
         If My.Settings.isAutoArchiveOnSave Then
             Try
                 ArchiveExistingFile(pFilename, oDesignFolderName, DESIGN_ZIP_EXT, oDesignArchiveFolderName, DESIGN_ARC_EXT, AddDateTime.AddDate)
             Catch ex As Exception
-
+                LogUtil.Exception("Problem archiving existing file", ex, MethodBase.GetCurrentMethod.Name)
             End Try
         End If
-        SaveDesignDelimited(oProject, oProjectDesign, oProjectThreads, oProjectBeads, pFilename)
-        isSaved = True
-        LogUtil.LogInfo("Design saved to " & pFilename, MethodBase.GetCurrentMethod.Name)
-        _reply = "Save complete"
+        _reply = SaveDesignDelimited(oProject, oProjectDesign, oProjectThreads, oProjectBeads, pFilename)
+        If _reply.ResponseType <> ResponseType.Err Then
+            isSaved = True
+            LogUtil.LogInfo("Design saved to " & pFilename, MethodBase.GetCurrentMethod.Name)
+        Else
+            LogUtil.LogInfo(_reply.ResponseText, MethodBase.GetCurrentMethod.Name)
+        End If
         Return _reply
     End Function
-
+    Public Function SaveMotifToFile(pMotif As Motif, pFilename As String) As ActionResponse
+        Dim _reply As ActionResponse = SaveMotifDelimited(pMotif, pFilename)
+        If _reply.ResponseType = ResponseType.None Then
+            LogUtil.LogInfo("Motif saved to " & pFilename, MethodBase.GetCurrentMethod.Name)
+            _reply = New ActionResponse("Motif save complete", ResponseType.Info)
+        End If
+        Return _reply
+    End Function
     Public Sub LoadProject(pDgv As DataGridView)
         LoadProjectTable(pDgv)
         UpdateThreadsFromDesign(oFileProjectDesign, oFileProjectThreadCollection)

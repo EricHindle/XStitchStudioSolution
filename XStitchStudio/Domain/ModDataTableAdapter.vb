@@ -19,6 +19,7 @@ Namespace Domain
 #Region "constants"
         Public Const TABLE_TAG As String = "T~"
         Public Const DESIGN_TAG As String = "D~"
+        Public Const MOTIF_TAG As String = "M~"
         Public Const IMAGE_TAG As String = "I~"
         Private Const BRANDS_TABLE As String = "Brands Table"
         Private Const PROJECT_BEAD_TABLE As String = "Project Beads Table"
