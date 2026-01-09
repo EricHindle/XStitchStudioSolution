@@ -163,8 +163,8 @@ Partial Class FrmStitchDesign
         Me.MnuFloodFill = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuClearArea = New System.Windows.Forms.ToolStripMenuItem()
         Me.MotifsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MnuPlaceMotif = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuSaveMotif = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MnuPlaceMotif = New System.Windows.Forms.ToolStripMenuItem()
         Me.DrawMotifToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuDrawMotifLine = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuDrawMotifBorder = New System.Windows.Forms.ToolStripMenuItem()
@@ -1261,6 +1261,7 @@ Partial Class FrmStitchDesign
         '
         Me.LblStatus.AutoSize = True
         Me.LblStatus.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblStatus.ForeColor = System.Drawing.Color.Black
         Me.LblStatus.Location = New System.Drawing.Point(425, 6)
         Me.LblStatus.Margin = New System.Windows.Forms.Padding(3, 3, 3, 0)
         Me.LblStatus.Name = "LblStatus"
@@ -1648,35 +1649,35 @@ Partial Class FrmStitchDesign
         Me.MotifsToolStripMenuItem.Size = New System.Drawing.Size(53, 20)
         Me.MotifsToolStripMenuItem.Text = "Motifs"
         '
-        'MnuPlaceMotif
-        '
-        Me.MnuPlaceMotif.Name = "MnuPlaceMotif"
-        Me.MnuPlaceMotif.Size = New System.Drawing.Size(180, 22)
-        Me.MnuPlaceMotif.Text = "Place Motif"
-        '
         'MnuSaveMotif
         '
         Me.MnuSaveMotif.Name = "MnuSaveMotif"
-        Me.MnuSaveMotif.Size = New System.Drawing.Size(180, 22)
+        Me.MnuSaveMotif.Size = New System.Drawing.Size(138, 22)
         Me.MnuSaveMotif.Text = "Save Motif"
+        '
+        'MnuPlaceMotif
+        '
+        Me.MnuPlaceMotif.Name = "MnuPlaceMotif"
+        Me.MnuPlaceMotif.Size = New System.Drawing.Size(138, 22)
+        Me.MnuPlaceMotif.Text = "Place Motif"
         '
         'DrawMotifToolStripMenuItem
         '
         Me.DrawMotifToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuDrawMotifLine, Me.MnuDrawMotifBorder})
         Me.DrawMotifToolStripMenuItem.Name = "DrawMotifToolStripMenuItem"
-        Me.DrawMotifToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.DrawMotifToolStripMenuItem.Size = New System.Drawing.Size(138, 22)
         Me.DrawMotifToolStripMenuItem.Text = "Draw Motifs"
         '
         'MnuDrawMotifLine
         '
         Me.MnuDrawMotifLine.Name = "MnuDrawMotifLine"
-        Me.MnuDrawMotifLine.Size = New System.Drawing.Size(180, 22)
+        Me.MnuDrawMotifLine.Size = New System.Drawing.Size(109, 22)
         Me.MnuDrawMotifLine.Text = "Line"
         '
         'MnuDrawMotifBorder
         '
         Me.MnuDrawMotifBorder.Name = "MnuDrawMotifBorder"
-        Me.MnuDrawMotifBorder.Size = New System.Drawing.Size(180, 22)
+        Me.MnuDrawMotifBorder.Size = New System.Drawing.Size(109, 22)
         Me.MnuDrawMotifBorder.Text = "Border"
         '
         'MnuText

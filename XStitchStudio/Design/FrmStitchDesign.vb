@@ -226,7 +226,7 @@ Public Class FrmStitchDesign
                         ClearSelection()
                     End If
                 Else
-                        Select Case oCurrentAction
+                    Select Case oCurrentAction
                         Case DesignAction.Copy,
                                  DesignAction.Cut,
                                  DesignAction.Flip,
@@ -559,7 +559,8 @@ Public Class FrmStitchDesign
         End If
     End Sub
     Private Sub MnuSaveDesign_Click(sender As Object, e As EventArgs) Handles MnuSaveDesign.Click
-        SaveDesign()
+        Dim _response As ActionResponse = SaveDesign()
+        ShowStatus(_response)
     End Sub
     Private Sub MnuSaveDesignAs_Click(sender As Object, e As EventArgs) Handles MnuSaveDesignAs.Click
         Dim _filename As String = FileUtil.GetFileName(FileUtil.OpenOrSave.Save, FileUtil.FileType.HSZ, My.Settings.DesignFilePath)
@@ -1636,17 +1637,25 @@ Public Class FrmStitchDesign
     End Sub
     Private Sub ShowStatus(pResponse As ActionResponse, pIsLogged As Boolean)
         LblStatus.Text = pResponse.ResponseText
-        LblStatus.BackColor = TableLayoutPanel1.BackColor
-        LblStatus.ForeColor = TableLayoutPanel1.ForeColor
-        Select Case pResponse.ResponseType
-            Case ResponseType.Info
-                LblStatus.ForeColor = Color.Blue
-            Case ResponseType.Err
-                LblStatus.BackColor = Color.Red
-                LblStatus.ForeColor = Color.White
-        End Select
-        If pIsLogged Then
-            LogUtil.LogInfo(pResponse.ResponseText, MyBase.Name)
+        If Not String.IsNullOrWhiteSpace(pResponse.ResponseText) Then
+            LblStatus.BackColor = TableLayoutPanel1.BackColor
+            LblStatus.ForeColor = TableLayoutPanel1.ForeColor
+            Select Case pResponse.ResponseType
+                Case ResponseType.OK
+                    LblStatus.ForeColor = Color.ForestGreen
+                Case ResponseType.Info
+                    LblStatus.ForeColor = Color.MediumBlue
+                Case ResponseType.Warning
+                    LblStatus.ForeColor = Color.MediumOrchid
+                Case ResponseType.Err
+                    LblStatus.ForeColor = Color.Red
+                Case ResponseType.Critical
+                    LblStatus.BackColor = Color.Red
+                    LblStatus.ForeColor = Color.White
+            End Select
+            If pIsLogged Then
+                LogUtil.LogInfo(pResponse.ResponseText, MyBase.Name)
+            End If
         End If
     End Sub
     Private Sub ClearStatus()

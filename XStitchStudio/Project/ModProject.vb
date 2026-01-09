@@ -39,11 +39,14 @@ Module ModProject
     Public Function SaveDesign() As ActionResponse
         Dim _reply As New ActionResponse
         If oProject.IsLoaded Then
+            ShowMessage("Saving Design...", MethodBase.GetCurrentMethod.Name)
             If String.IsNullOrEmpty(oProject.DesignFileName) Then
                 oProject.DesignFileName = MakeFilename(oProject)
                 AmendProject(oProject)
             End If
             _reply = SaveDesignToFile(oProject.DesignFileName)
+            RemoveMessage()
+            ShowMessage(_reply.ResponseText, 1.5, MethodBase.GetCurrentMethod.Name)
         End If
         Return _reply
     End Function
