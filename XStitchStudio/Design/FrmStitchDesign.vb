@@ -41,7 +41,7 @@ Public Class FrmStitchDesign
     Private oCurrentSelectedBlockStitch As New List(Of BlockStitch)
     Private oCurrentSelectedKnot As New List(Of Knot)
     Private oCurrentSelectedBackstitch As New List(Of BackStitch)
-
+    Private oCurrentMotif As New Motif
     Private isBlockstitchAction As Boolean
     Private isBackstitchAction As Boolean
     Private isKnotAction As Boolean
@@ -231,7 +231,9 @@ Public Class FrmStitchDesign
                                  DesignAction.Zoom,
                                  DesignAction.Rotate,
                                  DesignAction.DrawShape,
-                                 DesignAction.SaveMotif
+                                 DesignAction.SaveMotif,
+                                 DesignAction.PlaceMotifLine,
+                                 DesignAction.PlaceMotifBorder
                             StartSelection(_cell)
                     End Select
                 End If
@@ -246,7 +248,9 @@ Public Class FrmStitchDesign
                                  DesignAction.Rotate,
                                  DesignAction.DrawShape,
                                  DesignAction.SaveMotif,
-                                 DesignAction.PlaceMotif
+                                 DesignAction.PlaceMotif,
+                                 DesignAction.PlaceMotifLine,
+                                 DesignAction.PlaceMotifBorder
                         ClearSelection()
                 End Select
             End If
@@ -773,20 +777,31 @@ Public Class FrmStitchDesign
     End Sub
 
     Private Sub MnuPlaceMotif_Click(sender As Object, e As EventArgs) Handles MnuPlaceMotif.Click
-        LoadMotifIntoSelectedStitches()
-        BeginPlaceMotif()
+        Dim _response As ActionResponse = LoadMotifIntoSelectedStitches()
+        If _response.ResponseType = ResponseType.OK Then
+            BeginPlaceMotif()
+        Else
+            ShowStatus(_response, False)
+        End If
     End Sub
     Private Sub MnuSaveMotif_Click(sender As Object, e As EventArgs) Handles MnuSaveMotif.Click
         BeginSaveArea()
     End Sub
-    Private Sub MnuDrawSingleMotif_Click(sender As Object, e As EventArgs)
-
-    End Sub
     Private Sub MnuDrawMotifLine_Click(sender As Object, e As EventArgs) Handles MnuDrawMotifLine.Click
-
+        Dim _response As ActionResponse = LoadMotifIntoSelectedStitches()
+        If _response.ResponseType = ResponseType.OK Then
+            BeginPlaceMotifLine()
+        Else
+            ShowStatus(_response, False)
+        End If
     End Sub
     Private Sub MnuDrawMotifBorder_Click(sender As Object, e As EventArgs) Handles MnuDrawMotifBorder.Click
-
+        Dim _response As ActionResponse = LoadMotifIntoSelectedStitches()
+        If _response.ResponseType = ResponseType.OK Then
+            BeginPlaceMotifBorder()
+        Else
+            ShowStatus(_response, False)
+        End If
     End Sub
     Private Sub MnuBlockStitches_CheckedChanged(sender As Object, e As EventArgs) Handles MnuBlockStitches.CheckedChanged
         If MnuBlockStitches.Checked <> isBlocksOn Then
@@ -1031,15 +1046,11 @@ Public Class FrmStitchDesign
 #Region "begin actions"
     Private Sub BeginSaveArea()
         ClearStatus()
-        oMotifFilename = FileUtil.GetFileName(FileUtil.OpenOrSave.Save, FileUtil.FileType.HSM, oMotifFolderName)
-        If Not String.IsNullOrWhiteSpace(oMotifFilename) Then
-            oCurrentAction = DesignAction.SaveMotif
-            LblCurrentAction.Text = "Saving selected stitches as motif"
-            oCurrentStitchType = DesignAction.none
-            SelectionMessage("Select area to save")
-        Else
-            ShowStatus(New ActionResponse("Motif Save cancelled", ResponseType.Info))
-        End If
+        oCurrentAction = DesignAction.SaveMotif
+        LblCurrentAction.Text = "Saving selected stitches as motif"
+        oCurrentStitchType = DesignAction.none
+        StitchButtonSelected()
+        SelectionMessage("Select area to save")
     End Sub
     Private Sub BeginCopy()
         ClearStatus()
@@ -1090,6 +1101,22 @@ Public Class FrmStitchDesign
         StitchButtonSelected()
         SelectionMessage("Select location to place motif")
         isMoveInProgress = True
+    End Sub
+    Private Sub BeginPlaceMotifLine()
+        ClearStatus()
+        oCurrentAction = DesignAction.PlaceMotifLine
+        LblCurrentAction.Text = "Place line of Motifs"
+        oCurrentStitchType = DesignAction.none
+        StitchButtonSelected()
+        SelectionMessage("Select location to place motifs")
+    End Sub
+    Private Sub BeginPlaceMotifBorder()
+        ClearStatus()
+        oCurrentAction = DesignAction.PlaceMotifBorder
+        LblCurrentAction.Text = "Place border of Motifs"
+        oCurrentStitchType = DesignAction.none
+        StitchButtonSelected()
+        SelectionMessage("Select location to place border")
     End Sub
     Private Sub BeginFlip()
         oCurrentAction = DesignAction.Flip
@@ -1239,7 +1266,7 @@ Public Class FrmStitchDesign
                 LoadBeadPalette()
             End If
         End If
-            Return isOK
+        Return isOK
     End Function
     Private Sub LoadThreadPalette(_stitchDisplayStyle As StitchDisplayStyle)
         ThreadLayoutPanel.Controls.Clear()
@@ -1247,73 +1274,73 @@ Public Class FrmStitchDesign
         oProjectBeads = FindProjectBeads(oProject.ProjectId)
 
         oProjectThreads.Threads.Sort(Function(x As ProjectThread, y As ProjectThread) x.Thread.SortNumber.CompareTo(y.Thread.SortNumber))
-            Dim _panelWidth As Integer = ThreadLayoutPanel.Width
-            Dim _panelHeight As Integer = ThreadLayoutPanel.Height
-            Dim _threadCt As Integer = oProjectThreads.Count
-            Dim _picSize As Integer = ShrinkPic(ThreadLayoutPanel, _threadCt, PALETTE_COLOUR_SIZE)
-            Dim _firstPicThread As PictureBox = Nothing
+        Dim _panelWidth As Integer = ThreadLayoutPanel.Width
+        Dim _panelHeight As Integer = ThreadLayoutPanel.Height
+        Dim _threadCt As Integer = oProjectThreads.Count
+        Dim _picSize As Integer = ShrinkPic(ThreadLayoutPanel, _threadCt, PALETTE_COLOUR_SIZE)
+        Dim _firstPicThread As PictureBox = Nothing
 
-            For Each _projectThread As ProjectThread In oProjectThreads.Threads
-                Dim _thread As Thread = _projectThread.Thread
-                Dim _picThread As New PictureBox()
-                Dim _image As Image = New Bitmap(_picSize, _picSize)
-                Dim _pen As New Pen(_thread.Colour, _picSize / 8) With {
-                                                .StartCap = Drawing2D.LineCap.Round,
-                                                .EndCap = Drawing2D.LineCap.Round
-                                            }
-                With _picThread
-                    .Name = CStr(_thread.ThreadId)
-                    .Size = New Size(_picSize, _picSize)
-                    .BorderStyle = BorderStyle.None
-                    .SizeMode = PictureBoxSizeMode.Zoom
-                    .BackColor = Color.White
-                    Select Case _stitchDisplayStyle
-                        Case StitchDisplayStyle.Blocks
-                            .BackColor = _thread.Colour
-                        Case StitchDisplayStyle.BlocksWithSymbols
-                            .BackColor = _thread.Colour
-                            If _projectThread.SymbolId > 0 Then
-                                _image = FindSymbolById(_projectThread.SymbolId).SymbolImage
-                            End If
-                        Case StitchDisplayStyle.Crosses
-                            Using _graphics As Graphics = Graphics.FromImage(_image)
-                                _graphics.DrawLine(_pen, 2, 2, _picSize - 2, _picSize - 2)
-                                _graphics.DrawLine(_pen, _picSize - 2, 2, 2, _picSize - 2)
-                            End Using
-                        Case StitchDisplayStyle.BlackWhiteSymbols
-                            If _projectThread.SymbolId > 0 Then
-                                _image = FindSymbolById(_projectThread.SymbolId).SymbolImage
-                            End If
-                        Case StitchDisplayStyle.ColouredSymbols
-                            If _projectThread.SymbolId > 0 Then
-                                _image = FindSymbolById(_projectThread.SymbolId).SymbolImage
-                                If _image IsNot Nothing Then
-                                    Dim _symbolColour As Color = _thread.Colour
-                                    Dim _imageAttributes As ImageAttributes = MakeColourChangeAttributes(_thread)
-                                    Using _graphics As Graphics = Graphics.FromImage(_image)
-                                        _graphics.DrawImage(_image, New Rectangle(New Point(0, 0), _image.Size), 0, 0, _image.Width, _image.Height, GraphicsUnit.Pixel, _imageAttributes)
-                                    End Using
-                                End If
-                            End If
-                    End Select
-                    If _projectThread.IsUsed Then
+        For Each _projectThread As ProjectThread In oProjectThreads.Threads
+            Dim _thread As Thread = _projectThread.Thread
+            Dim _picThread As New PictureBox()
+            Dim _image As Image = New Bitmap(_picSize, _picSize)
+            Dim _pen As New Pen(_thread.Colour, _picSize / 8) With {
+                                            .StartCap = Drawing2D.LineCap.Round,
+                                            .EndCap = Drawing2D.LineCap.Round
+                                        }
+            With _picThread
+                .Name = CStr(_thread.ThreadId)
+                .Size = New Size(_picSize, _picSize)
+                .BorderStyle = BorderStyle.None
+                .SizeMode = PictureBoxSizeMode.Zoom
+                .BackColor = Color.White
+                Select Case _stitchDisplayStyle
+                    Case StitchDisplayStyle.Blocks
+                        .BackColor = _thread.Colour
+                    Case StitchDisplayStyle.BlocksWithSymbols
+                        .BackColor = _thread.Colour
+                        If _projectThread.SymbolId > 0 Then
+                            _image = FindSymbolById(_projectThread.SymbolId).SymbolImage
+                        End If
+                    Case StitchDisplayStyle.Crosses
                         Using _graphics As Graphics = Graphics.FromImage(_image)
-                            Dim _points As Point() = {New Point(0, 0), New Point(0, 8), New Point(8, 0)}
-                            _graphics.FillPolygon(New SolidBrush(ThreadLayoutPanel.BackColor), _points)
+                            _graphics.DrawLine(_pen, 2, 2, _picSize - 2, _picSize - 2)
+                            _graphics.DrawLine(_pen, _picSize - 2, 2, 2, _picSize - 2)
                         End Using
-                    End If
-                    Dim tt As New ToolTip
-                    tt.SetToolTip(_picThread, _thread.ColourName & " " & _thread.ThreadNo)
-                    AddHandler .Click, AddressOf Thread_Palette_Click
-                    .Image = _image
-                    _pen.Dispose()
-                End With
-                ThreadLayoutPanel.Controls.Add(_picThread)
-                _firstPicThread = If(_firstPicThread, _picThread)
-            Next
-            If _firstPicThread IsNot Nothing Then
-                SelectThreadPaletteColour(_firstPicThread)
-            End If
+                    Case StitchDisplayStyle.BlackWhiteSymbols
+                        If _projectThread.SymbolId > 0 Then
+                            _image = FindSymbolById(_projectThread.SymbolId).SymbolImage
+                        End If
+                    Case StitchDisplayStyle.ColouredSymbols
+                        If _projectThread.SymbolId > 0 Then
+                            _image = FindSymbolById(_projectThread.SymbolId).SymbolImage
+                            If _image IsNot Nothing Then
+                                Dim _symbolColour As Color = _thread.Colour
+                                Dim _imageAttributes As ImageAttributes = MakeColourChangeAttributes(_thread)
+                                Using _graphics As Graphics = Graphics.FromImage(_image)
+                                    _graphics.DrawImage(_image, New Rectangle(New Point(0, 0), _image.Size), 0, 0, _image.Width, _image.Height, GraphicsUnit.Pixel, _imageAttributes)
+                                End Using
+                            End If
+                        End If
+                End Select
+                If _projectThread.IsUsed Then
+                    Using _graphics As Graphics = Graphics.FromImage(_image)
+                        Dim _points As Point() = {New Point(0, 0), New Point(0, 8), New Point(8, 0)}
+                        _graphics.FillPolygon(New SolidBrush(ThreadLayoutPanel.BackColor), _points)
+                    End Using
+                End If
+                Dim tt As New ToolTip
+                tt.SetToolTip(_picThread, _thread.ColourName & " " & _thread.ThreadNo)
+                AddHandler .Click, AddressOf Thread_Palette_Click
+                .Image = _image
+                _pen.Dispose()
+            End With
+            ThreadLayoutPanel.Controls.Add(_picThread)
+            _firstPicThread = If(_firstPicThread, _picThread)
+        Next
+        If _firstPicThread IsNot Nothing Then
+            SelectThreadPaletteColour(_firstPicThread)
+        End If
 
     End Sub
     Private Sub LoadBeadPalette()
@@ -1529,18 +1556,37 @@ Public Class FrmStitchDesign
     Private Sub ShowPrintForm()
         OpenPrintForm(Me, oProject)
     End Sub
-    Private Sub LoadMotifIntoSelectedStitches()
+    Private Function LoadMotifIntoSelectedStitches() As ActionResponse
+        Dim _response As New ActionResponse
         ClearStatus()
         oMotifFilename = FileUtil.GetFileName(FileUtil.OpenOrSave.Open, FileUtil.FileType.HSM, oMotifFolderName)
-        Dim oMotifString As String = ExtractMotifString(oMotifFilename)
-        Dim _motif As Motif = LoadMotifFromMotifString(oMotifString)
-        oCurrentSelectedBackstitch = _motif.BackStitches
-        oCurrentSelectedBlockStitch = _motif.BlockStitches
-        oCurrentSelectedKnot = _motif.Knots
-        oInProgressAnchor = New Point(0, 0)
-        oInProgressTerminus = New Point(_motif.Columns, _motif.Rows)
-        oCurrentSelection = New Point() {oInProgressAnchor, oInProgressTerminus}
-    End Sub
+        If Not String.IsNullOrWhiteSpace(oMotifFilename) Then
+            Dim oMotifString As String = ExtractMotifString(oMotifFilename)
+            oCurrentMotif = LoadMotifFromMotifString(oMotifString)
+            oCurrentSelectedBackstitch = New List(Of BackStitch)
+            For Each _bks As BackStitch In oCurrentMotif.BackStitches
+                _bks.ProjectId = oProject.ProjectId
+                oCurrentSelectedBackstitch.Add(_bks)
+            Next
+            oCurrentSelectedBlockStitch = New List(Of BlockStitch)
+            For Each _blk As BlockStitch In oCurrentMotif.BlockStitches
+                _blk.ProjectId = oProject.ProjectId
+                oCurrentSelectedBlockStitch.Add(_blk)
+            Next
+            oCurrentSelectedKnot = New List(Of Knot)
+            For Each _knot As Knot In oCurrentMotif.Knots
+                _knot.ProjectId = oProject.ProjectId
+                oCurrentSelectedKnot.Add(_knot)
+            Next
+            oInProgressAnchor = New Point(0, 0)
+            oInProgressTerminus = New Point(oCurrentMotif.Columns, oCurrentMotif.Rows)
+            oCurrentSelection = New Point() {oInProgressAnchor, oInProgressTerminus}
+            _response.ResponseType = ResponseType.OK
+        Else
+            _response = New ActionResponse("No motif selected", ResponseType.Warning)
+        End If
+        Return _response
+    End Function
 
     Private Sub AddMissingThreadsToProject()
         AddMissingThreads(oCurrentSelectedBlockStitch)
@@ -1761,7 +1807,70 @@ Public Class FrmStitchDesign
             Case DesignAction.SaveMotif
                 SaveSelectedCells()
                 ClearSelection()
+            Case DesignAction.PlaceMotifLine
+                PlaceMotifLine(oInProgressAnchor, oInProgressTerminus)
+                ClearSelection()
+            Case DesignAction.PlaceMotifBorder
+                PlaceMotifBorder(oInProgressAnchor, oInProgressTerminus)
+                ClearSelection()
         End Select
+    End Sub
+    Private Sub PlaceMotifLine(oInProgressAnchor As Point, oInProgressTerminus As Point)
+        AddMissingThreadsToProject()
+        Dim _anchorLeft As Integer = oInProgressAnchor.X
+        Dim _anchorTop As Integer = oInProgressAnchor.Y
+        Dim _motifColumns As Integer = oCurrentMotif.Columns + 1
+        Dim _motifRows As Integer = oCurrentMotif.Rows + 1
+        If oInProgressTerminus.X > oInProgressAnchor.X + oCurrentMotif.Columns Then
+            Dim _lineWidth As Integer = oInProgressTerminus.X - oInProgressAnchor.X + 2
+            Dim _motifCount As Integer = Math.Floor(_lineWidth / _motifColumns)
+            PasteMotifsHorizontally(_anchorLeft, _anchorTop, _motifCount)
+        End If
+        If oInProgressTerminus.Y > oInProgressAnchor.Y + oCurrentMotif.Rows Then
+            Dim _columnHeight As Integer = oInProgressTerminus.Y - oInProgressAnchor.Y + 2
+            Dim _motifCount As Integer = Math.Floor(_columnHeight / (oCurrentMotif.Rows + 1))
+            PasteMotifsVertically(_anchorLeft, _anchorTop, _motifCount)
+        End If
+    End Sub
+    Private Sub PlaceMotifBorder(oInProgressAnchor As Point, oInProgressTerminus As Point)
+        AddMissingThreadsToProject()
+        Dim _anchorLeft As Integer = oInProgressAnchor.X
+        Dim _anchorTop As Integer = oInProgressAnchor.Y
+        Dim _borderWidth As Integer = oInProgressTerminus.X - oInProgressAnchor.X + 2
+        Dim _borderHeight As Integer = oInProgressTerminus.Y - oInProgressAnchor.Y + 2
+        Dim _motifColumns As Integer = oCurrentMotif.Columns + 1
+        Dim _motifRows As Integer = oCurrentMotif.Rows + 1
+        Dim _horizontalMotifCount As Integer = Math.Floor(_borderWidth / _motifColumns)
+        Dim _verticalMotifCount As Integer = Math.Floor(_borderHeight / _motifRows)
+        PasteMotifsHorizontally(_anchorLeft, _anchorTop, _horizontalMotifCount)
+        _anchorLeft = oInProgressAnchor.X
+        _anchorTop = oInProgressAnchor.Y + (_motifRows * (_verticalMotifCount - 1))
+        PasteMotifsHorizontally(_anchorLeft, _anchorTop, _horizontalMotifCount)
+        _anchorLeft = oInProgressAnchor.X
+        _anchorTop = oInProgressAnchor.Y + oCurrentMotif.Rows + 1
+        PasteMotifsVertically(_anchorLeft, _anchorTop, _verticalMotifCount - 2)
+        _anchorLeft = oInProgressAnchor.X + (_motifColumns * (_horizontalMotifCount - 1))
+        _anchorTop = oInProgressAnchor.Y + oCurrentMotif.Rows + 1
+        PasteMotifsVertically(_anchorLeft, _anchorTop, _verticalMotifCount - 2)
+    End Sub
+
+    Private Sub PasteMotifsHorizontally(_col As Integer, _row As Integer, _hct As Integer)
+        For _mNo As Integer = 1 To _hct
+            Dim _cell As New Cell With {
+                .Position = New Point(_col, _row)
+            }
+            EndPaste(_cell)
+            _col += oCurrentMotif.Columns + 1
+        Next
+    End Sub
+    Private Sub PasteMotifsVertically(_col As Integer, _row As Integer, _vct As Integer)
+        For _mNo As Integer = 1 To _vct
+            Dim _cell As New Cell With {
+                .Position = New Point(_col, _row)
+            }
+            EndPaste(_cell)
+            _row += oCurrentMotif.Rows + 1
+        Next
     End Sub
     Private Sub PlaceShape(oCurrentShapeType As ShapeType, oInProgressAnchor As Point, oInProgressTerminus As Point)
         If oCurrentShapeType = ShapeType.Line Then
@@ -1810,9 +1919,11 @@ Public Class FrmStitchDesign
         Dim isStitchesSelected As Boolean
         pCell = AdjustCellOntoDesign(pCell)
         oInProgressTerminus = pCell.Position
-        AdjustTerminusForLine(pCell.Position)
-        oCurrentSelection = New Point() {oInProgressAnchor, oInProgressTerminus}
-        GetSelectedCells()
+        AdjustTerminusForShape(pCell.Position)
+        If oCurrentAction <> DesignAction.PlaceMotifLine AndAlso oCurrentAction <> DesignAction.PlaceMotifBorder Then
+            oCurrentSelection = New Point() {oInProgressAnchor, oInProgressTerminus}
+            GetSelectedCells()
+        End If
         isSelectionInProgress = False
         If oCurrentSelectedBackstitch.Count = 0 AndAlso oCurrentSelectedBlockStitch.Count = 0 AndAlso oCurrentSelectedKnot.Count = 0 Then
             isStitchesSelected = False
@@ -1878,12 +1989,13 @@ Public Class FrmStitchDesign
         SelectionMessage(String.Empty)
         oCurrentAction = DesignAction.none
         oCurrentShapeType = ShapeType.None
+        oCurrentMotif = New Motif
         LblCurrentAction.Text = String.Empty
     End Sub
     Private Sub EndSelection(pCell As Cell)
         If isSelectionInProgress Then
             oInProgressTerminus = pCell.Position
-            AdjustTerminusForLine(oInProgressTerminus)
+            AdjustTerminusForShape(oInProgressTerminus)
             oCurrentSelection = New Point() {oInProgressAnchor, oInProgressTerminus}
             GetSelectedCells()
             ClearSelection()
@@ -1902,9 +2014,9 @@ Public Class FrmStitchDesign
         End If
         Return _colour
     End Function
-    Private Sub DrawSelectionInProgress(pCell As Point)
-        oInProgressTerminus = New Point(pCell.X - 1, pCell.Y - 1)
-        AdjustTerminusForLine(pCell)
+    Private Sub DrawSelectionInProgress(pCursorPosition As Point)
+        oInProgressTerminus = New Point(pCursorPosition.X - 1, pCursorPosition.Y - 1)
+        AdjustTerminusForShape(pCursorPosition)
         If isSelectionWidthVariable Then
             oSelectionPenWidth = Math.Max(2, iPixelsPerCell / oVariableWidthFraction)
         Else
@@ -1917,17 +2029,42 @@ Public Class FrmStitchDesign
         _toCellLocation_y = (oInProgressTerminus.Y + iOriginY + iYOffset - topcorner.Y) * iPixelsPerCell
         PicDesign.Invalidate()
     End Sub
-    Private Sub AdjustTerminusForLine(pCell As Point)
+    Private Sub AdjustTerminusForShape(pCursorPosition As Point)
+        Dim _iWidth As Integer = oInProgressTerminus.X - oInProgressAnchor.X + 1
+        Dim _iHeight As Integer = oInProgressTerminus.Y - oInProgressAnchor.Y + 1
+        Dim _pasteColumns As Integer = oCurrentMotif.Columns + 1
+        Dim _pasteRows As Integer = oCurrentMotif.Rows + 1
+        Dim _hct As Integer = Math.Floor(_iWidth / (_pasteColumns))
+        Dim _vct As Integer = Math.Floor(_iHeight / (_pasteRows))
+
+
+
+        'Dim _iWidth As Integer = Math.Abs(oInProgressAnchor.X - pCursorPosition.X)
+        'Dim _iHeight As Integer = Math.Abs(oInProgressAnchor.Y - pCursorPosition.Y)
+
         If oCurrentShapeType = ShapeType.Line Then
-            Dim _iWidth As Integer = Math.Abs(oInProgressAnchor.X - oInProgressTerminus.X)
-            Dim _iHeight As Integer = Math.Abs(oInProgressAnchor.Y - oInProgressTerminus.Y)
             If _iWidth > _iHeight Then
-                oInProgressTerminus = New Point(pCell.X - 1, oInProgressAnchor.Y)
+                oInProgressTerminus = New Point(pCursorPosition.X - 1, oInProgressAnchor.Y)
             Else
-                oInProgressTerminus = New Point(oInProgressAnchor.X, pCell.Y - 1)
+                oInProgressTerminus = New Point(oInProgressAnchor.X, pCursorPosition.Y - 1)
             End If
         End If
+        If oCurrentAction = DesignAction.PlaceMotifLine Then
+            Dim _newX As Integer = oInProgressAnchor.X + (Math.Floor(_iWidth / _pasteColumns) * _pasteColumns) - 2
+            Dim _newY As Integer = oInProgressAnchor.Y + (Math.Floor(_iHeight / _pasteRows) * _pasteRows) - 2
+            If _iWidth > oCurrentMotif.Columns Then
+                oInProgressTerminus = New Point(_newX, oInProgressAnchor.Y + oCurrentMotif.Rows)
+            Else
+                oInProgressTerminus = New Point(oInProgressAnchor.X + oCurrentMotif.Columns, _newY)
+            End If
+        End If
+        If oCurrentAction = DesignAction.PlaceMotifBorder Then
+            Dim _newX As Integer = oInProgressAnchor.X + (_hct * _pasteColumns) - 2
+            Dim _newY As Integer = oInProgressAnchor.Y + (_vct * _pasteRows) - 2
+            oInProgressTerminus = New Point(_newX, _newY)
+        End If
     End Sub
+
     Private Sub GetSelectedCells()
         Dim _from_x As Integer = oCurrentSelection(0).X
         Dim _from_y As Integer = oCurrentSelection(0).Y
@@ -1963,16 +2100,21 @@ Public Class FrmStitchDesign
         Dim _motif As Motif = MotifBuilder.AMotif.StartingWithNothing() _
                                                         .WithColumns(_width) _
                                                         .WithRows(_height) _
-                                                        .WithBlockstitches(oCurrentSelectedBlockStitch) _
-                                                        .WithBackstitches(oCurrentSelectedBackstitch) _
-                                                        .WithKnots(oCurrentSelectedKnot) _
                                                         .Build
+        _motif.AddRange(oCurrentSelectedBlockStitch)
+        _motif.AddRange(oCurrentSelectedBackstitch)
+        _motif.AddRange(oCurrentSelectedKnot)
         AdjustMotifToZeroOrigin(_motif, oInProgressAnchor)
-        ShowMessage("Saving selected area as Motif", MyBase.Name)
-        Dim _response As ActionResponse = SaveMotifToFile(_motif, oMotifFilename)
-        RemoveMessage()
-        ShowMessage("Motif saved", 1.5, MyBase.Name)
-        ShowStatus(_response, True)
+        oMotifFilename = FileUtil.GetFileName(FileUtil.OpenOrSave.Save, FileUtil.FileType.HSM, oMotifFolderName)
+        If Not String.IsNullOrWhiteSpace(oMotifFilename) Then
+            ShowMessage("Saving selected area as Motif", MyBase.Name)
+            Dim _response As ActionResponse = SaveMotifToFile(_motif, oMotifFilename)
+            RemoveMessage()
+            ShowMessage("Motif saved", 1.5, MyBase.Name)
+            ShowStatus(_response, True)
+        Else
+            ShowStatus(New ActionResponse("Motif Save cancelled", ResponseType.Info))
+        End If
     End Sub
     Private Sub AdjustMotifToZeroOrigin(pMotif As Motif, pInProgressAnchor As Point)
         For Each _blockstitch As BlockStitch In pMotif.BlockStitches

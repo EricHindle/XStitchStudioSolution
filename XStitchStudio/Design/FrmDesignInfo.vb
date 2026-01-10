@@ -60,6 +60,7 @@ Public Class FrmDesignInfo
         isLoading = True
         InitialiseForm()
         isLoading = False
+        SetPanelVisibility()
     End Sub
     Private Sub ChkShowStock_CheckedChanged(sender As Object, e As EventArgs) Handles ChkShowStock.CheckedChanged
         isShowStock = ChkShowStock.Checked
@@ -220,7 +221,7 @@ Public Class FrmDesignInfo
             oRow.Cells(threadName.Name).Value = .ColourName
             LoadColourCell(DgvThreads, oRow, threadColour.Name, pThread.Thread, pIsShowStock)
             oRow.Cells(threadSortNumber.Name).Value = .SortNumber
-            oRow.Cells(ThreadNo.Name).Value = .ThreadNo
+            oRow.Cells(threadNo.Name).Value = .ThreadNo
         End With
         Return oRow
     End Function
@@ -285,18 +286,20 @@ Public Class FrmDesignInfo
         Return Nothing
     End Function
     Private Sub SetPanelVisibility()
-        Dim isHideBlock As Boolean = Not ChkShowBlock.Checked
-        Dim isHideBack As Boolean = Not ChkShowBack.Checked
-        Dim isHideKnot As Boolean = Not ChkShowKnots.Checked
-        My.Settings.ShowBkStInfo = ChkShowBack.Checked
-        My.Settings.ShowBlkStInfo = ChkShowBlock.Checked
-        My.Settings.ShowKnotInfo = ChkShowKnots.Checked
-        My.Settings.Save()
-        SplitContainer1.Panel2Collapsed = isHideBlock AndAlso isHideBack AndAlso isHideKnot
-        SplitContainer2.Panel2Collapsed = isHideBack AndAlso isHideKnot
-        SplitContainer3.Panel2Collapsed = isHideKnot
-        SplitContainer2.Panel1Collapsed = isHideBlock
-        SplitContainer3.Panel1Collapsed = isHideBack
+        If isComponentInitialized And Not isLoading Then
+            Dim isHideBlock As Boolean = Not ChkShowBlock.Checked
+            Dim isHideBack As Boolean = Not ChkShowBack.Checked
+            Dim isHideKnot As Boolean = Not ChkShowKnots.Checked
+            My.Settings.ShowBkStInfo = ChkShowBack.Checked
+            My.Settings.ShowBlkStInfo = ChkShowBlock.Checked
+            My.Settings.ShowKnotInfo = ChkShowKnots.Checked
+            My.Settings.Save()
+            SplitContainer1.Panel2Collapsed = isHideBlock AndAlso isHideBack AndAlso isHideKnot
+            SplitContainer2.Panel2Collapsed = isHideBack AndAlso isHideKnot
+            SplitContainer3.Panel2Collapsed = isHideKnot
+            SplitContainer2.Panel1Collapsed = isHideBlock
+            SplitContainer3.Panel1Collapsed = isHideBack
+        End If
     End Sub
 #End Region
 End Class

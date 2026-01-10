@@ -7,6 +7,7 @@
 
 Imports System.Text
 Imports Newtonsoft.Json
+Imports XStitchStudio.Domain.Builders
 Namespace Domain.Objects
     Public Class Motif
         Private _motifId As Integer
@@ -82,6 +83,33 @@ Namespace Domain.Objects
         Public Function SerializeJson() As String
             Return JsonConvert.SerializeObject(Me)
         End Function
+        Public Sub Add(pBlockstitch As BlockStitch)
+            Dim _newStitch As BlockStitch = BlockStitchBuilder.ABlockStitch.StartingWith(pBlockstitch).Build
+            _blockStitches.Add(_newStitch)
+        End Sub
+        Public Sub AddRange(pBlockstitches As List(Of BlockStitch))
+            For Each _stitch As BlockStitch In pBlockstitches
+                Add(_stitch)
+            Next
+        End Sub
+        Public Sub Add(pBackstitch As BackStitch)
+            Dim _newStitch As BackStitch = BackstitchBuilder.ABackStitch.StartingWith(pBackstitch).Build
+            _backStitches.Add(_newStitch)
+        End Sub
+        Public Sub AddRange(pBackstitches As List(Of BackStitch))
+            For Each _stitch As BackStitch In pBackstitches
+                Add(_stitch)
+            Next
+        End Sub
+        Public Sub Add(pKnot As Knot)
+            Dim _newStitch As Knot = KnotBuilder.AKnot.StartingWith(pKnot).Build
+            _knots.Add(_newStitch)
+        End Sub
+        Public Sub AddRange(pKnots As List(Of Knot))
+            For Each _stitch As Knot In pKnots
+                Add(_stitch)
+            Next
+        End Sub
         Public Function IsLoaded() As Boolean
             Dim _isOk As Boolean = False
             If _rows > 0 AndAlso _columns > 0 Then

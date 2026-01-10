@@ -86,6 +86,8 @@ Module ModDesign
         Text
         SaveMotif
         PlaceMotif
+        PlaceMotifLine
+        PlaceMotifBorder
         none
     End Enum
 #End Region
@@ -625,7 +627,7 @@ Module ModDesign
         Dim _image As Image = New Bitmap(1, 1)
         Dim _projectThread As ProjectThread = CType(oProjectThreads.Threads.Find(Function(p) p.ThreadId = pBlockStitch.ProjThread.ThreadId), ProjectThread)
         If _projectThread Is Nothing Then
-            LogUtil.DisplayStatusMessage("Thread missing from project :" & vbCrLf & pBlockStitch.ProjThread.Thread.ToString, Nothing, "MakeImage", False)
+            LogUtil.Problem("Thread missing from project :" & vbCrLf & pBlockStitch.ProjThread.Thread.ToString, "MakeImage")
         Else
             Dim _symbol As Symbol = FindSymbolById(_projectThread.SymbolId)
             _image = ImageUtil.ResizeImage(_symbol.SymbolImage, pPixels, pPixels)
