@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_104D2963E20C4CE589C63A008B40FCBF"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_13C65B8897B440CBA68720417EA96D77"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -129,6 +135,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_BD2BD65906BE48B8862E7E67AA7B922C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_C5887E49CACB45E391952A0259F34A70"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -136,6 +148,12 @@
         "Entry"
         {
         "MsmKey" = "8:_C681A1C29E7C4B318BDE9468A6ABE509"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D328BBA79083479CAB2957294D7CDA33"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -300,6 +318,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_104D2963E20C4CE589C63A008B40FCBF"
+            {
+            "SourcePath" = "8:..\\XStitchStudioData\\Designs\\Motifs\\apple.hsm"
+            "TargetName" = "8:apple.hsm"
+            "Tag" = "8:"
+            "Folder" = "8:_AF7BE87E0B3247649E3C00AE1DCA36AF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_13C65B8897B440CBA68720417EA96D77"
             {
             "SourcePath" = "8:..\\XStitchStudioData\\Beads.hsx"
@@ -715,6 +753,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BD2BD65906BE48B8862E7E67AA7B922C"
+            {
+            "SourcePath" = "8:..\\XStitchStudioData\\Designs\\Motifs\\star.hsm"
+            "TargetName" = "8:star.hsm"
+            "Tag" = "8:"
+            "Folder" = "8:_AF7BE87E0B3247649E3C00AE1DCA36AF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C5887E49CACB45E391952A0259F34A70"
             {
             "SourcePath" = "8:..\\XStitchStudioData\\Palettes.hsx"
@@ -741,6 +799,26 @@
             "TargetName" = "8:ProjectWorkTimes.hsx"
             "Tag" = "8:"
             "Folder" = "8:_FC8A046B48B8487CB70E3664581EB6BC"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D328BBA79083479CAB2957294D7CDA33"
+            {
+            "SourcePath" = "8:..\\XStitchStudioData\\Designs\\Motifs\\tinypattern2.hsm"
+            "TargetName" = "8:tinypattern2.hsm"
+            "Tag" = "8:"
+            "Folder" = "8:_AF7BE87E0B3247649E3C00AE1DCA36AF"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -850,6 +928,17 @@
                     "Property" = "8:_E4BF503E1D6C487DAD94A6A13EE01342"
                         "Folders"
                         {
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_AF7BE87E0B3247649E3C00AE1DCA36AF"
+                            {
+                            "Name" = "8:Motifs"
+                            "AlwaysCreate" = "11:FALSE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_5E0A2FDD7E42488088FCD3E4AB68DEBC"
+                                "Folders"
+                                {
+                                }
+                            }
                         }
                     }
                 }

@@ -2036,12 +2036,6 @@ Public Class FrmStitchDesign
         Dim _pasteRows As Integer = oCurrentMotif.Rows + 1
         Dim _hct As Integer = Math.Floor(_iWidth / (_pasteColumns))
         Dim _vct As Integer = Math.Floor(_iHeight / (_pasteRows))
-
-
-
-        'Dim _iWidth As Integer = Math.Abs(oInProgressAnchor.X - pCursorPosition.X)
-        'Dim _iHeight As Integer = Math.Abs(oInProgressAnchor.Y - pCursorPosition.Y)
-
         If oCurrentShapeType = ShapeType.Line Then
             If _iWidth > _iHeight Then
                 oInProgressTerminus = New Point(pCursorPosition.X - 1, oInProgressAnchor.Y)
@@ -2456,8 +2450,8 @@ Public Class FrmStitchDesign
                 '    DrawHalfBlockStitch(_newBs, True)
                 'Case BlockStitchType.Quarter
                 '    DrawQuarterBlockStitch(_newBs)
-                'Case BlockStitchType.ThreeQuarter
-                '    DrawThreeQuarterBlockStitch(_newBs)
+            Case BlockStitchType.ThreeQuarter
+                DrawThreeQuarterBlockStitch(_newBs, oDesignGraphics)
             Case Else
                 DrawQuarterBlockStitches(_newBs, oDesignGraphics)
         End Select
@@ -2715,8 +2709,8 @@ Public Class FrmStitchDesign
         End Select
         _blockstitch.Quarters = _blockStitchQtrList
         AddBlockStitchToDesign(_blockstitch)
-        DrawQuarterBlockStitches(_blockstitch, oDesignGraphics)
-
+        '    DrawQuarterBlockStitches(_blockstitch, oDesignGraphics)
+        DrawThreeQuarterBlockStitch(_blockstitch, oDesignGraphics)
     End Sub
     Private Sub AddHalfBlockStitch(pCell As Cell, isBack As Boolean, pIsDouble As Boolean)
         Dim _strands As Integer = If(pIsDouble, 2, 1)

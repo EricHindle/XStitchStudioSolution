@@ -42,9 +42,12 @@ Public NotInheritable Class FrmStartUp
             Dim oFromFolder As String = Path.Combine(My.Application.Info.DirectoryPath, "Data")
             Dim oToFolder As String = My.Settings.DataFilePath
             Dim oTempDesignFolder As String = Path.Combine(GetFolderPath(SpecialFolder.Desktop), "XStitchStudioTempFolder")
+            Dim oTempMotifFolder As String = Path.Combine(oTempDesignFolder, "Motifs")
             Dim oToDesignFolder As String = My.Settings.DesignFilePath
+            Dim oToMotifFolder As String = Path.Combine(My.Settings.DesignFilePath, "Motifs")
             InstallDataArchive(oFromFolder, oToFolder)
             InstallSampleDesign(oTempDesignFolder, oToDesignFolder)
+            InstallSampleDesign(oTempMotifFolder, oToMotifFolder)
             My.Settings.isInstallationComplete = True
             My.Settings.Save()
             LogUtil.LogInfo("Installation complete", MethodBase.GetCurrentMethod.Name)
@@ -101,7 +104,7 @@ Public NotInheritable Class FrmStartUp
         btnSave.Enabled = True
     End Sub
     Private Sub InstallSampleDesign(pFromFolder As String, pToFolder As String)
-        LogUtil.LogInfo("Installing sample design", MethodBase.GetCurrentMethod.Name)
+        LogUtil.LogInfo("Installing sample files", MethodBase.GetCurrentMethod.Name)
         LogUtil.LogInfo("From folder " & pFromFolder, MethodBase.GetCurrentMethod.Name)
         LogUtil.LogInfo("To Folder " & pToFolder, MethodBase.GetCurrentMethod.Name)
         Dim fileList As IReadOnlyCollection(Of String) = My.Computer.FileSystem.GetFiles(pFromFolder)
