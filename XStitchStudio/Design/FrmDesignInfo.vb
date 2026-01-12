@@ -45,6 +45,7 @@ Public Class FrmDesignInfo
     Private iTotalBackStitchLength As Double
     Private FABRIC_COUNT As Integer
     Private isComponentInitialized As Boolean = False
+    Private oProjectThreads As ProjectThreadCollection
 #End Region
 #Region "control handlers"
     Private Sub BtnClose_Click(sender As Object, e As EventArgs) Handles BtnClose.Click
@@ -75,6 +76,22 @@ Public Class FrmDesignInfo
     Private Sub ChkShowKnots_CheckedChanged(sender As Object, e As EventArgs) Handles ChkShowKnots.CheckedChanged
         SetPanelVisibility()
     End Sub
+    Private Sub DgvBlock_SelectionChanged(sender As Object, e As EventArgs) Handles DgvBlock.SelectionChanged
+        DgvQuarters.Rows.Clear()
+        If Not isLoading Then
+            If DgvBlock.SelectedRows.Count > 0 Then
+                Dim _row As DataGridViewRow = DgvBlock.SelectedRows(0)
+                Dim _cellPosition As New Point(_row.Cells(block_pos_x.Name).Value, _row.Cells(block_pos_y.Name).Value)
+                Dim _blockstitch As BlockStitch = CType(_projectDesign.BlockStitches.Find(Function(p) p.BlockPosition = _cellPosition), BlockStitch)
+                If _blockstitch IsNot Nothing Then
+                    For Each _qtr As BlockStitchQuarter In _blockstitch.Quarters
+                        AddQuarterRow(DgvQuarters, _qtr)
+                    Next
+                End If
+            End If
+        End If
+    End Sub
+
 #End Region
 #Region "subroutines"
     Private Sub InitialiseForm()
@@ -86,6 +103,7 @@ Public Class FrmDesignInfo
         ChkShowKnots.Checked = My.Settings.ShowKnotInfo
         FABRIC_COUNT = My.Settings.DefaultFabricCount
         If _selectedProject.IsLoaded Then
+            oProjectThreads = FindProjectThreads(_selectedProject.ProjectId)
             LoadProjectDetails()
             LoadThreadList()
             If _projectDesign IsNot Nothing Then
@@ -208,7 +226,7 @@ Public Class FrmDesignInfo
     Private Sub LoadThreadList()
         LogUtil.LogInfo("Load ProjectThread list", MyBase.Name)
         DgvThreads.Rows.Clear()
-        For Each oThread As ProjectThread In FindProjectThreads(_selectedProject.ProjectId).Threads
+        For Each oThread As ProjectThread In oProjectThreads.Threads
             NewProjectThreadRow(oThread, isShowStock)
         Next
         DgvThreads.Sort(DgvThreads.Columns(threadSortNumber.Name), ListSortDirection.Ascending)
@@ -261,7 +279,6 @@ Public Class FrmDesignInfo
             oRow.Cells(knot_thread_no.Name).Value = .ProjThread.Thread.ThreadNo
             oRow.Cells(knot_strands.Name).Value = .Strands
             oRow.Cells(knot_colour.Name).Value = .ProjThread.Thread.ColourName
-
         End With
         Return oRow
     End Function
@@ -273,7 +290,6 @@ Public Class FrmDesignInfo
             oRow.Cells(bead_id.Name).Value = .ThreadId
             oRow.Cells(bead_no.Name).Value = .ProjThread.Thread.ThreadNo
             oRow.Cells(bead_colour.Name).Value = .ProjThread.Thread.ColourName
-
         End With
         Return oRow
     End Function
@@ -300,6 +316,15 @@ Public Class FrmDesignInfo
             SplitContainer2.Panel1Collapsed = isHideBlock
             SplitContainer3.Panel1Collapsed = isHideBack
         End If
+    End Sub
+    Private Sub AddQuarterRow(pDgv As DataGridView, pQtr As BlockStitchQuarter)
+        Dim oRow As DataGridViewRow = pDgv.Rows(pDgv.Rows.Add())
+        Dim oProjectThread As ProjectThread = oProjectThreads.Threads.Find(Function(p) p.ThreadId = pQtr.ThreadId)
+        With pQtr
+            oRow.Cells(qtrthreadid.Name).Value = .Thread.ThreadNo
+            oRow.Cells(qtrsymbolid.Name).Value = oProjectThread.SymbolId
+            oRow.Cells(qtrlocation.Name).Value = .BlockQuarter.ToString
+        End With
     End Sub
 #End Region
 End Class

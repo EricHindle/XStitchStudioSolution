@@ -48,6 +48,7 @@ Partial Class FrmDesignInfo
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.ChkShowStock = New System.Windows.Forms.CheckBox()
         Me.SplitContainer2 = New System.Windows.Forms.SplitContainer()
+        Me.DgvQuarters = New System.Windows.Forms.DataGridView()
         Me.DgvBlock = New System.Windows.Forms.DataGridView()
         Me.block_pos_x = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.block_pos_y = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -127,6 +128,9 @@ Partial Class FrmDesignInfo
         Me.ChkShowBlock = New System.Windows.Forms.CheckBox()
         Me.ChkShowBack = New System.Windows.Forms.CheckBox()
         Me.ChkShowKnots = New System.Windows.Forms.CheckBox()
+        Me.qtrlocation = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.qtrthreadid = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.qtrsymbolid = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.DgvThreads, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
@@ -136,6 +140,7 @@ Partial Class FrmDesignInfo
         Me.SplitContainer2.Panel1.SuspendLayout()
         Me.SplitContainer2.Panel2.SuspendLayout()
         Me.SplitContainer2.SuspendLayout()
+        CType(Me.DgvQuarters, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DgvBlock, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitContainer3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer3.Panel1.SuspendLayout()
@@ -208,7 +213,7 @@ Partial Class FrmDesignInfo
         Me.DgvThreads.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.White
         Me.DgvThreads.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black
         Me.DgvThreads.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvThreads.Size = New System.Drawing.Size(612, 129)
+        Me.DgvThreads.Size = New System.Drawing.Size(669, 129)
         Me.DgvThreads.TabIndex = 156
         '
         'threadId
@@ -330,7 +335,7 @@ Partial Class FrmDesignInfo
         'SplitContainer1.Panel2
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.SplitContainer2)
-        Me.SplitContainer1.Size = New System.Drawing.Size(668, 690)
+        Me.SplitContainer1.Size = New System.Drawing.Size(725, 690)
         Me.SplitContainer1.SplitterDistance = 162
         Me.SplitContainer1.TabIndex = 160
         '
@@ -355,15 +360,31 @@ Partial Class FrmDesignInfo
         '
         'SplitContainer2.Panel1
         '
+        Me.SplitContainer2.Panel1.Controls.Add(Me.DgvQuarters)
         Me.SplitContainer2.Panel1.Controls.Add(Me.DgvBlock)
         Me.SplitContainer2.Panel1.Controls.Add(Me.Label1)
         '
         'SplitContainer2.Panel2
         '
         Me.SplitContainer2.Panel2.Controls.Add(Me.SplitContainer3)
-        Me.SplitContainer2.Size = New System.Drawing.Size(668, 524)
+        Me.SplitContainer2.Size = New System.Drawing.Size(725, 524)
         Me.SplitContainer2.SplitterDistance = 191
         Me.SplitContainer2.TabIndex = 0
+        '
+        'DgvQuarters
+        '
+        Me.DgvQuarters.AllowUserToAddRows = False
+        Me.DgvQuarters.AllowUserToDeleteRows = False
+        Me.DgvQuarters.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.DgvQuarters.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(239, Byte), Integer), CType(CType(230, Byte), Integer), CType(CType(230, Byte), Integer))
+        Me.DgvQuarters.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvQuarters.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.qtrlocation, Me.qtrthreadid, Me.qtrsymbolid})
+        Me.DgvQuarters.Location = New System.Drawing.Point(520, 32)
+        Me.DgvQuarters.Name = "DgvQuarters"
+        Me.DgvQuarters.ReadOnly = True
+        Me.DgvQuarters.RowHeadersVisible = False
+        Me.DgvQuarters.Size = New System.Drawing.Size(199, 126)
+        Me.DgvQuarters.TabIndex = 159
         '
         'DgvBlock
         '
@@ -379,7 +400,8 @@ Partial Class FrmDesignInfo
         Me.DgvBlock.Name = "DgvBlock"
         Me.DgvBlock.ReadOnly = True
         Me.DgvBlock.RowHeadersVisible = False
-        Me.DgvBlock.Size = New System.Drawing.Size(652, 152)
+        Me.DgvBlock.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DgvBlock.Size = New System.Drawing.Size(505, 126)
         Me.DgvBlock.TabIndex = 158
         '
         'block_pos_x
@@ -445,7 +467,7 @@ Partial Class FrmDesignInfo
         'SplitContainer3.Panel2
         '
         Me.SplitContainer3.Panel2.Controls.Add(Me.SplitContainer4)
-        Me.SplitContainer3.Size = New System.Drawing.Size(668, 329)
+        Me.SplitContainer3.Size = New System.Drawing.Size(725, 329)
         Me.SplitContainer3.SplitterDistance = 192
         Me.SplitContainer3.TabIndex = 0
         '
@@ -463,7 +485,7 @@ Partial Class FrmDesignInfo
         Me.DgvBack.Name = "DgvBack"
         Me.DgvBack.ReadOnly = True
         Me.DgvBack.RowHeadersVisible = False
-        Me.DgvBack.Size = New System.Drawing.Size(652, 153)
+        Me.DgvBack.Size = New System.Drawing.Size(709, 153)
         Me.DgvBack.TabIndex = 159
         '
         'back_from_x
@@ -555,8 +577,8 @@ Partial Class FrmDesignInfo
         '
         Me.SplitContainer4.Panel2.Controls.Add(Me.Label24)
         Me.SplitContainer4.Panel2.Controls.Add(Me.DgvBead)
-        Me.SplitContainer4.Size = New System.Drawing.Size(658, 123)
-        Me.SplitContainer4.SplitterDistance = 327
+        Me.SplitContainer4.Size = New System.Drawing.Size(715, 123)
+        Me.SplitContainer4.SplitterDistance = 355
         Me.SplitContainer4.TabIndex = 161
         '
         'DgvKnot
@@ -573,7 +595,7 @@ Partial Class FrmDesignInfo
         Me.DgvKnot.Name = "DgvKnot"
         Me.DgvKnot.ReadOnly = True
         Me.DgvKnot.RowHeadersVisible = False
-        Me.DgvKnot.Size = New System.Drawing.Size(304, 98)
+        Me.DgvKnot.Size = New System.Drawing.Size(332, 98)
         Me.DgvKnot.TabIndex = 160
         '
         'knot_pos_x
@@ -649,7 +671,7 @@ Partial Class FrmDesignInfo
         Me.DgvBead.Name = "DgvBead"
         Me.DgvBead.ReadOnly = True
         Me.DgvBead.RowHeadersVisible = False
-        Me.DgvBead.Size = New System.Drawing.Size(321, 98)
+        Me.DgvBead.Size = New System.Drawing.Size(350, 98)
         Me.DgvBead.TabIndex = 161
         '
         'bead_pos_x
@@ -699,7 +721,7 @@ Partial Class FrmDesignInfo
         Me.BtnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BtnClose.Font = New System.Drawing.Font("Tahoma", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnClose.ForeColor = System.Drawing.Color.WhiteSmoke
-        Me.BtnClose.Location = New System.Drawing.Point(837, 686)
+        Me.BtnClose.Location = New System.Drawing.Point(894, 686)
         Me.BtnClose.Margin = New System.Windows.Forms.Padding(4)
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(80, 40)
@@ -712,7 +734,7 @@ Partial Class FrmDesignInfo
         Me.Label14.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label14.AutoSize = True
         Me.Label14.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label14.Location = New System.Drawing.Point(723, 88)
+        Me.Label14.Location = New System.Drawing.Point(780, 88)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(94, 14)
         Me.Label14.TabIndex = 171
@@ -723,7 +745,7 @@ Partial Class FrmDesignInfo
         Me.Label12.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label12.AutoSize = True
         Me.Label12.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(722, 192)
+        Me.Label12.Location = New System.Drawing.Point(779, 192)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(95, 14)
         Me.Label12.TabIndex = 170
@@ -734,7 +756,7 @@ Partial Class FrmDesignInfo
         Me.Label13.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(723, 166)
+        Me.Label13.Location = New System.Drawing.Point(780, 166)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(94, 14)
         Me.Label13.TabIndex = 169
@@ -745,7 +767,7 @@ Partial Class FrmDesignInfo
         Me.Label8.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(741, 270)
+        Me.Label8.Location = New System.Drawing.Point(798, 270)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(76, 14)
         Me.Label8.TabIndex = 168
@@ -756,7 +778,7 @@ Partial Class FrmDesignInfo
         Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(739, 244)
+        Me.Label4.Location = New System.Drawing.Point(796, 244)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(78, 14)
         Me.Label4.TabIndex = 167
@@ -767,7 +789,7 @@ Partial Class FrmDesignInfo
         Me.Label6.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(742, 218)
+        Me.Label6.Location = New System.Drawing.Point(799, 218)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(75, 14)
         Me.Label6.TabIndex = 166
@@ -778,7 +800,7 @@ Partial Class FrmDesignInfo
         Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(734, 140)
+        Me.Label5.Location = New System.Drawing.Point(791, 140)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(83, 14)
         Me.Label5.TabIndex = 165
@@ -789,7 +811,7 @@ Partial Class FrmDesignInfo
         Me.Label9.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(737, 114)
+        Me.Label9.Location = New System.Drawing.Point(794, 114)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(80, 14)
         Me.Label9.TabIndex = 164
@@ -800,7 +822,7 @@ Partial Class FrmDesignInfo
         Me.Label10.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(767, 62)
+        Me.Label10.Location = New System.Drawing.Point(824, 62)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(50, 14)
         Me.Label10.TabIndex = 163
@@ -811,7 +833,7 @@ Partial Class FrmDesignInfo
         Me.Label11.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label11.AutoSize = True
         Me.Label11.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label11.Location = New System.Drawing.Point(769, 36)
+        Me.Label11.Location = New System.Drawing.Point(826, 36)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(48, 14)
         Me.Label11.TabIndex = 162
@@ -822,7 +844,7 @@ Partial Class FrmDesignInfo
         Me.LblTotalTime.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LblTotalTime.AutoSize = True
         Me.LblTotalTime.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblTotalTime.Location = New System.Drawing.Point(826, 88)
+        Me.LblTotalTime.Location = New System.Drawing.Point(883, 88)
         Me.LblTotalTime.Name = "LblTotalTime"
         Me.LblTotalTime.Size = New System.Drawing.Size(94, 14)
         Me.LblTotalTime.TabIndex = 181
@@ -833,7 +855,7 @@ Partial Class FrmDesignInfo
         Me.LblCentreY.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LblCentreY.AutoSize = True
         Me.LblCentreY.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblCentreY.Location = New System.Drawing.Point(826, 192)
+        Me.LblCentreY.Location = New System.Drawing.Point(883, 192)
         Me.LblCentreY.Name = "LblCentreY"
         Me.LblCentreY.Size = New System.Drawing.Size(95, 14)
         Me.LblCentreY.TabIndex = 180
@@ -844,7 +866,7 @@ Partial Class FrmDesignInfo
         Me.LblCentreX.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LblCentreX.AutoSize = True
         Me.LblCentreX.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblCentreX.Location = New System.Drawing.Point(826, 166)
+        Me.LblCentreX.Location = New System.Drawing.Point(883, 166)
         Me.LblCentreX.Name = "LblCentreX"
         Me.LblCentreX.Size = New System.Drawing.Size(94, 14)
         Me.LblCentreX.TabIndex = 179
@@ -855,7 +877,7 @@ Partial Class FrmDesignInfo
         Me.LblFabricColour.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LblFabricColour.AutoSize = True
         Me.LblFabricColour.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblFabricColour.Location = New System.Drawing.Point(826, 270)
+        Me.LblFabricColour.Location = New System.Drawing.Point(883, 270)
         Me.LblFabricColour.Name = "LblFabricColour"
         Me.LblFabricColour.Size = New System.Drawing.Size(76, 14)
         Me.LblFabricColour.TabIndex = 178
@@ -866,7 +888,7 @@ Partial Class FrmDesignInfo
         Me.LblFabricHeight.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LblFabricHeight.AutoSize = True
         Me.LblFabricHeight.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblFabricHeight.Location = New System.Drawing.Point(826, 244)
+        Me.LblFabricHeight.Location = New System.Drawing.Point(883, 244)
         Me.LblFabricHeight.Name = "LblFabricHeight"
         Me.LblFabricHeight.Size = New System.Drawing.Size(78, 14)
         Me.LblFabricHeight.TabIndex = 177
@@ -877,7 +899,7 @@ Partial Class FrmDesignInfo
         Me.LblFabricWidth.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LblFabricWidth.AutoSize = True
         Me.LblFabricWidth.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblFabricWidth.Location = New System.Drawing.Point(826, 218)
+        Me.LblFabricWidth.Location = New System.Drawing.Point(883, 218)
         Me.LblFabricWidth.Name = "LblFabricWidth"
         Me.LblFabricWidth.Size = New System.Drawing.Size(75, 14)
         Me.LblFabricWidth.TabIndex = 176
@@ -888,7 +910,7 @@ Partial Class FrmDesignInfo
         Me.LblDesignHeight.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LblDesignHeight.AutoSize = True
         Me.LblDesignHeight.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblDesignHeight.Location = New System.Drawing.Point(826, 140)
+        Me.LblDesignHeight.Location = New System.Drawing.Point(883, 140)
         Me.LblDesignHeight.Name = "LblDesignHeight"
         Me.LblDesignHeight.Size = New System.Drawing.Size(83, 14)
         Me.LblDesignHeight.TabIndex = 175
@@ -899,7 +921,7 @@ Partial Class FrmDesignInfo
         Me.LblDesignWidth.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LblDesignWidth.AutoSize = True
         Me.LblDesignWidth.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblDesignWidth.Location = New System.Drawing.Point(826, 114)
+        Me.LblDesignWidth.Location = New System.Drawing.Point(883, 114)
         Me.LblDesignWidth.Name = "LblDesignWidth"
         Me.LblDesignWidth.Size = New System.Drawing.Size(80, 14)
         Me.LblDesignWidth.TabIndex = 174
@@ -910,7 +932,7 @@ Partial Class FrmDesignInfo
         Me.LblFinished.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LblFinished.AutoSize = True
         Me.LblFinished.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblFinished.Location = New System.Drawing.Point(826, 62)
+        Me.LblFinished.Location = New System.Drawing.Point(883, 62)
         Me.LblFinished.Name = "LblFinished"
         Me.LblFinished.Size = New System.Drawing.Size(50, 14)
         Me.LblFinished.TabIndex = 173
@@ -921,7 +943,7 @@ Partial Class FrmDesignInfo
         Me.LblStarted.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LblStarted.AutoSize = True
         Me.LblStarted.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblStarted.Location = New System.Drawing.Point(826, 36)
+        Me.LblStarted.Location = New System.Drawing.Point(883, 36)
         Me.LblStarted.Name = "LblStarted"
         Me.LblStarted.Size = New System.Drawing.Size(48, 14)
         Me.LblStarted.TabIndex = 172
@@ -932,7 +954,7 @@ Partial Class FrmDesignInfo
         Me.Label15.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label15.AutoSize = True
         Me.Label15.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label15.Location = New System.Drawing.Point(702, 348)
+        Me.Label15.Location = New System.Drawing.Point(759, 348)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(81, 14)
         Me.Label15.TabIndex = 182
@@ -943,7 +965,7 @@ Partial Class FrmDesignInfo
         Me.Label16.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label16.AutoSize = True
         Me.Label16.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label16.Location = New System.Drawing.Point(705, 503)
+        Me.Label16.Location = New System.Drawing.Point(762, 503)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(78, 14)
         Me.Label16.TabIndex = 183
@@ -954,7 +976,7 @@ Partial Class FrmDesignInfo
         Me.Label17.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label17.AutoSize = True
         Me.Label17.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label17.Location = New System.Drawing.Point(745, 571)
+        Me.Label17.Location = New System.Drawing.Point(802, 571)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(38, 14)
         Me.Label17.TabIndex = 184
@@ -965,7 +987,7 @@ Partial Class FrmDesignInfo
         Me.Label18.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label18.AutoSize = True
         Me.Label18.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label18.Location = New System.Drawing.Point(744, 597)
+        Me.Label18.Location = New System.Drawing.Point(801, 597)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(39, 14)
         Me.Label18.TabIndex = 185
@@ -976,7 +998,7 @@ Partial Class FrmDesignInfo
         Me.LblBlockCount.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LblBlockCount.AutoSize = True
         Me.LblBlockCount.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblBlockCount.Location = New System.Drawing.Point(800, 348)
+        Me.LblBlockCount.Location = New System.Drawing.Point(857, 348)
         Me.LblBlockCount.Name = "LblBlockCount"
         Me.LblBlockCount.Size = New System.Drawing.Size(14, 14)
         Me.LblBlockCount.TabIndex = 186
@@ -987,7 +1009,7 @@ Partial Class FrmDesignInfo
         Me.LblBackCount.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LblBackCount.AutoSize = True
         Me.LblBackCount.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblBackCount.Location = New System.Drawing.Point(800, 503)
+        Me.LblBackCount.Location = New System.Drawing.Point(857, 503)
         Me.LblBackCount.Name = "LblBackCount"
         Me.LblBackCount.Size = New System.Drawing.Size(14, 14)
         Me.LblBackCount.TabIndex = 187
@@ -998,7 +1020,7 @@ Partial Class FrmDesignInfo
         Me.LblKnotCount.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LblKnotCount.AutoSize = True
         Me.LblKnotCount.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblKnotCount.Location = New System.Drawing.Point(800, 572)
+        Me.LblKnotCount.Location = New System.Drawing.Point(857, 572)
         Me.LblKnotCount.Name = "LblKnotCount"
         Me.LblKnotCount.Size = New System.Drawing.Size(14, 14)
         Me.LblKnotCount.TabIndex = 188
@@ -1009,7 +1031,7 @@ Partial Class FrmDesignInfo
         Me.LblBeadCount.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LblBeadCount.AutoSize = True
         Me.LblBeadCount.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblBeadCount.Location = New System.Drawing.Point(800, 597)
+        Me.LblBeadCount.Location = New System.Drawing.Point(857, 597)
         Me.LblBeadCount.Name = "LblBeadCount"
         Me.LblBeadCount.Size = New System.Drawing.Size(14, 14)
         Me.LblBeadCount.TabIndex = 189
@@ -1020,7 +1042,7 @@ Partial Class FrmDesignInfo
         Me.LblFullCount.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LblFullCount.AutoSize = True
         Me.LblFullCount.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblFullCount.Location = New System.Drawing.Point(800, 375)
+        Me.LblFullCount.Location = New System.Drawing.Point(857, 375)
         Me.LblFullCount.Name = "LblFullCount"
         Me.LblFullCount.Size = New System.Drawing.Size(14, 14)
         Me.LblFullCount.TabIndex = 191
@@ -1031,7 +1053,7 @@ Partial Class FrmDesignInfo
         Me.Label20.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label20.AutoSize = True
         Me.Label20.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label20.Location = New System.Drawing.Point(722, 375)
+        Me.Label20.Location = New System.Drawing.Point(779, 375)
         Me.Label20.Name = "Label20"
         Me.Label20.Size = New System.Drawing.Size(70, 14)
         Me.Label20.TabIndex = 190
@@ -1042,7 +1064,7 @@ Partial Class FrmDesignInfo
         Me.LblThreeQtrCount.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LblThreeQtrCount.AutoSize = True
         Me.LblThreeQtrCount.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblThreeQtrCount.Location = New System.Drawing.Point(800, 397)
+        Me.LblThreeQtrCount.Location = New System.Drawing.Point(857, 397)
         Me.LblThreeQtrCount.Name = "LblThreeQtrCount"
         Me.LblThreeQtrCount.Size = New System.Drawing.Size(14, 14)
         Me.LblThreeQtrCount.TabIndex = 193
@@ -1053,7 +1075,7 @@ Partial Class FrmDesignInfo
         Me.Label21.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label21.AutoSize = True
         Me.Label21.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label21.Location = New System.Drawing.Point(716, 397)
+        Me.Label21.Location = New System.Drawing.Point(773, 397)
         Me.Label21.Name = "Label21"
         Me.Label21.Size = New System.Drawing.Size(76, 14)
         Me.Label21.TabIndex = 192
@@ -1064,7 +1086,7 @@ Partial Class FrmDesignInfo
         Me.LblHalfCount.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LblHalfCount.AutoSize = True
         Me.LblHalfCount.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblHalfCount.Location = New System.Drawing.Point(800, 419)
+        Me.LblHalfCount.Location = New System.Drawing.Point(857, 419)
         Me.LblHalfCount.Name = "LblHalfCount"
         Me.LblHalfCount.Size = New System.Drawing.Size(14, 14)
         Me.LblHalfCount.TabIndex = 195
@@ -1075,7 +1097,7 @@ Partial Class FrmDesignInfo
         Me.Label23.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label23.AutoSize = True
         Me.Label23.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label23.Location = New System.Drawing.Point(720, 419)
+        Me.Label23.Location = New System.Drawing.Point(777, 419)
         Me.Label23.Name = "Label23"
         Me.Label23.Size = New System.Drawing.Size(72, 14)
         Me.Label23.TabIndex = 194
@@ -1086,7 +1108,7 @@ Partial Class FrmDesignInfo
         Me.LblMixedCount.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LblMixedCount.AutoSize = True
         Me.LblMixedCount.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblMixedCount.Location = New System.Drawing.Point(800, 468)
+        Me.LblMixedCount.Location = New System.Drawing.Point(857, 468)
         Me.LblMixedCount.Name = "LblMixedCount"
         Me.LblMixedCount.Size = New System.Drawing.Size(14, 14)
         Me.LblMixedCount.TabIndex = 197
@@ -1097,7 +1119,7 @@ Partial Class FrmDesignInfo
         Me.Label25.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label25.AutoSize = True
         Me.Label25.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label25.Location = New System.Drawing.Point(708, 468)
+        Me.Label25.Location = New System.Drawing.Point(765, 468)
         Me.Label25.Name = "Label25"
         Me.Label25.Size = New System.Drawing.Size(84, 14)
         Me.Label25.TabIndex = 196
@@ -1108,7 +1130,7 @@ Partial Class FrmDesignInfo
         Me.Label19.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label19.AutoSize = True
         Me.Label19.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label19.Location = New System.Drawing.Point(720, 439)
+        Me.Label19.Location = New System.Drawing.Point(777, 439)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(72, 14)
         Me.Label19.TabIndex = 194
@@ -1119,7 +1141,7 @@ Partial Class FrmDesignInfo
         Me.LblQtrCount.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LblQtrCount.AutoSize = True
         Me.LblQtrCount.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblQtrCount.Location = New System.Drawing.Point(800, 439)
+        Me.LblQtrCount.Location = New System.Drawing.Point(857, 439)
         Me.LblQtrCount.Name = "LblQtrCount"
         Me.LblQtrCount.Size = New System.Drawing.Size(14, 14)
         Me.LblQtrCount.TabIndex = 195
@@ -1129,7 +1151,7 @@ Partial Class FrmDesignInfo
         '
         Me.Label22.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label22.AutoSize = True
-        Me.Label22.Location = New System.Drawing.Point(722, 526)
+        Me.Label22.Location = New System.Drawing.Point(779, 526)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(46, 14)
         Me.Label22.TabIndex = 198
@@ -1140,7 +1162,7 @@ Partial Class FrmDesignInfo
         Me.LblBackLength.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LblBackLength.AutoSize = True
         Me.LblBackLength.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblBackLength.Location = New System.Drawing.Point(776, 526)
+        Me.LblBackLength.Location = New System.Drawing.Point(833, 526)
         Me.LblBackLength.Name = "LblBackLength"
         Me.LblBackLength.Size = New System.Drawing.Size(94, 14)
         Me.LblBackLength.TabIndex = 199
@@ -1151,7 +1173,7 @@ Partial Class FrmDesignInfo
         Me.LblFabricCount.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LblFabricCount.AutoSize = True
         Me.LblFabricCount.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblFabricCount.Location = New System.Drawing.Point(825, 297)
+        Me.LblFabricCount.Location = New System.Drawing.Point(882, 297)
         Me.LblFabricCount.Name = "LblFabricCount"
         Me.LblFabricCount.Size = New System.Drawing.Size(75, 14)
         Me.LblFabricCount.TabIndex = 201
@@ -1162,7 +1184,7 @@ Partial Class FrmDesignInfo
         Me.Label26.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label26.AutoSize = True
         Me.Label26.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label26.Location = New System.Drawing.Point(740, 297)
+        Me.Label26.Location = New System.Drawing.Point(797, 297)
         Me.Label26.Name = "Label26"
         Me.Label26.Size = New System.Drawing.Size(75, 14)
         Me.Label26.TabIndex = 200
@@ -1172,7 +1194,7 @@ Partial Class FrmDesignInfo
         '
         Me.ChkShowBlock.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ChkShowBlock.AutoSize = True
-        Me.ChkShowBlock.Location = New System.Drawing.Point(860, 344)
+        Me.ChkShowBlock.Location = New System.Drawing.Point(917, 344)
         Me.ChkShowBlock.Name = "ChkShowBlock"
         Me.ChkShowBlock.Size = New System.Drawing.Size(57, 18)
         Me.ChkShowBlock.TabIndex = 202
@@ -1183,7 +1205,7 @@ Partial Class FrmDesignInfo
         '
         Me.ChkShowBack.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ChkShowBack.AutoSize = True
-        Me.ChkShowBack.Location = New System.Drawing.Point(860, 499)
+        Me.ChkShowBack.Location = New System.Drawing.Point(917, 499)
         Me.ChkShowBack.Name = "ChkShowBack"
         Me.ChkShowBack.Size = New System.Drawing.Size(57, 18)
         Me.ChkShowBack.TabIndex = 203
@@ -1194,18 +1216,41 @@ Partial Class FrmDesignInfo
         '
         Me.ChkShowKnots.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ChkShowKnots.AutoSize = True
-        Me.ChkShowKnots.Location = New System.Drawing.Point(860, 567)
+        Me.ChkShowKnots.Location = New System.Drawing.Point(917, 567)
         Me.ChkShowKnots.Name = "ChkShowKnots"
         Me.ChkShowKnots.Size = New System.Drawing.Size(57, 18)
         Me.ChkShowKnots.TabIndex = 204
         Me.ChkShowKnots.Text = "Show"
         Me.ChkShowKnots.UseVisualStyleBackColor = True
         '
+        'qtrlocation
+        '
+        Me.qtrlocation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.qtrlocation.HeaderText = "Qtr"
+        Me.qtrlocation.Name = "qtrlocation"
+        Me.qtrlocation.ReadOnly = True
+        '
+        'qtrthreadid
+        '
+        Me.qtrthreadid.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.qtrthreadid.HeaderText = "Thread"
+        Me.qtrthreadid.Name = "qtrthreadid"
+        Me.qtrthreadid.ReadOnly = True
+        Me.qtrthreadid.Width = 60
+        '
+        'qtrsymbolid
+        '
+        Me.qtrsymbolid.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.qtrsymbolid.HeaderText = "Symbol"
+        Me.qtrsymbolid.Name = "qtrsymbolid"
+        Me.qtrsymbolid.ReadOnly = True
+        Me.qtrsymbolid.Width = 60
+        '
         'FrmDesignInfo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(930, 738)
+        Me.ClientSize = New System.Drawing.Size(987, 738)
         Me.Controls.Add(Me.ChkShowKnots)
         Me.Controls.Add(Me.ChkShowBack)
         Me.Controls.Add(Me.ChkShowBlock)
@@ -1270,6 +1315,7 @@ Partial Class FrmDesignInfo
         Me.SplitContainer2.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer2.ResumeLayout(False)
+        CType(Me.DgvQuarters, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DgvBlock, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer3.Panel1.ResumeLayout(False)
         Me.SplitContainer3.Panel1.PerformLayout()
@@ -1386,4 +1432,8 @@ Partial Class FrmDesignInfo
     Friend WithEvents back_thread_id As DataGridViewTextBoxColumn
     Friend WithEvents back_thread_no As DataGridViewTextBoxColumn
     Friend WithEvents back_strands As DataGridViewTextBoxColumn
+    Friend WithEvents DgvQuarters As DataGridView
+    Friend WithEvents qtrlocation As DataGridViewTextBoxColumn
+    Friend WithEvents qtrthreadid As DataGridViewTextBoxColumn
+    Friend WithEvents qtrsymbolid As DataGridViewTextBoxColumn
 End Class

@@ -2709,7 +2709,7 @@ Public Class FrmStitchDesign
     End Sub
     Private Sub AddAdditionalQuarterBlockstitch(pCell As Cell, pQtr As BlockQuarter, pIsDouble As Boolean)
         Dim _existingBlock As BlockStitch = RemoveExistingBlockStitch(pCell.Position)
-        Dim _blockstitch As BlockStitch = MakeBlockstitch(pCell, BlockStitchType.Quarter, pQtr, pIsDouble)
+        Dim _blockstitch As BlockStitch = MakeBlockstitch(pCell, BlockStitchType.Mixed, pQtr, pIsDouble)
         If _existingBlock IsNot Nothing Then
             For Each _bsq As BlockStitchQuarter In _existingBlock.Quarters
                 If Not _bsq.BlockQuarter = pQtr Then
@@ -2735,25 +2735,29 @@ Public Class FrmStitchDesign
         If (pType = BlockStitchType.Full) Or
            (pType = BlockStitchType.Half And pQtr = BlockQuarter.TopLeft) Or
            (pType = BlockStitchType.ThreeQuarter And pQtr <> BlockQuarter.BottomRight) Or
-           (pType = BlockStitchType.Quarter And pQtr = BlockQuarter.TopLeft) Then
+           (pType = BlockStitchType.Quarter And pQtr = BlockQuarter.TopLeft) Or
+           (pType = BlockStitchType.Mixed And pQtr = BlockQuarter.TopLeft) Then
             _blockStitchQtrList.Add(New BlockStitchQuarter(BlockQuarter.TopLeft, _strands, oCurrentThread.ThreadId))
         End If
         If (pType = BlockStitchType.Full) Or
            (pType = BlockStitchType.Half And pQtr = BlockQuarter.TopRight) Or
            (pType = BlockStitchType.ThreeQuarter And pQtr <> BlockQuarter.BottomLeft) Or
-           (pType = BlockStitchType.Quarter And pQtr = BlockQuarter.TopRight) Then
+           (pType = BlockStitchType.Quarter And pQtr = BlockQuarter.TopRight) Or
+           (pType = BlockStitchType.Mixed And pQtr = BlockQuarter.TopRight) Then
             _blockStitchQtrList.Add(New BlockStitchQuarter(BlockQuarter.TopRight, _strands, oCurrentThread.ThreadId))
         End If
         If (pType = BlockStitchType.Full) Or
            (pType = BlockStitchType.Half And pQtr = BlockQuarter.TopRight) Or
            (pType = BlockStitchType.ThreeQuarter And pQtr <> BlockQuarter.TopRight) Or
-           (pType = BlockStitchType.Quarter And pQtr = BlockQuarter.BottomLeft) Then
+           (pType = BlockStitchType.Quarter And pQtr = BlockQuarter.BottomLeft) Or
+           (pType = BlockStitchType.Mixed And pQtr = BlockQuarter.BottomLeft) Then
             _blockStitchQtrList.Add(New BlockStitchQuarter(BlockQuarter.BottomLeft, _strands, oCurrentThread.ThreadId))
         End If
         If (pType = BlockStitchType.Full) Or
            (pType = BlockStitchType.Half And pQtr = BlockQuarter.TopLeft) Or
            (pType = BlockStitchType.ThreeQuarter And pQtr <> BlockQuarter.TopLeft) Or
-           (pType = BlockStitchType.Quarter And pQtr = BlockQuarter.BottomRight) Then
+           (pType = BlockStitchType.Quarter And pQtr = BlockQuarter.BottomRight) Or
+           (pType = BlockStitchType.Mixed And pQtr = BlockQuarter.BottomRight) Then
             _blockStitchQtrList.Add(New BlockStitchQuarter(BlockQuarter.BottomRight, _strands, oCurrentThread.ThreadId))
         End If
         _blockstitch.Quarters = _blockStitchQtrList
