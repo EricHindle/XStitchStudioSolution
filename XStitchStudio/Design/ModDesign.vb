@@ -441,15 +441,15 @@ Module ModDesign
 
         If pStitchDisplayStyle = StitchDisplayStyle.ColouredSymbols Then
             Dim _imageAttributes As ImageAttributes = MakeColourChangeAttributes(pBlockStitch.ProjThread.Thread)
-            DrawSymbol(pBlockStitch, pDesignGraphics, _tl, pPixelsPerCell, _imageAttributes)
+            DrawSymbol(pBlockStitch.ThreadId, pDesignGraphics, _tl, pPixelsPerCell, _imageAttributes)
         End If
         If pStitchDisplayStyle = StitchDisplayStyle.BlackWhiteSymbols Or pStitchDisplayStyle = StitchDisplayStyle.BlocksWithSymbols Then
-            DrawSymbol(pBlockStitch, pDesignGraphics, _tl, pPixelsPerCell, New ImageAttributes)
+            DrawSymbol(pBlockStitch.ThreadId, pDesignGraphics, _tl, pPixelsPerCell, New ImageAttributes)
         End If
         _crossPen.Dispose()
     End Sub
-    Friend Sub DrawSymbol(pBlockstitch As BlockStitch, pDesignGraphics As Graphics, _tl As Point, pSize As Integer, pImageAttributes As ImageAttributes)
-        pDesignGraphics.DrawImage(MakeImage(pBlockstitch, pSize), New Rectangle(_tl, New Size(pSize, pSize)), 0, 0, pSize, pSize, GraphicsUnit.Pixel, pImageAttributes)
+    Friend Sub DrawSymbol(pThreadId As Integer, pDesignGraphics As Graphics, _tl As Point, pSize As Integer, pImageAttributes As ImageAttributes)
+        pDesignGraphics.DrawImage(MakeImage(pThreadId, pSize), New Rectangle(_tl, New Size(pSize, pSize)), 0, 0, pSize, pSize, GraphicsUnit.Pixel, pImageAttributes)
     End Sub
     Public Sub DrawThreeQuarterBlockStitch(pBlockstitch As BlockStitch, pDesignGraphics As Graphics)
         Dim pX As Integer = (pBlockstitch.BlockPosition.X + iOriginX) * iPixelsPerCell
@@ -522,19 +522,29 @@ Module ModDesign
         End If
         _crossPen.Dispose()
     End Sub
-
     Private Sub DrawQuarterSymbol(pBlockstitch As BlockStitch, pQtr As BlockQuarter, pDesignGraphics As Graphics, _rectSize As Integer, _tl As Point, _trq As Point, _blq As Point, _brq As Point, _imageAttributes As ImageAttributes)
+        Dim _qtr As BlockStitchQuarter = GetQuarter(pBlockstitch, pQtr)
         Select Case pQtr
             Case BlockQuarter.TopLeft
-                DrawSymbol(pBlockstitch, pDesignGraphics, _tl, _rectSize, _imageAttributes)
+                DrawSymbol(_qtr.ThreadId, pDesignGraphics, _tl, _rectSize, _imageAttributes)
             Case BlockQuarter.TopRight
-                DrawSymbol(pBlockstitch, pDesignGraphics, _trq, _rectSize, _imageAttributes)
+                DrawSymbol(_qtr.ThreadId, pDesignGraphics, _trq, _rectSize, _imageAttributes)
             Case BlockQuarter.BottomLeft
-                DrawSymbol(pBlockstitch, pDesignGraphics, _blq, _rectSize, _imageAttributes)
+                DrawSymbol(_qtr.ThreadId, pDesignGraphics, _blq, _rectSize, _imageAttributes)
             Case BlockQuarter.BottomRight
-                DrawSymbol(pBlockstitch, pDesignGraphics, _brq, _rectSize, _imageAttributes)
+                DrawSymbol(_qtr.ThreadId, pDesignGraphics, _brq, _rectSize, _imageAttributes)
         End Select
     End Sub
+    Private Function GetQuarter(pBlockstitch As BlockStitch, pQtr As BlockQuarter)
+        Dim _stitchQtr As BlockStitchQuarter = New BlockStitchQuarter
+        For Each _qtr As BlockStitchQuarter In pBlockstitch.Quarters
+            If _qtr.BlockQuarter = pQtr Then
+                _stitchQtr = _qtr
+                Exit For
+            End If
+        Next
+        Return _stitchQtr
+    End Function
 
     Public Sub DrawQuarterBlockStitches(pBlockstitch As BlockStitch, ByRef pDesignGraphics As Graphics)
         Dim pX As Integer = (pBlockstitch.BlockPosition.X + iOriginX) * iPixelsPerCell
@@ -686,11 +696,11 @@ Module ModDesign
         }))
         Return _imageAttributes
     End Function
-    Public Function MakeImage(pBlockStitch As BlockStitch, pPixels As Integer) As Image
+    Public Function MakeImage(pThreadId As Integer, pPixels As Integer) As Image
         Dim _image As Image = New Bitmap(1, 1)
-        Dim _projectThread As ProjectThread = CType(oProjectThreads.Threads.Find(Function(p) p.ThreadId = pBlockStitch.ProjThread.ThreadId), ProjectThread)
+        Dim _projectThread As ProjectThread = CType(oProjectThreads.Threads.Find(Function(p) p.ThreadId = pThreadId), ProjectThread)
         If _projectThread Is Nothing Then
-            LogUtil.Problem("Thread missing from project :" & vbCrLf & pBlockStitch.ProjThread.Thread.ToString, "MakeImage")
+            LogUtil.Problem("Thread missing from project :" & vbCrLf & pThreadId.ToString, "MakeImage")
         Else
             Dim _symbol As Symbol = FindSymbolById(_projectThread.SymbolId)
             _image = ImageUtil.ResizeImage(_symbol.SymbolImage, pPixels, pPixels)

@@ -185,7 +185,7 @@ Public Class FrmStitchDesign
                             Case DesignAction.ThreeQuarterBlockstitchTopRight
                                 AddThreeQuarterStitch(_cell, BlockQuarter.TopRight, RbDouble.Checked)
                             Case DesignAction.BlockstitchQuarters
-                                AddQuarterBlockstitch(_cell, _cell.StitchQuarter, RbDouble.Checked)
+                                AddAdditionalQuarterBlockstitch(_cell, _cell.StitchQuarter, RbDouble.Checked)
                         End Select
                     End If
                 Else
@@ -443,7 +443,7 @@ Public Class FrmStitchDesign
                     Case DesignAction.ThreeQuarterBlockstitchTopRight
                         AddThreeQuarterStitch(_cell, BlockQuarter.TopRight, RbDouble.Checked)
                     Case DesignAction.BlockstitchQuarters
-                        AddQuarterBlockstitch(_cell, _cellQtr, RbDouble.Checked)
+                        AddAdditionalQuarterBlockstitch(_cell, _cellQtr, RbDouble.Checked)
                 End Select
             End If
             If isBackstitchInProgress Then
@@ -2682,106 +2682,83 @@ Public Class FrmStitchDesign
             End Select
         Next
     End Sub
-    Private Sub AddThreeQuarterStitch(pcell As Cell, pQtr As BlockQuarter, pIsDouble As Boolean)
-        Dim _strands As Integer = If(pIsDouble, 2, 1)
-        Dim _stitch As Stitch = StitchBuilder.AStitch.StartingWithNothing.WithStitchType(BlockStitchType.ThreeQuarter).WithProjectId(oProject.ProjectId).WithThreadId(oCurrentThread.ThreadId).WithStrandCount(2).WithBlockLocation(pcell.Position).WithQuarter(pQtr).Build
-        Dim _blockstitch As BlockStitch = BlockStitchBuilder.ABlockStitch.StartingWith(_stitch).Build
-
-        Dim _blockStitchQtrList As New List(Of BlockStitchQuarter)
-
-        Select Case pQtr
-            Case BlockQuarter.TopLeft
-                _blockStitchQtrList.Add(New BlockStitchQuarter(BlockQuarter.TopLeft, _strands, oCurrentThread.ThreadId))
-                _blockStitchQtrList.Add(New BlockStitchQuarter(BlockQuarter.TopRight, _strands, oCurrentThread.ThreadId))
-                _blockStitchQtrList.Add(New BlockStitchQuarter(BlockQuarter.BottomLeft, _strands, oCurrentThread.ThreadId))
-            Case BlockQuarter.TopRight
-                _blockStitchQtrList.Add(New BlockStitchQuarter(BlockQuarter.TopLeft, _strands, oCurrentThread.ThreadId))
-                _blockStitchQtrList.Add(New BlockStitchQuarter(BlockQuarter.TopRight, _strands, oCurrentThread.ThreadId))
-                _blockStitchQtrList.Add(New BlockStitchQuarter(BlockQuarter.BottomRight, _strands, oCurrentThread.ThreadId))
-            Case BlockQuarter.BottomLeft
-                _blockStitchQtrList.Add(New BlockStitchQuarter(BlockQuarter.TopLeft, _strands, oCurrentThread.ThreadId))
-                _blockStitchQtrList.Add(New BlockStitchQuarter(BlockQuarter.BottomRight, _strands, oCurrentThread.ThreadId))
-                _blockStitchQtrList.Add(New BlockStitchQuarter(BlockQuarter.BottomLeft, _strands, oCurrentThread.ThreadId))
-            Case BlockQuarter.BottomRight
-                _blockStitchQtrList.Add(New BlockStitchQuarter(BlockQuarter.BottomRight, _strands, oCurrentThread.ThreadId))
-                _blockStitchQtrList.Add(New BlockStitchQuarter(BlockQuarter.TopRight, _strands, oCurrentThread.ThreadId))
-                _blockStitchQtrList.Add(New BlockStitchQuarter(BlockQuarter.BottomLeft, _strands, oCurrentThread.ThreadId))
-        End Select
-        _blockstitch.Quarters = _blockStitchQtrList
-        AddBlockStitchToDesign(_blockstitch)
-        '    DrawQuarterBlockStitches(_blockstitch, oDesignGraphics)
-        DrawThreeQuarterBlockStitch(_blockstitch, oDesignGraphics)
-    End Sub
-    Private Sub AddHalfBlockStitch(pCell As Cell, isBack As Boolean, pIsDouble As Boolean)
-        Dim _strands As Integer = If(pIsDouble, 2, 1)
-        Dim _stitch As Stitch = StitchBuilder.AStitch.StartingWithNothing _
-            .WithStitchType(BlockStitchType.Half) _
-            .WithProjectId(oProject.ProjectId) _
-            .WithThreadId(oCurrentThread.ThreadId) _
-            .WithStrandCount(_strands) _
-            .WithBlockLocation(pCell.Position).Build
-        Dim _quarters As New List(Of BlockStitchQuarter)
-        If isBack Then
-            _quarters.Add(New BlockStitchQuarter(BlockQuarter.TopLeft, _strands, oCurrentThread.ThreadId))
-            _quarters.Add(New BlockStitchQuarter(BlockQuarter.BottomRight, _strands, oCurrentThread.ThreadId))
-        Else
-            _quarters.Add(New BlockStitchQuarter(BlockQuarter.TopRight, _strands, oCurrentThread.ThreadId))
-            _quarters.Add(New BlockStitchQuarter(BlockQuarter.BottomLeft, _strands, oCurrentThread.ThreadId))
-        End If
-        Dim _blockstitch As BlockStitch = BlockStitchBuilder.ABlockStitch.StartingWith(_stitch) _
-            .WithQuarters(_quarters).Build
-        RemoveExistingBlockStitch(pCell.Position)
-        AddBlockStitchToDesign(_blockstitch)
-        DrawQuarterBlockStitches(_blockstitch, oDesignGraphics)
-    End Sub
     Private Sub AddFullBlockStitch(pCell As Cell, pIsDouble As Boolean)
-        Dim _strands As Integer = If(pIsDouble, 2, 1)
-        Dim _stitch As Stitch = StitchBuilder.AStitch.StartingWithNothing _
-        .WithStitchType(BlockStitchType.Full) _
-        .WithProjectId(oProject.ProjectId) _
-        .WithThreadId(oCurrentThread.ThreadId) _
-        .WithStrandCount(_strands) _
-        .WithBlockLocation(pCell.Position).Build
-        Dim _quarters As New List(Of BlockStitchQuarter) From {
-            New BlockStitchQuarter(BlockQuarter.TopLeft, _strands, oCurrentThread.ThreadId),
-            New BlockStitchQuarter(BlockQuarter.TopRight, _strands, oCurrentThread.ThreadId),
-            New BlockStitchQuarter(BlockQuarter.BottomLeft, _strands, oCurrentThread.ThreadId),
-            New BlockStitchQuarter(BlockQuarter.BottomRight, _strands, oCurrentThread.ThreadId)
-        }
-        Dim _blockstitch As BlockStitch = BlockStitchBuilder.ABlockStitch.StartingWith(_stitch) _
-            .WithQuarters(_quarters).Build
         RemoveExistingBlockStitch(pCell.Position)
+        Dim _blockstitch As BlockStitch = MakeBlockstitch(pCell, BlockStitchType.Full, BlockQuarter.TopLeft, pIsDouble)
         AddBlockStitchToDesign(_blockstitch)
         DrawFullBlockStitch(_blockstitch)
     End Sub
+    Private Sub AddThreeQuarterStitch(pcell As Cell, pQtr As BlockQuarter, pIsDouble As Boolean)
+        RemoveExistingBlockStitch(pcell.Position)
+        Dim _blockstitch As BlockStitch = MakeBlockstitch(pcell, BlockStitchType.ThreeQuarter, pQtr, pIsDouble)
+        AddBlockStitchToDesign(_blockstitch)
+        DrawThreeQuarterBlockStitch(_blockstitch, oDesignGraphics)
+    End Sub
+    Private Sub AddHalfBlockStitch(pCell As Cell, isBack As Boolean, pIsDouble As Boolean)
+        RemoveExistingBlockStitch(pCell.Position)
+        Dim _qtr As BlockQuarter = If(isBack, BlockQuarter.TopLeft, BlockQuarter.TopRight)
+        Dim _blockstitch As BlockStitch = MakeBlockstitch(pCell, BlockStitchType.Half, _qtr, pIsDouble)
+        AddBlockStitchToDesign(_blockstitch)
+        DrawQuarterBlockStitches(_blockstitch, oDesignGraphics)
+    End Sub
     Private Sub AddQuarterBlockstitch(pCell As Cell, pQtr As BlockQuarter, pIsDouble As Boolean)
-        Dim _strands As Integer = If(pIsDouble, 2, 1)
-
-        Dim _existingBlockstitch As BlockStitch = FindBlockstitch(pCell.Position)
-        Dim _blockStitchQtrList As New List(Of BlockStitchQuarter)
-        If _existingBlockstitch IsNot Nothing Then
-            For Each _bsq As BlockStitchQuarter In _existingBlockstitch.Quarters
+        RemoveExistingBlockStitch(pCell.Position)
+        Dim _blockstitch As BlockStitch = MakeBlockstitch(pCell, BlockStitchType.Quarter, pQtr, pIsDouble)
+        AddBlockStitchToDesign(_blockstitch)
+        DrawQuarterBlockStitches(_blockstitch, oDesignGraphics)
+    End Sub
+    Private Sub AddAdditionalQuarterBlockstitch(pCell As Cell, pQtr As BlockQuarter, pIsDouble As Boolean)
+        Dim _existingBlock As BlockStitch = RemoveExistingBlockStitch(pCell.Position)
+        Dim _blockstitch As BlockStitch = MakeBlockstitch(pCell, BlockStitchType.Quarter, pQtr, pIsDouble)
+        If _existingBlock IsNot Nothing Then
+            For Each _bsq As BlockStitchQuarter In _existingBlock.Quarters
                 If Not _bsq.BlockQuarter = pQtr Then
-                    _blockStitchQtrList.Add(_bsq)
+                    _blockstitch.Quarters.Add(_bsq)
                 End If
             Next
-        Else
-            Dim _stitch As Stitch = StitchBuilder.AStitch.StartingWithNothing _
-                .WithStitchType(BlockStitchType.Quarter) _
-                .WithProjectId(oProject.ProjectId) _
-                .WithThreadId(oCurrentThread.ThreadId) _
-                .WithStrandCount(_strands) _
-                .WithBlockLocation(pCell.Position).Build
-            _existingBlockstitch = BlockStitchBuilder.ABlockStitch.StartingWith(_stitch).Build
-            oProjectDesign.BlockStitches.Add(_existingBlockstitch)
-            AddToCurrentUndoList(_existingBlockstitch, UndoAction.Add)
         End If
-        _blockStitchQtrList.Add(New BlockStitchQuarter(pQtr, _strands, oCurrentThread.ThreadId))
-        _existingBlockstitch.Quarters = _blockStitchQtrList
-        _existingBlockstitch.StitchType = BlockStitchType.Mixed
-        DrawQuarterBlockStitches(_existingBlockstitch, oDesignGraphics)
-        isSaved = False
+        AddBlockStitchToDesign(_blockstitch)
+        DrawQuarterBlockStitches(_blockstitch, oDesignGraphics)
     End Sub
+    Private Shared Function MakeBlockstitch(pcell As Cell, pType As BlockStitchType, pQtr As BlockQuarter, pIsDouble As Boolean) As BlockStitch
+        Dim _strands As Integer = If(pIsDouble, 2, 1)
+        Dim _stitch As Stitch = StitchBuilder.AStitch.StartingWithNothing _
+            .WithStitchType(pType) _
+            .WithProjectId(oProject.ProjectId) _
+            .WithThreadId(oCurrentThread.ThreadId) _
+            .WithStrandCount(_strands) _
+            .WithBlockLocation(pcell.Position) _
+            .WithQuarter(pQtr) _
+            .Build
+        Dim _blockstitch As BlockStitch = BlockStitchBuilder.ABlockStitch.StartingWith(_stitch).Build
+        Dim _blockStitchQtrList As New List(Of BlockStitchQuarter)
+        If (pType = BlockStitchType.Full) Or
+           (pType = BlockStitchType.Half And pQtr = BlockQuarter.TopLeft) Or
+           (pType = BlockStitchType.ThreeQuarter And pQtr <> BlockQuarter.BottomRight) Or
+           (pType = BlockStitchType.Quarter And pQtr = BlockQuarter.TopLeft) Then
+            _blockStitchQtrList.Add(New BlockStitchQuarter(BlockQuarter.TopLeft, _strands, oCurrentThread.ThreadId))
+        End If
+        If (pType = BlockStitchType.Full) Or
+           (pType = BlockStitchType.Half And pQtr = BlockQuarter.TopRight) Or
+           (pType = BlockStitchType.ThreeQuarter And pQtr <> BlockQuarter.BottomLeft) Or
+           (pType = BlockStitchType.Quarter And pQtr = BlockQuarter.TopRight) Then
+            _blockStitchQtrList.Add(New BlockStitchQuarter(BlockQuarter.TopRight, _strands, oCurrentThread.ThreadId))
+        End If
+        If (pType = BlockStitchType.Full) Or
+           (pType = BlockStitchType.Half And pQtr = BlockQuarter.TopRight) Or
+           (pType = BlockStitchType.ThreeQuarter And pQtr <> BlockQuarter.TopRight) Or
+           (pType = BlockStitchType.Quarter And pQtr = BlockQuarter.BottomLeft) Then
+            _blockStitchQtrList.Add(New BlockStitchQuarter(BlockQuarter.BottomLeft, _strands, oCurrentThread.ThreadId))
+        End If
+        If (pType = BlockStitchType.Full) Or
+           (pType = BlockStitchType.Half And pQtr = BlockQuarter.TopLeft) Or
+           (pType = BlockStitchType.ThreeQuarter And pQtr <> BlockQuarter.TopLeft) Or
+           (pType = BlockStitchType.Quarter And pQtr = BlockQuarter.BottomRight) Then
+            _blockStitchQtrList.Add(New BlockStitchQuarter(BlockQuarter.BottomRight, _strands, oCurrentThread.ThreadId))
+        End If
+        _blockstitch.Quarters = _blockStitchQtrList
+        Return _blockstitch
+    End Function
     Private Function FindBlockstitch(pCellPosition As Point) As BlockStitch
         Dim _blockstitch As BlockStitch = CType(oProjectDesign.BlockStitches.Find(Function(p) p.BlockPosition = pCellPosition), BlockStitch)
         Return _blockstitch

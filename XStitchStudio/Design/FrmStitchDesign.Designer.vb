@@ -809,7 +809,7 @@ Partial Class FrmStitchDesign
         Me.BtnFullStitch.Name = "BtnFullStitch"
         Me.BtnFullStitch.Size = New System.Drawing.Size(23, 22)
         Me.BtnFullStitch.Text = "ToolStripButton1"
-        Me.BtnFullStitch.ToolTipText = "Full Stitch"
+        Me.BtnFullStitch.ToolTipText = "Place full stitch"
         '
         'Btn3QtrsTL
         '
@@ -824,7 +824,7 @@ Partial Class FrmStitchDesign
         Me.Btn3QtrsTL.Name = "Btn3QtrsTL"
         Me.Btn3QtrsTL.Size = New System.Drawing.Size(23, 22)
         Me.Btn3QtrsTL.Text = "ToolStripButton2"
-        Me.Btn3QtrsTL.ToolTipText = "Three-quarter Top Left"
+        Me.Btn3QtrsTL.ToolTipText = "Place three-quarter Top Left"
         '
         'Btn3QtrsTR
         '
@@ -839,7 +839,7 @@ Partial Class FrmStitchDesign
         Me.Btn3QtrsTR.Name = "Btn3QtrsTR"
         Me.Btn3QtrsTR.Size = New System.Drawing.Size(23, 22)
         Me.Btn3QtrsTR.Text = "ToolStripButton3"
-        Me.Btn3QtrsTR.ToolTipText = "Three-quarter Top Right"
+        Me.Btn3QtrsTR.ToolTipText = "Place three-quarter Top Right"
         '
         'Btn3QtrsBR
         '
@@ -854,7 +854,7 @@ Partial Class FrmStitchDesign
         Me.Btn3QtrsBR.Name = "Btn3QtrsBR"
         Me.Btn3QtrsBR.Size = New System.Drawing.Size(23, 22)
         Me.Btn3QtrsBR.Text = "ToolStripButton1"
-        Me.Btn3QtrsBR.ToolTipText = "Three-quarter Bottom Right"
+        Me.Btn3QtrsBR.ToolTipText = "Place three-quarter Bottom Right"
         '
         'Btn3QtrsBL
         '
@@ -869,7 +869,7 @@ Partial Class FrmStitchDesign
         Me.Btn3QtrsBL.Name = "Btn3QtrsBL"
         Me.Btn3QtrsBL.Size = New System.Drawing.Size(23, 22)
         Me.Btn3QtrsBL.Text = "ToolStripButton1"
-        Me.Btn3QtrsBL.ToolTipText = "Three-quarter Bottom Left"
+        Me.Btn3QtrsBL.ToolTipText = "Place three-quarter Bottom Left"
         '
         'BtnHalfForward
         '
@@ -884,7 +884,7 @@ Partial Class FrmStitchDesign
         Me.BtnHalfForward.Name = "BtnHalfForward"
         Me.BtnHalfForward.Size = New System.Drawing.Size(23, 22)
         Me.BtnHalfForward.Text = "ToolStripButton1"
-        Me.BtnHalfForward.ToolTipText = "Half Forward"
+        Me.BtnHalfForward.ToolTipText = "Place forward half stitch"
         '
         'BtnHalfBack
         '
@@ -899,7 +899,7 @@ Partial Class FrmStitchDesign
         Me.BtnHalfBack.Name = "BtnHalfBack"
         Me.BtnHalfBack.Size = New System.Drawing.Size(23, 22)
         Me.BtnHalfBack.Text = "ToolStripButton1"
-        Me.BtnHalfBack.ToolTipText = "Half Back"
+        Me.BtnHalfBack.ToolTipText = "Place backward half stitch"
         '
         'BtnQtrTL
         '
@@ -914,7 +914,7 @@ Partial Class FrmStitchDesign
         Me.BtnQtrTL.Name = "BtnQtrTL"
         Me.BtnQtrTL.Size = New System.Drawing.Size(23, 22)
         Me.BtnQtrTL.Text = "ToolStripButton1"
-        Me.BtnQtrTL.ToolTipText = "Quarter Top Left"
+        Me.BtnQtrTL.ToolTipText = "Place quarter Top Left"
         '
         'BtnQtrTR
         '
@@ -929,7 +929,7 @@ Partial Class FrmStitchDesign
         Me.BtnQtrTR.Name = "BtnQtrTR"
         Me.BtnQtrTR.Size = New System.Drawing.Size(23, 22)
         Me.BtnQtrTR.Text = "ToolStripButton1"
-        Me.BtnQtrTR.ToolTipText = "Quarter Top Right"
+        Me.BtnQtrTR.ToolTipText = "Place quarter Top Right"
         '
         'BtnQtrBR
         '
@@ -944,7 +944,7 @@ Partial Class FrmStitchDesign
         Me.BtnQtrBR.Name = "BtnQtrBR"
         Me.BtnQtrBR.Size = New System.Drawing.Size(23, 22)
         Me.BtnQtrBR.Text = "ToolStripButton1"
-        Me.BtnQtrBR.ToolTipText = "Quarter Bottom Right"
+        Me.BtnQtrBR.ToolTipText = "Place quarter Bottom Right"
         '
         'BtnQtrBL
         '
@@ -959,7 +959,7 @@ Partial Class FrmStitchDesign
         Me.BtnQtrBL.Name = "BtnQtrBL"
         Me.BtnQtrBL.Size = New System.Drawing.Size(23, 22)
         Me.BtnQtrBL.Text = "ToolStripButton1"
-        Me.BtnQtrBL.ToolTipText = "Quarter Bottom Left"
+        Me.BtnQtrBL.ToolTipText = "Place quarter Bottom Left"
         '
         'BtnQuarters
         '
@@ -967,14 +967,14 @@ Partial Class FrmStitchDesign
         Me.BtnQuarters.BackgroundImage = CType(resources.GetObject("BtnQuarters.BackgroundImage"), System.Drawing.Image)
         Me.BtnQuarters.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.BtnQuarters.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BtnQuarters.Image = Global.XStitchStudio.My.Resources.Resources.quarters
+        Me.BtnQuarters.Image = CType(resources.GetObject("BtnQuarters.Image"), System.Drawing.Image)
         Me.BtnQuarters.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.BtnQuarters.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BtnQuarters.Margin = New System.Windows.Forms.Padding(0, 0, 1, 0)
         Me.BtnQuarters.Name = "BtnQuarters"
         Me.BtnQuarters.Size = New System.Drawing.Size(23, 22)
         Me.BtnQuarters.Text = "ToolStripButton1"
-        Me.BtnQuarters.ToolTipText = "Quarters"
+        Me.BtnQuarters.ToolTipText = "Add Quarter stitch"
         '
         'ToolStripSeparator2
         '

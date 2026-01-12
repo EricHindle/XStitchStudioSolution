@@ -573,7 +573,7 @@
     <Content Include="Resources\qtrbr.png" />
     <Content Include="Resources\qtrtl.png" />
     <Content Include="Resources\qtrtr.png" />
-    <Content Include="Resources\quarters.png" />
+    <None Include="Resources\quarters.png" />
     <Content Include="Resources\redo.png" />
     <Content Include="Resources\right24.png" />
     <Content Include="Resources\rotate.png" />

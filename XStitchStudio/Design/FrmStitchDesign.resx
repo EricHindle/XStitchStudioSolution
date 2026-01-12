@@ -341,6 +341,14 @@
         lKsAAAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="BtnQuarters.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAB/SURBVDhPY/jw4cN/SjEDjJFU0oqC0RXiUwM2BCRw7Ml/
+        FFw3ZQWKASA+uhqYQTgNQVZESH6QGULIz9gMQQ4zuCEwxciYWDkUQ8jFKIYwMDCgYGQ5olwC0qQ28z8K
+        hhlEVJhgM4CQIcgBPwQMQQ9YfOkIJWBxxQwM44ohqqQTAPrdqqjZ0IQpAAAAAElFTkSuQmCC
+</value>
+  </data>
   <data name="BtnFullBackstitch.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABcAAAAWCAYAAAArdgcFAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
