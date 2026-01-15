@@ -234,9 +234,9 @@ Partial Class FrmStitchDesign
         Me.ScDesign.Panel2.Controls.Add(Me.ToolStrip1)
         Me.ScDesign.Panel2.Controls.Add(Me.ToolStrip2)
         Me.ScDesign.Panel2.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ScDesign.Size = New System.Drawing.Size(1039, 532)
-        Me.ScDesign.SplitterDistance = 156
-        Me.ScDesign.TabIndex = 137
+        Me.ScDesign.Size = New System.Drawing.Size(955, 518)
+        Me.ScDesign.SplitterDistance = 143
+        Me.ScDesign.TabIndex = 1
         '
         'ScPalette
         '
@@ -257,9 +257,9 @@ Partial Class FrmStitchDesign
         '
         Me.ScPalette.Panel2.Controls.Add(Me.Label4)
         Me.ScPalette.Panel2.Controls.Add(Me.BeadLayoutPanel)
-        Me.ScPalette.Size = New System.Drawing.Size(152, 528)
-        Me.ScPalette.SplitterDistance = 404
-        Me.ScPalette.TabIndex = 135
+        Me.ScPalette.Size = New System.Drawing.Size(139, 514)
+        Me.ScPalette.SplitterDistance = 393
+        Me.ScPalette.TabIndex = 0
         '
         'Label3
         '
@@ -278,7 +278,7 @@ Partial Class FrmStitchDesign
         Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Tahoma", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(105, 26)
+        Me.Label2.Location = New System.Drawing.Point(92, 26)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(43, 13)
         Me.Label2.TabIndex = 134
@@ -290,7 +290,7 @@ Partial Class FrmStitchDesign
         Me.RbDouble.AutoSize = True
         Me.RbDouble.Checked = True
         Me.RbDouble.Font = New System.Drawing.Font("Tahoma", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.RbDouble.Location = New System.Drawing.Point(70, 24)
+        Me.RbDouble.Location = New System.Drawing.Point(57, 24)
         Me.RbDouble.Margin = New System.Windows.Forms.Padding(1)
         Me.RbDouble.Name = "RbDouble"
         Me.RbDouble.Size = New System.Drawing.Size(31, 17)
@@ -308,15 +308,15 @@ Partial Class FrmStitchDesign
         Me.ThreadLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
         Me.ThreadLayoutPanel.Location = New System.Drawing.Point(3, 45)
         Me.ThreadLayoutPanel.Name = "ThreadLayoutPanel"
-        Me.ThreadLayoutPanel.Size = New System.Drawing.Size(146, 356)
-        Me.ThreadLayoutPanel.TabIndex = 131
+        Me.ThreadLayoutPanel.Size = New System.Drawing.Size(133, 345)
+        Me.ThreadLayoutPanel.TabIndex = 0
         '
         'RbSingle
         '
         Me.RbSingle.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.RbSingle.AutoSize = True
         Me.RbSingle.Font = New System.Drawing.Font("Tahoma", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.RbSingle.Location = New System.Drawing.Point(37, 24)
+        Me.RbSingle.Location = New System.Drawing.Point(24, 24)
         Me.RbSingle.Margin = New System.Windows.Forms.Padding(1)
         Me.RbSingle.Name = "RbSingle"
         Me.RbSingle.Size = New System.Drawing.Size(31, 17)
@@ -345,8 +345,8 @@ Partial Class FrmStitchDesign
         Me.BeadLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
         Me.BeadLayoutPanel.Location = New System.Drawing.Point(2, 18)
         Me.BeadLayoutPanel.Name = "BeadLayoutPanel"
-        Me.BeadLayoutPanel.Size = New System.Drawing.Size(146, 99)
-        Me.BeadLayoutPanel.TabIndex = 132
+        Me.BeadLayoutPanel.Size = New System.Drawing.Size(133, 96)
+        Me.BeadLayoutPanel.TabIndex = 0
         '
         'Panel1
         '
@@ -357,10 +357,10 @@ Partial Class FrmStitchDesign
         Me.Panel1.Controls.Add(Me.PicDesign)
         Me.Panel1.Controls.Add(Me.HScrollBar1)
         Me.Panel1.Controls.Add(Me.VScrollBar1)
-        Me.Panel1.Location = New System.Drawing.Point(6, 63)
+        Me.Panel1.Location = New System.Drawing.Point(6, 34)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(866, 462)
-        Me.Panel1.TabIndex = 137
+        Me.Panel1.Size = New System.Drawing.Size(762, 477)
+        Me.Panel1.TabIndex = 0
         '
         'PicDesign
         '
@@ -370,7 +370,7 @@ Partial Class FrmStitchDesign
         Me.PicDesign.BackColor = System.Drawing.Color.White
         Me.PicDesign.Location = New System.Drawing.Point(3, 2)
         Me.PicDesign.Name = "PicDesign"
-        Me.PicDesign.Size = New System.Drawing.Size(832, 429)
+        Me.PicDesign.Size = New System.Drawing.Size(728, 448)
         Me.PicDesign.TabIndex = 133
         Me.PicDesign.TabStop = False
         '
@@ -378,19 +378,19 @@ Partial Class FrmStitchDesign
         '
         Me.HScrollBar1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.HScrollBar1.Location = New System.Drawing.Point(3, 438)
+        Me.HScrollBar1.Location = New System.Drawing.Point(3, 453)
         Me.HScrollBar1.Name = "HScrollBar1"
-        Me.HScrollBar1.Size = New System.Drawing.Size(832, 20)
-        Me.HScrollBar1.TabIndex = 135
+        Me.HScrollBar1.Size = New System.Drawing.Size(728, 20)
+        Me.HScrollBar1.TabIndex = 1
         '
         'VScrollBar1
         '
         Me.VScrollBar1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.VScrollBar1.Location = New System.Drawing.Point(838, 3)
+        Me.VScrollBar1.Location = New System.Drawing.Point(734, 3)
         Me.VScrollBar1.Name = "VScrollBar1"
-        Me.VScrollBar1.Size = New System.Drawing.Size(20, 429)
-        Me.VScrollBar1.TabIndex = 134
+        Me.VScrollBar1.Size = New System.Drawing.Size(20, 444)
+        Me.VScrollBar1.TabIndex = 0
         '
         'ToolStrip1
         '
@@ -405,8 +405,8 @@ Partial Class FrmStitchDesign
         Me.ToolStrip1.Location = New System.Drawing.Point(6, 5)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.Padding = New System.Windows.Forms.Padding(2, 1, 1, 1)
-        Me.ToolStrip1.Size = New System.Drawing.Size(860, 26)
-        Me.ToolStrip1.TabIndex = 135
+        Me.ToolStrip1.Size = New System.Drawing.Size(789, 26)
+        Me.ToolStrip1.TabIndex = 0
         Me.ToolStrip1.Text = "ToolStrip1"
         '
         'BtnSave
@@ -781,19 +781,19 @@ Partial Class FrmStitchDesign
         '
         'ToolStrip2
         '
-        Me.ToolStrip2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.ToolStrip2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ToolStrip2.AutoSize = False
         Me.ToolStrip2.BackColor = System.Drawing.Color.AliceBlue
-        Me.ToolStrip2.BackgroundImage = CType(resources.GetObject("ToolStrip2.BackgroundImage"), System.Drawing.Image)
         Me.ToolStrip2.Dock = System.Windows.Forms.DockStyle.None
         Me.ToolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.ToolStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BtnFullStitch, Me.Btn3QtrsTL, Me.Btn3QtrsTR, Me.Btn3QtrsBR, Me.Btn3QtrsBL, Me.BtnHalfForward, Me.BtnHalfBack, Me.BtnQtrTL, Me.BtnQtrTR, Me.BtnQtrBR, Me.BtnQtrBL, Me.BtnQuarters, Me.ToolStripSeparator2, Me.BtnFullBackstitch, Me.BtnHalfBackStitch, Me.ToolStripSeparator6, Me.BtnKnot, Me.BtnBead})
-        Me.ToolStrip2.Location = New System.Drawing.Point(6, 31)
+        Me.ToolStrip2.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow
+        Me.ToolStrip2.Location = New System.Drawing.Point(771, 43)
         Me.ToolStrip2.Name = "ToolStrip2"
         Me.ToolStrip2.Padding = New System.Windows.Forms.Padding(2, 1, 1, 1)
-        Me.ToolStrip2.Size = New System.Drawing.Size(860, 26)
-        Me.ToolStrip2.TabIndex = 136
+        Me.ToolStrip2.Size = New System.Drawing.Size(30, 471)
+        Me.ToolStrip2.TabIndex = 1
         Me.ToolStrip2.Text = "ToolStrip2"
         '
         'BtnFullStitch
@@ -805,9 +805,9 @@ Partial Class FrmStitchDesign
         Me.BtnFullStitch.Image = Global.XStitchStudio.My.Resources.Resources.fullcross
         Me.BtnFullStitch.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.BtnFullStitch.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnFullStitch.Margin = New System.Windows.Forms.Padding(0, 0, 1, 0)
+        Me.BtnFullStitch.Margin = New System.Windows.Forms.Padding(0, 0, 0, 1)
         Me.BtnFullStitch.Name = "BtnFullStitch"
-        Me.BtnFullStitch.Size = New System.Drawing.Size(23, 22)
+        Me.BtnFullStitch.Size = New System.Drawing.Size(29, 27)
         Me.BtnFullStitch.Text = "ToolStripButton1"
         Me.BtnFullStitch.ToolTipText = "Place full stitch"
         '
@@ -820,9 +820,9 @@ Partial Class FrmStitchDesign
         Me.Btn3QtrsTL.Image = Global.XStitchStudio.My.Resources.Resources._3qtrstl
         Me.Btn3QtrsTL.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.Btn3QtrsTL.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.Btn3QtrsTL.Margin = New System.Windows.Forms.Padding(0, 0, 1, 0)
+        Me.Btn3QtrsTL.Margin = New System.Windows.Forms.Padding(0, 0, 0, 1)
         Me.Btn3QtrsTL.Name = "Btn3QtrsTL"
-        Me.Btn3QtrsTL.Size = New System.Drawing.Size(23, 22)
+        Me.Btn3QtrsTL.Size = New System.Drawing.Size(29, 27)
         Me.Btn3QtrsTL.Text = "ToolStripButton2"
         Me.Btn3QtrsTL.ToolTipText = "Place three-quarter Top Left"
         '
@@ -835,9 +835,9 @@ Partial Class FrmStitchDesign
         Me.Btn3QtrsTR.Image = Global.XStitchStudio.My.Resources.Resources._3qtrstr
         Me.Btn3QtrsTR.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.Btn3QtrsTR.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.Btn3QtrsTR.Margin = New System.Windows.Forms.Padding(0, 0, 1, 0)
+        Me.Btn3QtrsTR.Margin = New System.Windows.Forms.Padding(0, 0, 0, 1)
         Me.Btn3QtrsTR.Name = "Btn3QtrsTR"
-        Me.Btn3QtrsTR.Size = New System.Drawing.Size(23, 22)
+        Me.Btn3QtrsTR.Size = New System.Drawing.Size(29, 27)
         Me.Btn3QtrsTR.Text = "ToolStripButton3"
         Me.Btn3QtrsTR.ToolTipText = "Place three-quarter Top Right"
         '
@@ -850,9 +850,9 @@ Partial Class FrmStitchDesign
         Me.Btn3QtrsBR.Image = Global.XStitchStudio.My.Resources.Resources._3qtrsbr
         Me.Btn3QtrsBR.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.Btn3QtrsBR.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.Btn3QtrsBR.Margin = New System.Windows.Forms.Padding(0, 0, 1, 0)
+        Me.Btn3QtrsBR.Margin = New System.Windows.Forms.Padding(0, 0, 0, 1)
         Me.Btn3QtrsBR.Name = "Btn3QtrsBR"
-        Me.Btn3QtrsBR.Size = New System.Drawing.Size(23, 22)
+        Me.Btn3QtrsBR.Size = New System.Drawing.Size(29, 27)
         Me.Btn3QtrsBR.Text = "ToolStripButton1"
         Me.Btn3QtrsBR.ToolTipText = "Place three-quarter Bottom Right"
         '
@@ -865,9 +865,9 @@ Partial Class FrmStitchDesign
         Me.Btn3QtrsBL.Image = Global.XStitchStudio.My.Resources.Resources._3qtrsbl
         Me.Btn3QtrsBL.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.Btn3QtrsBL.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.Btn3QtrsBL.Margin = New System.Windows.Forms.Padding(0, 0, 1, 0)
+        Me.Btn3QtrsBL.Margin = New System.Windows.Forms.Padding(0, 0, 0, 1)
         Me.Btn3QtrsBL.Name = "Btn3QtrsBL"
-        Me.Btn3QtrsBL.Size = New System.Drawing.Size(23, 22)
+        Me.Btn3QtrsBL.Size = New System.Drawing.Size(29, 27)
         Me.Btn3QtrsBL.Text = "ToolStripButton1"
         Me.Btn3QtrsBL.ToolTipText = "Place three-quarter Bottom Left"
         '
@@ -880,9 +880,9 @@ Partial Class FrmStitchDesign
         Me.BtnHalfForward.Image = Global.XStitchStudio.My.Resources.Resources.halffwd
         Me.BtnHalfForward.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.BtnHalfForward.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnHalfForward.Margin = New System.Windows.Forms.Padding(0, 0, 1, 0)
+        Me.BtnHalfForward.Margin = New System.Windows.Forms.Padding(0, 0, 0, 1)
         Me.BtnHalfForward.Name = "BtnHalfForward"
-        Me.BtnHalfForward.Size = New System.Drawing.Size(23, 22)
+        Me.BtnHalfForward.Size = New System.Drawing.Size(29, 27)
         Me.BtnHalfForward.Text = "ToolStripButton1"
         Me.BtnHalfForward.ToolTipText = "Place forward half stitch"
         '
@@ -895,9 +895,9 @@ Partial Class FrmStitchDesign
         Me.BtnHalfBack.Image = Global.XStitchStudio.My.Resources.Resources.halfback
         Me.BtnHalfBack.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.BtnHalfBack.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnHalfBack.Margin = New System.Windows.Forms.Padding(0, 0, 1, 0)
+        Me.BtnHalfBack.Margin = New System.Windows.Forms.Padding(0, 0, 0, 1)
         Me.BtnHalfBack.Name = "BtnHalfBack"
-        Me.BtnHalfBack.Size = New System.Drawing.Size(23, 22)
+        Me.BtnHalfBack.Size = New System.Drawing.Size(29, 27)
         Me.BtnHalfBack.Text = "ToolStripButton1"
         Me.BtnHalfBack.ToolTipText = "Place backward half stitch"
         '
@@ -910,9 +910,9 @@ Partial Class FrmStitchDesign
         Me.BtnQtrTL.Image = Global.XStitchStudio.My.Resources.Resources.qtrtl
         Me.BtnQtrTL.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.BtnQtrTL.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnQtrTL.Margin = New System.Windows.Forms.Padding(0, 0, 1, 0)
+        Me.BtnQtrTL.Margin = New System.Windows.Forms.Padding(0, 0, 0, 1)
         Me.BtnQtrTL.Name = "BtnQtrTL"
-        Me.BtnQtrTL.Size = New System.Drawing.Size(23, 22)
+        Me.BtnQtrTL.Size = New System.Drawing.Size(29, 27)
         Me.BtnQtrTL.Text = "ToolStripButton1"
         Me.BtnQtrTL.ToolTipText = "Place quarter Top Left"
         '
@@ -925,9 +925,9 @@ Partial Class FrmStitchDesign
         Me.BtnQtrTR.Image = Global.XStitchStudio.My.Resources.Resources.qtrtr
         Me.BtnQtrTR.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.BtnQtrTR.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnQtrTR.Margin = New System.Windows.Forms.Padding(0, 0, 1, 0)
+        Me.BtnQtrTR.Margin = New System.Windows.Forms.Padding(0, 0, 0, 1)
         Me.BtnQtrTR.Name = "BtnQtrTR"
-        Me.BtnQtrTR.Size = New System.Drawing.Size(23, 22)
+        Me.BtnQtrTR.Size = New System.Drawing.Size(29, 27)
         Me.BtnQtrTR.Text = "ToolStripButton1"
         Me.BtnQtrTR.ToolTipText = "Place quarter Top Right"
         '
@@ -940,9 +940,9 @@ Partial Class FrmStitchDesign
         Me.BtnQtrBR.Image = Global.XStitchStudio.My.Resources.Resources.qtrbr
         Me.BtnQtrBR.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.BtnQtrBR.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnQtrBR.Margin = New System.Windows.Forms.Padding(0, 0, 1, 0)
+        Me.BtnQtrBR.Margin = New System.Windows.Forms.Padding(0, 0, 0, 1)
         Me.BtnQtrBR.Name = "BtnQtrBR"
-        Me.BtnQtrBR.Size = New System.Drawing.Size(23, 22)
+        Me.BtnQtrBR.Size = New System.Drawing.Size(29, 27)
         Me.BtnQtrBR.Text = "ToolStripButton1"
         Me.BtnQtrBR.ToolTipText = "Place quarter Bottom Right"
         '
@@ -955,9 +955,9 @@ Partial Class FrmStitchDesign
         Me.BtnQtrBL.Image = Global.XStitchStudio.My.Resources.Resources.qtrbl
         Me.BtnQtrBL.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.BtnQtrBL.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnQtrBL.Margin = New System.Windows.Forms.Padding(0, 0, 1, 0)
+        Me.BtnQtrBL.Margin = New System.Windows.Forms.Padding(0, 0, 0, 1)
         Me.BtnQtrBL.Name = "BtnQtrBL"
-        Me.BtnQtrBL.Size = New System.Drawing.Size(23, 22)
+        Me.BtnQtrBL.Size = New System.Drawing.Size(29, 27)
         Me.BtnQtrBL.Text = "ToolStripButton1"
         Me.BtnQtrBL.ToolTipText = "Place quarter Bottom Left"
         '
@@ -970,9 +970,9 @@ Partial Class FrmStitchDesign
         Me.BtnQuarters.Image = CType(resources.GetObject("BtnQuarters.Image"), System.Drawing.Image)
         Me.BtnQuarters.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.BtnQuarters.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnQuarters.Margin = New System.Windows.Forms.Padding(0, 0, 1, 0)
+        Me.BtnQuarters.Margin = New System.Windows.Forms.Padding(0, 0, 0, 1)
         Me.BtnQuarters.Name = "BtnQuarters"
-        Me.BtnQuarters.Size = New System.Drawing.Size(23, 22)
+        Me.BtnQuarters.Size = New System.Drawing.Size(29, 27)
         Me.BtnQuarters.Text = "ToolStripButton1"
         Me.BtnQuarters.ToolTipText = "Add Quarter stitch"
         '
@@ -980,7 +980,7 @@ Partial Class FrmStitchDesign
         '
         Me.ToolStripSeparator2.Margin = New System.Windows.Forms.Padding(0, 0, 1, 0)
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(6, 24)
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(25, 6)
         '
         'BtnFullBackstitch
         '
@@ -991,9 +991,9 @@ Partial Class FrmStitchDesign
         Me.BtnFullBackstitch.Image = Global.XStitchStudio.My.Resources.Resources.fullthinbs
         Me.BtnFullBackstitch.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.BtnFullBackstitch.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnFullBackstitch.Margin = New System.Windows.Forms.Padding(0, 0, 1, 0)
+        Me.BtnFullBackstitch.Margin = New System.Windows.Forms.Padding(0, 0, 0, 1)
         Me.BtnFullBackstitch.Name = "BtnFullBackstitch"
-        Me.BtnFullBackstitch.Size = New System.Drawing.Size(23, 22)
+        Me.BtnFullBackstitch.Size = New System.Drawing.Size(29, 27)
         Me.BtnFullBackstitch.Text = "ToolStripButton1"
         Me.BtnFullBackstitch.ToolTipText = "Full Backstitch"
         '
@@ -1006,9 +1006,9 @@ Partial Class FrmStitchDesign
         Me.BtnHalfBackStitch.Image = Global.XStitchStudio.My.Resources.Resources.halfthinbs
         Me.BtnHalfBackStitch.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.BtnHalfBackStitch.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnHalfBackStitch.Margin = New System.Windows.Forms.Padding(0, 0, 1, 0)
+        Me.BtnHalfBackStitch.Margin = New System.Windows.Forms.Padding(0, 0, 0, 1)
         Me.BtnHalfBackStitch.Name = "BtnHalfBackStitch"
-        Me.BtnHalfBackStitch.Size = New System.Drawing.Size(23, 22)
+        Me.BtnHalfBackStitch.Size = New System.Drawing.Size(29, 27)
         Me.BtnHalfBackStitch.Text = "ToolStripButton1"
         Me.BtnHalfBackStitch.ToolTipText = "Half Backstitch"
         '
@@ -1016,7 +1016,7 @@ Partial Class FrmStitchDesign
         '
         Me.ToolStripSeparator6.Margin = New System.Windows.Forms.Padding(0, 0, 1, 0)
         Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
-        Me.ToolStripSeparator6.Size = New System.Drawing.Size(6, 24)
+        Me.ToolStripSeparator6.Size = New System.Drawing.Size(25, 6)
         '
         'BtnKnot
         '
@@ -1027,9 +1027,9 @@ Partial Class FrmStitchDesign
         Me.BtnKnot.Image = Global.XStitchStudio.My.Resources.Resources.knot
         Me.BtnKnot.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.BtnKnot.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnKnot.Margin = New System.Windows.Forms.Padding(0, 0, 1, 0)
+        Me.BtnKnot.Margin = New System.Windows.Forms.Padding(0, 0, 0, 1)
         Me.BtnKnot.Name = "BtnKnot"
-        Me.BtnKnot.Size = New System.Drawing.Size(23, 22)
+        Me.BtnKnot.Size = New System.Drawing.Size(29, 27)
         Me.BtnKnot.Text = "ToolStripButton1"
         Me.BtnKnot.ToolTipText = "Knot"
         '
@@ -1042,9 +1042,9 @@ Partial Class FrmStitchDesign
         Me.BtnBead.Image = Global.XStitchStudio.My.Resources.Resources.Bead
         Me.BtnBead.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.BtnBead.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BtnBead.Margin = New System.Windows.Forms.Padding(0, 0, 1, 0)
+        Me.BtnBead.Margin = New System.Windows.Forms.Padding(0, 0, 0, 1)
         Me.BtnBead.Name = "BtnBead"
-        Me.BtnBead.Size = New System.Drawing.Size(23, 22)
+        Me.BtnBead.Size = New System.Drawing.Size(29, 27)
         Me.BtnBead.Text = "ToolStripButton1"
         Me.BtnBead.ToolTipText = "Bead"
         '
@@ -1080,13 +1080,13 @@ Partial Class FrmStitchDesign
         Me.TableLayoutPanel1.Controls.Add(Me.PicSelectedThreadColour, 3, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.PicBeadColour, 3, 1)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 565)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 551)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 2
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(1053, 50)
-        Me.TableLayoutPanel1.TabIndex = 138
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(969, 50)
+        Me.TableLayoutPanel1.TabIndex = 2
         '
         'PicStyle
         '
@@ -1105,7 +1105,7 @@ Partial Class FrmStitchDesign
         '
         Me.LblPixelColourName.AutoSize = True
         Me.LblPixelColourName.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblPixelColourName.Location = New System.Drawing.Point(636, 6)
+        Me.LblPixelColourName.Location = New System.Drawing.Point(590, 6)
         Me.LblPixelColourName.Margin = New System.Windows.Forms.Padding(3, 3, 3, 0)
         Me.LblPixelColourName.Name = "LblPixelColourName"
         Me.LblPixelColourName.Size = New System.Drawing.Size(119, 14)
@@ -1129,7 +1129,7 @@ Partial Class FrmStitchDesign
         '
         Me.LblCursorPos.AutoSize = True
         Me.LblCursorPos.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblCursorPos.Location = New System.Drawing.Point(845, 6)
+        Me.LblCursorPos.Location = New System.Drawing.Point(780, 6)
         Me.LblCursorPos.Margin = New System.Windows.Forms.Padding(3, 3, 3, 0)
         Me.LblCursorPos.Name = "LblCursorPos"
         Me.LblCursorPos.Size = New System.Drawing.Size(58, 14)
@@ -1140,7 +1140,7 @@ Partial Class FrmStitchDesign
         'PnlPixelColour
         '
         Me.PnlPixelColour.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.PnlPixelColour.Location = New System.Drawing.Point(610, 3)
+        Me.PnlPixelColour.Location = New System.Drawing.Point(564, 3)
         Me.PnlPixelColour.Margin = New System.Windows.Forms.Padding(0)
         Me.PnlPixelColour.Name = "PnlPixelColour"
         Me.PnlPixelColour.Size = New System.Drawing.Size(20, 20)
@@ -1151,7 +1151,7 @@ Partial Class FrmStitchDesign
         '
         Me.LblSelectMessage.AutoSize = True
         Me.LblSelectMessage.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblSelectMessage.Location = New System.Drawing.Point(636, 29)
+        Me.LblSelectMessage.Location = New System.Drawing.Point(590, 29)
         Me.LblSelectMessage.Margin = New System.Windows.Forms.Padding(3, 3, 3, 0)
         Me.LblSelectMessage.Name = "LblSelectMessage"
         Me.LblSelectMessage.Size = New System.Drawing.Size(106, 14)
@@ -1163,7 +1163,7 @@ Partial Class FrmStitchDesign
         '
         Me.LblSelection.AutoSize = True
         Me.LblSelection.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblSelection.Location = New System.Drawing.Point(845, 29)
+        Me.LblSelection.Location = New System.Drawing.Point(780, 29)
         Me.LblSelection.Margin = New System.Windows.Forms.Padding(3, 3, 3, 0)
         Me.LblSelection.Name = "LblSelection"
         Me.LblSelection.Size = New System.Drawing.Size(104, 14)
@@ -1175,7 +1175,7 @@ Partial Class FrmStitchDesign
         '
         Me.LblCurrentAction.AutoSize = True
         Me.LblCurrentAction.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblCurrentAction.Location = New System.Drawing.Point(425, 29)
+        Me.LblCurrentAction.Location = New System.Drawing.Point(396, 29)
         Me.LblCurrentAction.Margin = New System.Windows.Forms.Padding(3, 3, 3, 0)
         Me.LblCurrentAction.Name = "LblCurrentAction"
         Me.LblCurrentAction.Size = New System.Drawing.Size(28, 14)
@@ -1185,7 +1185,7 @@ Partial Class FrmStitchDesign
         '
         'PicStitch
         '
-        Me.PicStitch.Location = New System.Drawing.Point(610, 26)
+        Me.PicStitch.Location = New System.Drawing.Point(564, 26)
         Me.PicStitch.Margin = New System.Windows.Forms.Padding(0)
         Me.PicStitch.Name = "PicStitch"
         Me.PicStitch.Size = New System.Drawing.Size(20, 21)
@@ -1262,7 +1262,7 @@ Partial Class FrmStitchDesign
         Me.LblStatus.AutoSize = True
         Me.LblStatus.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblStatus.ForeColor = System.Drawing.Color.Black
-        Me.LblStatus.Location = New System.Drawing.Point(425, 6)
+        Me.LblStatus.Location = New System.Drawing.Point(396, 6)
         Me.LblStatus.Margin = New System.Windows.Forms.Padding(3, 3, 3, 0)
         Me.LblStatus.Name = "LblStatus"
         Me.LblStatus.Size = New System.Drawing.Size(28, 14)
@@ -1312,8 +1312,8 @@ Partial Class FrmStitchDesign
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuDesign, Me.MnuPalette, Me.MnuEdit, Me.MnuThreads, Me.MnuDraw, Me.MotifsToolStripMenuItem, Me.MnuText, Me.ViewToolStripMenuItem, Me.MnuTools})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(1053, 24)
-        Me.MenuStrip1.TabIndex = 139
+        Me.MenuStrip1.Size = New System.Drawing.Size(969, 24)
+        Me.MenuStrip1.TabIndex = 0
         Me.MenuStrip1.Text = "MenuStrip1"
         '
         'MnuDesign
@@ -1842,13 +1842,14 @@ Partial Class FrmStitchDesign
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.AliceBlue
-        Me.ClientSize = New System.Drawing.Size(1053, 615)
+        Me.ClientSize = New System.Drawing.Size(969, 601)
         Me.Controls.Add(Me.MenuStrip1)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.Controls.Add(Me.ScDesign)
         Me.Font = New System.Drawing.Font("Tahoma", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4)
+        Me.MinimumSize = New System.Drawing.Size(985, 640)
         Me.Name = "FrmStitchDesign"
         Me.Text = "Stitch Design"
         Me.ScDesign.Panel1.ResumeLayout(False)
