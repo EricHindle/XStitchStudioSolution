@@ -10,6 +10,7 @@ Public NotInheritable Class FrmStitchSplash
     Private Sub FrmStitchThreadsSplash_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If My.Application.Info.Title <> "" Then
             ApplicationTitle.Text = My.Application.Info.Title
+            LblCompany.Text = String.Format(LblCompany.Text, My.Application.Info.CompanyName)
         Else
             ApplicationTitle.Text = System.IO.Path.GetFileNameWithoutExtension(My.Application.Info.AssemblyName)
         End If

@@ -362,10 +362,10 @@
     <Compile Include="Utilities\FrmMessage.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Utilities\frmOptions.Designer.vb">
-      <DependentUpon>frmOptions.vb</DependentUpon>
+    <Compile Include="Utilities\FrmOptions.Designer.vb">
+      <DependentUpon>FrmOptions.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\frmOptions.vb">
+    <Compile Include="Utilities\FrmOptions.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Utilities\FrmSetUp.Designer.vb">
@@ -478,8 +478,8 @@
     <EmbeddedResource Include="Utilities\FrmMessage.resx">
       <DependentUpon>FrmMessage.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utilities\frmOptions.resx">
-      <DependentUpon>frmOptions.vb</DependentUpon>
+    <EmbeddedResource Include="Utilities\FrmOptions.resx">
+      <DependentUpon>FrmOptions.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utilities\FrmSetUp.resx">
       <DependentUpon>FrmSetUp.vb</DependentUpon>

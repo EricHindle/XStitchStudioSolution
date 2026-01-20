@@ -684,13 +684,14 @@ Namespace Domain
             End If
             Return isOK
         End Function
-        Public Function AmendProjectThreadSymbolId(pProjectId As Integer, pThreadId As Integer, pSymbolId As Integer) As Boolean
+        Public Function AmendProjectThreadSymbolId(pProjectId As Integer, pThreadId As Integer, pDoubleSymbolId As Integer, pSingleSymbolId As Integer) As Boolean
             LogUtil.LogInfo("Changing project thread symbol", MethodBase.GetCurrentMethod.Name)
             Dim oRow As ProjectThreadsRow = GetProjectThreadByKey(pProjectId, pThreadId)
             Dim isOk As Boolean = True
             If oRow IsNot Nothing Then
                 Try
-                    oRow.symbol_id = pSymbolId
+                    oRow.symbol_id = pDoubleSymbolId
+                    oRow.single_thread_symbol_id = pSingleSymbolId
                     WriteXmlFromTable(oProjectThreadDataTable)
                 Catch ex As Exception
                     LogUtil.DisplayException(ex, PROJECT_THREAD_TABLE, MethodBase.GetCurrentMethod.Name)
@@ -750,7 +751,7 @@ Namespace Domain
             With pProjectThread
                 pProjectThreadRow.project_id = .ProjectId
                 pProjectThreadRow.thread_id = .ThreadId
-                pProjectThreadRow.symbol_id = .SymbolId
+                pProjectThreadRow.symbol_id = .DoubleThreadSymbolId
                 pProjectThreadRow.knot_count = 0
                 pProjectThreadRow.backstitch_count = 0
                 pProjectThreadRow.blockstitch_count = 0
@@ -1271,7 +1272,7 @@ Namespace Domain
             With pPaletteThread
                 pPaletteThreadRow.palette_id = .PaletteId
                 pPaletteThreadRow.thread_id = .ThreadId
-                pPaletteThreadRow.symbol_id = .SymbolId
+                pPaletteThreadRow.symbol_id = .DoubleThreadSymbolId
                 pPaletteThreadRow.isbead = If(.IsBead, 1, 0)
             End With
             Return pPaletteThreadRow

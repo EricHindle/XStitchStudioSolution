@@ -250,7 +250,7 @@ Public Class FrmDesignInfo
             oRow.Cells(block_pos_y.Name).Value = .BlockPosition.Y
             oRow.Cells(block_thread_id.Name).Value = .ThreadId
             oRow.Cells(block_thread_no.Name).Value = .ProjThread.Thread.ThreadNo
-            oRow.Cells(block_symbol_id.Name).Value = .ProjThread.SymbolId
+            oRow.Cells(block_symbol_id.Name).Value = .ProjThread.DoubleThreadSymbolId
             oRow.Cells(block_type.Name).Value = .StitchType.ToString()
         End With
         Return oRow
@@ -322,7 +322,7 @@ Public Class FrmDesignInfo
         Dim oProjectThread As ProjectThread = oProjectThreads.Threads.Find(Function(p) p.ThreadId = pQtr.ThreadId)
         With pQtr
             oRow.Cells(qtrthreadid.Name).Value = .Thread.ThreadNo
-            oRow.Cells(qtrsymbolid.Name).Value = oProjectThread.SymbolId
+            oRow.Cells(qtrsymbolid.Name).Value = oProjectThread.DoubleThreadSymbolId
             oRow.Cells(qtrlocation.Name).Value = .BlockQuarter.ToString
         End With
     End Sub

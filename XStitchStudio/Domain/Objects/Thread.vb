@@ -119,7 +119,7 @@ Namespace Domain.Objects
                 .Append("ThreadNo =[").Append(_threadNo).Append("], ") _
                 .Append("Colour name =[").Append(_colourName).Append("], ") _
                 .Append("Sort number =[").Append(_sortNumber).Append("], ") _
-                .Append("Stock level =[").Append(CStr(_stock_level)) _
+                .Append("Stock level =[").Append(CStr(_stock_level)).Append("], ") _
                 .Append("Brand Id =[").Append(CStr(_brandId)) _
                 .Append("]]")
             Return _sb.ToString()

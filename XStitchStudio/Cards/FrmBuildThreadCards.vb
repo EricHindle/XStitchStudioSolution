@@ -10,7 +10,6 @@ Imports HindlewareLib.Logging
 Imports XStitchStudio.Domain
 Imports XStitchStudio.Domain.Builders
 Imports XStitchStudio.Domain.Objects
-
 Public Class FrmBuildThreadCards
 #Region "constants"
     Private Const NEW_OR_AUTO As String = "Add a new card  or  use AUTO to generate cards"

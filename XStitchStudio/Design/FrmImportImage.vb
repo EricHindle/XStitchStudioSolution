@@ -401,13 +401,13 @@ Public Class FrmImportImage
         For Each _thread As PaletteThread In oPaletteList
             Dim _existingThread As ProjectThread = FindProjectThread(pProjectId, _thread.ThreadId)
             If Not _existingThread.IsLoaded Then
-                If _thread.SymbolId < 0 Then
-                    _thread.SymbolId = GetRandomAvailableSymbolId()
+                If _thread.DoubleThreadSymbolId < 0 Then
+                    _thread.DoubleThreadSymbolId = GetRandomAvailableSymbolId()
                 End If
                 Dim _projectThread As ProjectThread = ProjectThreadBuilder.AProjectThread.StartingWithNothing _
                 .WithProjectId(pProjectId) _
                 .WithThreadId(_thread.ThreadId) _
-                .WithSymbolId(_thread.SymbolId) _
+                .WithDoubleThreadSymbolId(_thread.DoubleThreadSymbolId) _
                 .WithIsUsed(True) _
                 .Build
                 AddNewProjectThread(_projectThread)
@@ -418,8 +418,8 @@ Public Class FrmImportImage
         Dim _allSymbols As List(Of Symbol) = GetSymbolsList()
         Dim _usedSymbolIds As New List(Of Integer)
         For Each _thread As PaletteThread In oPaletteList
-            If _thread.SymbolId > -1 Then
-                _usedSymbolIds.Add(_thread.SymbolId)
+            If _thread.DoubleThreadSymbolId > -1 Then
+                _usedSymbolIds.Add(_thread.DoubleThreadSymbolId)
             End If
         Next
         Return _allSymbols.Where(Function(x) Not _usedSymbolIds.Contains(x.SymbolId)).ToList()
@@ -429,13 +429,13 @@ Public Class FrmImportImage
         Randomize()
         oSymbolList = GetAllAvailableSymbols()
         For Each _thread In oPaletteList
-            If _thread.SymbolId < 0 Then
-                _thread.SymbolId = GetRandomAvailableSymbolId()
+            If _thread.DoubleThreadSymbolId < 0 Then
+                _thread.DoubleThreadSymbolId = GetRandomAvailableSymbolId()
             End If
             Dim _paletteThread As PaletteThread = PaletteThreadBuilder.APaletteThread.StartingWithNothing _
                 .WithThreadId(_thread.ThreadId) _
                 .WithPaletteId(pPaletteId) _
-                .WithSymbolId(_thread.SymbolId) _
+                .WithDoubleThreadSymbolId(_thread.DoubleThreadSymbolId) _
                 .Build
             AddNewPaletteThread(_paletteThread)
         Next

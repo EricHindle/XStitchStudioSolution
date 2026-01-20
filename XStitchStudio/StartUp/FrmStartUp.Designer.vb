@@ -30,10 +30,6 @@ Partial Class FrmStartUp
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Me.ApplicationTitle = New System.Windows.Forms.Label()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.Version = New System.Windows.Forms.Label()
-        Me.Copyright = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.btnSave = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
@@ -49,64 +45,16 @@ Partial Class FrmStartUp
         Me.Label3 = New System.Windows.Forms.Label()
         Me.BtnExit = New System.Windows.Forms.Button()
         Me.PnlSplash = New System.Windows.Forms.Panel()
-        Me.Panel2 = New System.Windows.Forms.Panel()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.ApplicationTitle = New System.Windows.Forms.Label()
+        Me.Version = New System.Windows.Forms.Label()
+        Me.LblCompany = New System.Windows.Forms.Label()
+        Me.Copyright = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.PnlSplash.SuspendLayout()
-        Me.Panel2.SuspendLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
-        '
-        'ApplicationTitle
-        '
-        Me.ApplicationTitle.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ApplicationTitle.BackColor = System.Drawing.Color.Transparent
-        Me.ApplicationTitle.Font = New System.Drawing.Font("Tahoma", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ApplicationTitle.ForeColor = System.Drawing.Color.FromArgb(CType(CType(5, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(60, Byte), Integer))
-        Me.ApplicationTitle.Location = New System.Drawing.Point(265, 9)
-        Me.ApplicationTitle.Name = "ApplicationTitle"
-        Me.ApplicationTitle.Size = New System.Drawing.Size(241, 185)
-        Me.ApplicationTitle.TabIndex = 1
-        Me.ApplicationTitle.Text = "Application Title"
-        Me.ApplicationTitle.TextAlign = System.Drawing.ContentAlignment.BottomLeft
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.Image = Global.XStitchStudio.My.Resources.Resources.cross_stitch
-        Me.PictureBox1.Location = New System.Drawing.Point(9, 9)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(200, 185)
-        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.PictureBox1.TabIndex = 0
-        Me.PictureBox1.TabStop = False
-        '
-        'Version
-        '
-        Me.Version.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Version.BackColor = System.Drawing.Color.Transparent
-        Me.Version.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Version.ForeColor = System.Drawing.Color.FromArgb(CType(CType(5, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(60, Byte), Integer))
-        Me.Version.Location = New System.Drawing.Point(3, 3)
-        Me.Version.Margin = New System.Windows.Forms.Padding(3)
-        Me.Version.Name = "Version"
-        Me.Version.Size = New System.Drawing.Size(235, 29)
-        Me.Version.TabIndex = 1
-        Me.Version.Text = "Version {0}.{1}.{2}.{3}"
-        '
-        'Copyright
-        '
-        Me.Copyright.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Copyright.BackColor = System.Drawing.Color.Transparent
-        Me.Copyright.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Copyright.ForeColor = System.Drawing.Color.FromArgb(CType(CType(5, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(60, Byte), Integer))
-        Me.Copyright.Location = New System.Drawing.Point(3, 38)
-        Me.Copyright.Margin = New System.Windows.Forms.Padding(3)
-        Me.Copyright.Name = "Copyright"
-        Me.Copyright.Size = New System.Drawing.Size(235, 33)
-        Me.Copyright.TabIndex = 2
-        Me.Copyright.Text = "Copyright"
         '
         'Label4
         '
@@ -262,27 +210,78 @@ Partial Class FrmStartUp
         'PnlSplash
         '
         Me.PnlSplash.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.PnlSplash.Controls.Add(Me.Panel2)
+        Me.PnlSplash.Controls.Add(Me.Copyright)
+        Me.PnlSplash.Controls.Add(Me.LblCompany)
         Me.PnlSplash.Controls.Add(Me.ApplicationTitle)
+        Me.PnlSplash.Controls.Add(Me.Version)
         Me.PnlSplash.Controls.Add(Me.PictureBox1)
         Me.PnlSplash.Location = New System.Drawing.Point(58, 12)
         Me.PnlSplash.Name = "PnlSplash"
         Me.PnlSplash.Size = New System.Drawing.Size(522, 287)
         Me.PnlSplash.TabIndex = 16
         '
-        'Panel2
-        '
-        Me.Panel2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Panel2.Controls.Add(Me.Version)
-        Me.Panel2.Controls.Add(Me.Copyright)
-        Me.Panel2.Location = New System.Drawing.Point(265, 208)
-        Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(241, 74)
-        Me.Panel2.TabIndex = 3
-        '
         'Timer1
         '
-        Me.Timer1.Interval = 1000
+        Me.Timer1.Interval = 2000
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.PictureBox1.Image = Global.XStitchStudio.My.Resources.Resources.cross_stitch
+        Me.PictureBox1.Location = New System.Drawing.Point(3, 3)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(271, 271)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.PictureBox1.TabIndex = 4
+        Me.PictureBox1.TabStop = False
+        '
+        'ApplicationTitle
+        '
+        Me.ApplicationTitle.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.ApplicationTitle.BackColor = System.Drawing.Color.Transparent
+        Me.ApplicationTitle.Font = New System.Drawing.Font("Tahoma", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ApplicationTitle.ForeColor = System.Drawing.Color.FromArgb(CType(CType(5, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(60, Byte), Integer))
+        Me.ApplicationTitle.Location = New System.Drawing.Point(297, 27)
+        Me.ApplicationTitle.Name = "ApplicationTitle"
+        Me.ApplicationTitle.Size = New System.Drawing.Size(193, 75)
+        Me.ApplicationTitle.TabIndex = 5
+        Me.ApplicationTitle.Text = "Application Title"
+        Me.ApplicationTitle.TextAlign = System.Drawing.ContentAlignment.BottomLeft
+        '
+        'Version
+        '
+        Me.Version.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Version.AutoSize = True
+        Me.Version.BackColor = System.Drawing.Color.Transparent
+        Me.Version.Font = New System.Drawing.Font("Courier New", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Version.Location = New System.Drawing.Point(289, 219)
+        Me.Version.Name = "Version"
+        Me.Version.Size = New System.Drawing.Size(140, 15)
+        Me.Version.TabIndex = 9
+        Me.Version.Text = "version {0}.{1}.{2}"
+        '
+        'LblCompany
+        '
+        Me.LblCompany.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LblCompany.AutoSize = True
+        Me.LblCompany.Font = New System.Drawing.Font("Courier New", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblCompany.Location = New System.Drawing.Point(289, 190)
+        Me.LblCompany.Name = "LblCompany"
+        Me.LblCompany.Size = New System.Drawing.Size(49, 15)
+        Me.LblCompany.TabIndex = 10
+        Me.LblCompany.Text = "by {0}"
+        '
+        'Copyright
+        '
+        Me.Copyright.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Copyright.AutoSize = True
+        Me.Copyright.BackColor = System.Drawing.Color.Transparent
+        Me.Copyright.Font = New System.Drawing.Font("Courier New", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Copyright.Location = New System.Drawing.Point(289, 235)
+        Me.Copyright.Name = "Copyright"
+        Me.Copyright.Size = New System.Drawing.Size(98, 15)
+        Me.Copyright.TabIndex = 11
+        Me.Copyright.Text = "copyright {0}"
         '
         'FrmStartUp
         '
@@ -303,19 +302,15 @@ Partial Class FrmStartUp
         Me.Name = "FrmStartUp"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.PnlSplash.ResumeLayout(False)
-        Me.Panel2.ResumeLayout(False)
+        Me.PnlSplash.PerformLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents ApplicationTitle As Label
-    Friend WithEvents Version As Label
-    Friend WithEvents Copyright As Label
     Friend WithEvents Label4 As Label
     Friend WithEvents btnSave As Button
     Friend WithEvents GroupBox1 As GroupBox
@@ -331,6 +326,10 @@ Partial Class FrmStartUp
     Friend WithEvents Label3 As Label
     Friend WithEvents BtnExit As Button
     Friend WithEvents PnlSplash As Panel
-    Friend WithEvents Panel2 As Panel
     Friend WithEvents Timer1 As Timer
+    Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents ApplicationTitle As Label
+    Friend WithEvents Copyright As Label
+    Friend WithEvents LblCompany As Label
+    Friend WithEvents Version As Label
 End Class

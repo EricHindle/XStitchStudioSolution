@@ -41,33 +41,62 @@ Public Class FrmThreadSymbols
         My.Settings.Save()
     End Sub
     Private Sub DgvThreads_SelectionChanged(sender As Object, e As EventArgs) Handles DgvThreads.SelectionChanged
+        SetSelectedSymbols()
+    End Sub
+
+    Private Sub SetSelectedSymbols()
+        SetSymbolColours()
         If DgvThreads.SelectedRows.Count > 0 Then
             Dim _row As DataGridViewRow = DgvThreads.SelectedRows(0)
             Dim _thread As Thread = FindThreadById(_row.Cells(threadId.Name).Value)
-            Dim _symbolPicbox As PictureBox = FindSymbolInTable(_thread.ThreadId)
+            LblColourName.Text = _thread.ColourName
+            Dim _doubleThreadSymbolId As Integer = _row.Cells(threadsymbolid.Name).Value
+            Dim _singleThreadSymbolId As Integer = _row.Cells(threadsymbol1id.Name).Value
+            Dim _symbolPicbox As PictureBox = FindSymbolInTable(_doubleThreadSymbolId)
             If _symbolPicbox IsNot Nothing Then
-                _symbolPicbox.BackColor = Color.LightGreen
+                _symbolPicbox.BackColor = Color.Yellow
+                PicDouble.Image = _symbolPicbox.Image
+            Else
+                PicDouble.Image = Nothing
             End If
+            Dim _symbol1Picbox As PictureBox = FindSymbolInTable(_singleThreadSymbolId)
+            If _symbol1Picbox IsNot Nothing Then
+                _symbol1Picbox.BackColor = Color.Yellow
+                PicSingle.Image = _symbol1Picbox.Image
+            Else
+                PicSingle.Image = Nothing
+            End If
+            GrpSelectedColour.Visible = True
+        Else
+            LblColourName.Text = String.Empty
+            GrpSelectedColour.Visible = False
         End If
     End Sub
+
     Private Sub BtnUpdate_Click(sender As Object, e As EventArgs) Handles BtnUpdate.Click
         For Each _row As DataGridViewRow In DgvThreads.Rows
             Dim _threadId As Integer = _row.Cells(threadId.Name).Value
             Dim _symbolId As Integer = _row.Cells(threadsymbolid.Name).Value
-            If _symbolId > 0 Then
-                AmendProjectThreadSymbolId(_selectedProject.ProjectId, _threadId, _symbolId)
-            ElseIf _symbolId = 0 Then
-                AmendProjectThreadSymbolId(_selectedProject.ProjectId, _threadId, -1)
-            End If
+            Dim _symbol1Id As Integer = _row.Cells(threadsymbol1id.Name).Value
+            If _symbolId = 0 Then _symbolId = -1
+            If _symbol1Id = 0 Then _symbol1Id = -1
+            AmendProjectThreadSymbolId(_selectedProject.ProjectId, _threadId, _symbolId, _symbol1Id)
         Next
     End Sub
     Private Sub BtnClearSymbol_Click(sender As Object, e As EventArgs) Handles BtnClearSymbol.Click
         If DgvThreads.SelectedRows.Count > 0 Then
             Dim _row As DataGridViewRow = DgvThreads.SelectedRows(0)
             Dim _symbolId As Integer = _row.Cells(threadsymbolid.Name).Value
-            _row.Cells(threadsymbolid.Name).Value = 0
-            _row.Cells(threadsymbol.Name).Value = New Bitmap(1, 1)
-            SetSymbolColours()
+            Dim _symbol1Id As Integer = _row.Cells(threadsymbol1id.Name).Value
+            If RbSingle.Checked Then
+                _row.Cells(threadsymbol1id.Name).Value = 0
+                _row.Cells(threadsymbol1.Name).Value = New Bitmap(1, 1)
+            End If
+            If RbDouble.Checked Then
+                _row.Cells(threadsymbolid.Name).Value = 0
+                _row.Cells(threadsymbol.Name).Value = New Bitmap(1, 1)
+            End If
+            SetSelectedSymbols()
         End If
     End Sub
 #End Region
@@ -78,8 +107,8 @@ Public Class FrmThreadSymbols
         LblProjectName.Text = _selectedProject.ProjectName
         LoadSymbols(FlpSymbols)
         LoadThreadList()
+        LblColourName.Text = String.Empty
         isLoading = False
-
     End Sub
     Private Sub LoadSymbols(ByRef pFlp As FlowLayoutPanel)
         ClearSymbolTable(pFlp)
@@ -93,14 +122,20 @@ Public Class FrmThreadSymbols
         Dim _picBox As PictureBox = CType(sender, PictureBox)
         iSelectedSymbolId = CInt(_picBox.Name)
         oSelectedSymbol = FindSymbolById(iSelectedSymbolId)
-        _picBox.BackColor = Color.LightGreen
         If DgvThreads.SelectedRows.Count = 1 Then
             Dim oRow As DataGridViewRow = DgvThreads.SelectedRows(0)
-            Dim symcell As DataGridViewImageCell = CType(oRow.Cells(threadsymbol.Name), DataGridViewImageCell)
             Dim _symbol As Symbol = FindSymbolById(iSelectedSymbolId)
-            symcell.Value = ResizeImage(_symbol.SymbolImage, symcell.Size.Height, symcell.Size.Height)
-            oRow.Cells(threadsymbolid.Name).Value = iSelectedSymbolId
-            SetSymbolColours()
+            If RbDouble.Checked Then
+                Dim symcell As DataGridViewImageCell = CType(oRow.Cells(threadsymbol.Name), DataGridViewImageCell)
+                symcell.Value = ResizeImage(_symbol.SymbolImage, symcell.Size.Height, symcell.Size.Height)
+                oRow.Cells(threadsymbolid.Name).Value = iSelectedSymbolId
+            End If
+            If RbSingle.Checked Then
+                Dim symcell As DataGridViewImageCell = CType(oRow.Cells(threadsymbol1.Name), DataGridViewImageCell)
+                symcell.Value = ResizeImage(_symbol.SymbolImage, symcell.Size.Height, symcell.Size.Height)
+                oRow.Cells(threadsymbol1id.Name).Value = iSelectedSymbolId
+            End If
+            SetSelectedSymbols()
         End If
     End Sub
     Private Sub LoadThreadList()
@@ -110,16 +145,9 @@ Public Class FrmThreadSymbols
         DgvThreads.Rows.Clear()
         For Each oThread As ProjectThread In _usedThreadList.Threads
             Dim _index = AddProjectThreadSymbolRow(DgvThreads, oThread)
-            Dim _symbolBox As PictureBox = FindSymbolInTable(oThread.SymbolId)
-            If _symbolBox IsNot Nothing Then
-                If _symbolBox.BackColor = Color.LightGreen Then
-                    _symbolBox.BackColor = Color.Red
-                Else
-                    _symbolBox.BackColor = Color.LightGreen
-                End If
-            End If
         Next
         DgvThreads.ClearSelection()
+        SetSymbolColours()
     End Sub
     Private Function AddProjectThreadSymbolRow(ByRef pDgv As DataGridView, pThread As ProjectThread) As Integer
         Dim oRow As DataGridViewRow = NewProjectThreadSymbolRow(pDgv, pThread)
@@ -132,14 +160,17 @@ Public Class FrmThreadSymbols
             oRow.Cells(threadName.Name).Value = .ColourName
             LoadColourCell(pDgv, oRow, threadColour.Name, pThread.Thread, False)
             oRow.Cells(threadSortNumber.Name).Value = .SortNumber
-            oRow.Cells(ThreadNo.Name).Value = .ThreadNo
-            SetThreadImageInRow(pThread.SymbolId, oRow)
+            oRow.Cells(threadNo.Name).Value = .ThreadNo
+            SetThreadImageInRow(pThread.DoubleThreadSymbolId, threadsymbol.Name, oRow)
+            SetThreadImageInRow(pThread.SingleThreadSymbolId, threadsymbol1.Name, oRow)
+            oRow.Cells(threadsymbolid.Name).Value = pThread.DoubleThreadSymbolId
+            oRow.Cells(threadsymbol1id.Name).Value = pThread.SingleThreadSymbolId
         End With
         Return oRow
     End Function
 
-    Private Sub SetThreadImageInRow(pSymbolId As Integer, ByRef pRow As DataGridViewRow)
-        Dim symcell As DataGridViewImageCell = CType(pRow.Cells(threadsymbol.Name), DataGridViewImageCell)
+    Private Sub SetThreadImageInRow(pSymbolId As Integer, pCellName As String, ByRef pRow As DataGridViewRow)
+        Dim symcell As DataGridViewImageCell = CType(pRow.Cells(pCellName), DataGridViewImageCell)
         Dim _symbol As Symbol = FindSymbolById(pSymbolId)
         symcell.Style.Padding = New Padding(1)
         symcell.Value = ResizeImage(_symbol.SymbolImage, symcell.Size.Height, symcell.Size.Height)
@@ -167,20 +198,29 @@ Public Class FrmThreadSymbols
         For Each _row As DataGridViewRow In DgvThreads.Rows
             Dim _symbolId = _row.Cells(threadsymbolid.Name).Value
             If _symbolId > 0 Then
-                Dim _controls As Control() = FlpSymbols.Controls.Find(CStr(_symbolId), False)
-                If _controls.Length > 0 Then
-                    Dim _symbolBox As PictureBox = TryCast(_controls(0), PictureBox)
-                    If _symbolBox IsNot Nothing Then
-                        If _symbolBox.BackColor = Color.LightGreen Then
-                            _symbolBox.BackColor = Color.Red
-                        Else
-                            _symbolBox.BackColor = Color.LightGreen
-                        End If
-                    End If
-                End If
+                SetSymbolColour(_symbolId)
+            End If
+            Dim _symbol1Id = _row.Cells(threadsymbol1id.Name).Value
+            If _symbol1Id > 0 Then
+                SetSymbolColour(_symbol1Id)
             End If
         Next
     End Sub
+
+    Private Sub SetSymbolColour(_symbolId As Object)
+        Dim _controls As Control() = FlpSymbols.Controls.Find(CStr(_symbolId), False)
+        If _controls.Length > 0 Then
+            Dim _symbolBox As PictureBox = TryCast(_controls(0), PictureBox)
+            If _symbolBox IsNot Nothing Then
+                If _symbolBox.BackColor = Color.LightGreen Or _symbolBox.BackColor = Color.Red Then
+                    _symbolBox.BackColor = Color.Red
+                Else
+                    _symbolBox.BackColor = Color.LightGreen
+                End If
+            End If
+        End If
+    End Sub
+
     Private Sub BtnAuto_Click(sender As Object, e As EventArgs) Handles BtnAuto.Click
         Randomize()
         For Each _row As DataGridViewRow In DgvThreads.Rows
@@ -188,7 +228,7 @@ Public Class FrmThreadSymbols
             If _symbolId <= 0 Then
                 _symbolId = FindRandomAvailableSymbol()
                 _row.Cells(threadsymbolid.Name).Value = _symbolId
-                SetThreadImageInRow(_symbolId, _row)
+                SetThreadImageInRow(_symbolId, threadsymbol.Name, _row)
                 SetSymbolColours()
             End If
         Next

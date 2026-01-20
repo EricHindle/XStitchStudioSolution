@@ -11,8 +11,6 @@ Imports XStitchStudio.Domain
 Imports XStitchStudio.Domain.Objects
 Public Class FrmPrintThreadCards
 #Region "constants"
-    ' image dots per inch
-
     ' font points per inch
     Private Const PPI As Integer = 72
     Private Const PROJECT_NAME_FONT_SIZE As Integer = 9
@@ -148,7 +146,6 @@ Public Class FrmPrintThreadCards
         sourceBitmap.SetResolution(PRINT_DPI, PRINT_DPI)
         leftmargin = oPrintDoc.DefaultPageSettings.HardMarginY / 100 * PRINT_DPI
         topmargin = oPrintDoc.DefaultPageSettings.HardMarginX / 100 * PRINT_DPI
-
         SetPictureWidth()
         LoadProjectList(DgvProjects, MyBase.Name)
         AddInstruction(SELECT_PROJECT)
@@ -289,7 +286,6 @@ Public Class FrmPrintThreadCards
             Dim _colourRect As New Rectangle(New Point(_colourleft, _colourbottom_y), New Size(_colourwidth, _colourheight))
             Dim _symbolBorderRect As New Rectangle(New Point(_symbolleft, _symboltop), New Size(_symbolwidth, _symbolheight))
             Dim _symbolRect As New Rectangle(New Point(_symbolleft + (_symbolwidth / 4), _symboltop + (_symbolwidth / 4)), New Size(_symbolwidth / 2, _symbolheight / 2))
-
             Dim _brush As Brush = New SolidBrush(_thread.Thread.Colour)
             _cardGraphics.FillRectangle(_brush, _colourRect)
             _cardGraphics.FillRectangle(CARD_COLOUR, _textrect)

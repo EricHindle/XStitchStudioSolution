@@ -702,7 +702,7 @@ Module ModDesign
         If _projectThread Is Nothing Then
             LogUtil.Problem("Thread missing from project :" & vbCrLf & pThreadId.ToString, "MakeImage")
         Else
-            Dim _symbol As Symbol = FindSymbolById(_projectThread.SymbolId)
+            Dim _symbol As Symbol = FindSymbolById(_projectThread.DoubleThreadSymbolId)
             _image = ImageUtil.ResizeImage(_symbol.SymbolImage, pPixels, pPixels)
         End If
         Return _image
@@ -1023,7 +1023,7 @@ Module ModDesign
             Dim _projThread As ProjectThread = ProjectThreadBuilder.AProjectThread.StartingWithNothing _
                 .WithProjectId(oProject.ProjectId) _
                 .WithThreadId(oStitch.ThreadId) _
-                .WithSymbolId(FindRandomSymbol()) _
+                .WithDoubleThreadSymbolId(FindRandomSymbol()) _
                 .WithIsUsed(True).Build
             AddNewProjectThread(_projThread)
         End If

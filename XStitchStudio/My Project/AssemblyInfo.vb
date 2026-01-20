@@ -18,7 +18,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("CrossStitch Design Studio")>
 <Assembly: AssemblyCompany("hindleware")>
 <Assembly: AssemblyProduct("XStitchStudio")>
-<Assembly: AssemblyCopyright("Copyright ©Eric Hindle  2025-6")>
+<Assembly: AssemblyCopyright("© 2025-26 eric hindle")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
@@ -34,5 +34,5 @@ Imports System.Runtime.InteropServices
 '      Revision
 '
 
-<Assembly: AssemblyVersion("2.18.4.*")>
-<Assembly: AssemblyFileVersion("2.18.4.0")>
+<Assembly: AssemblyVersion("2.19.0.*")>
+<Assembly: AssemblyFileVersion("2.19.0.0")>

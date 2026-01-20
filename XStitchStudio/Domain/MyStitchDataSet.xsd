@@ -117,6 +117,7 @@
               <xs:element name="knot_count" msprop:Generator_ColumnPropNameInTable="knot_countColumn" msprop:Generator_ColumnPropNameInRow="knot_count" msprop:Generator_UserColumnName="knot_count" msprop:Generator_ColumnVarNameInTable="columnknot_count" type="xs:int" default="0" />
               <xs:element name="symbol_id" msprop:Generator_ColumnPropNameInTable="symbol_idColumn" msprop:Generator_ColumnPropNameInRow="symbol_id" msprop:Generator_UserColumnName="symbol_id" msprop:Generator_ColumnVarNameInTable="columnsymbol_id" type="xs:int" default="-1" />
               <xs:element name="is_used" msprop:Generator_ColumnPropNameInTable="is_usedColumn" msprop:Generator_ColumnPropNameInRow="is_used" msprop:Generator_UserColumnName="is_used" msprop:Generator_ColumnVarNameInTable="columnis_used" type="xs:unsignedByte" default="0" />
+              <xs:element name="single_thread_symbol_id" msprop:Generator_UserColumnName="single_thread_symbol_id" msprop:Generator_ColumnPropNameInTable="single_thread_symbol_idColumn" msprop:Generator_ColumnPropNameInRow="single_thread_symbol_id" msprop:Generator_ColumnVarNameInTable="columnsingle_thread_symbol_id" type="xs:int" default="-1" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -168,6 +169,7 @@
               <xs:element name="thread_id" msprop:Generator_ColumnPropNameInTable="thread_idColumn" msprop:Generator_ColumnPropNameInRow="thread_id" msprop:Generator_UserColumnName="thread_id" msprop:Generator_ColumnVarNameInTable="columnthread_id" type="xs:int" />
               <xs:element name="symbol_id" msprop:Generator_ColumnPropNameInTable="symbol_idColumn" msprop:Generator_ColumnPropNameInRow="symbol_id" msprop:Generator_UserColumnName="symbol_id" msprop:Generator_ColumnVarNameInTable="columnsymbol_id" type="xs:int" default="-1" />
               <xs:element name="isbead" msprop:Generator_ColumnPropNameInTable="isbeadColumn" msprop:Generator_ColumnPropNameInRow="isbead" msprop:Generator_UserColumnName="isbead" msprop:Generator_ColumnVarNameInTable="columnisbead" type="xs:unsignedByte" default="0" />
+              <xs:element name="single_thread_symbol_id" msprop:Generator_UserColumnName="single_thread_symbol_id" msprop:Generator_ColumnPropNameInTable="single_thread_symbol_idColumn" msprop:Generator_ColumnPropNameInRow="single_thread_symbol_id" msprop:Generator_ColumnVarNameInTable="columnsingle_thread_symbol_id" type="xs:int" default="-1" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

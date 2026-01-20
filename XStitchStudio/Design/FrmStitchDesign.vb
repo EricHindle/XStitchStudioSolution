@@ -1025,8 +1025,12 @@ Public Class FrmStitchDesign
     Private Sub PicSelectedColour_Click(sender As Object, e As EventArgs) Handles PicSelectedThreadColour.Click
         ToggleSingleColour()
     End Sub
-    Private Sub PicStyle_Click(sender As Object, e As EventArgs) Handles PicStyle.Click
-        oStitchDisplayStyle = If(oStitchDisplayStyle = 4, 0, oStitchDisplayStyle + 1)
+    Private Sub PicStyle_MouseUp(sender As Object, e As MouseEventArgs) Handles PicStyle.MouseUp
+        If e.Button = MouseButtons.Right Then
+            oStitchDisplayStyle = If(oStitchDisplayStyle = 0, 4, oStitchDisplayStyle - 1)
+        ElseIf e.Button = MouseButtons.Left Then
+            oStitchDisplayStyle = If(oStitchDisplayStyle = 4, 0, oStitchDisplayStyle + 1)
+        End If
         My.Settings.DesignStitchDisplay = oStitchDisplayStyle
         My.Settings.Save()
         SetDisplayStyleImage()
@@ -1299,8 +1303,8 @@ Public Class FrmStitchDesign
                         .BackColor = _thread.Colour
                     Case StitchDisplayStyle.BlocksWithSymbols
                         .BackColor = _thread.Colour
-                        If _projectThread.SymbolId > 0 Then
-                            _image = FindSymbolById(_projectThread.SymbolId).SymbolImage
+                        If _projectThread.DoubleThreadSymbolId > 0 Then
+                            _image = FindSymbolById(_projectThread.DoubleThreadSymbolId).SymbolImage
                         End If
                     Case StitchDisplayStyle.Crosses
                         Using _graphics As Graphics = Graphics.FromImage(_image)
@@ -1308,12 +1312,12 @@ Public Class FrmStitchDesign
                             _graphics.DrawLine(_pen, _picSize - 2, 2, 2, _picSize - 2)
                         End Using
                     Case StitchDisplayStyle.BlackWhiteSymbols
-                        If _projectThread.SymbolId > 0 Then
-                            _image = FindSymbolById(_projectThread.SymbolId).SymbolImage
+                        If _projectThread.DoubleThreadSymbolId > 0 Then
+                            _image = FindSymbolById(_projectThread.DoubleThreadSymbolId).SymbolImage
                         End If
                     Case StitchDisplayStyle.ColouredSymbols
-                        If _projectThread.SymbolId > 0 Then
-                            _image = FindSymbolById(_projectThread.SymbolId).SymbolImage
+                        If _projectThread.DoubleThreadSymbolId > 0 Then
+                            _image = FindSymbolById(_projectThread.DoubleThreadSymbolId).SymbolImage
                             If _image IsNot Nothing Then
                                 Dim _symbolColour As Color = _thread.Colour
                                 Dim _imageAttributes As ImageAttributes = MakeColourChangeAttributes(_thread)
@@ -1619,7 +1623,7 @@ Public Class FrmStitchDesign
             Dim _paletteThread As PaletteThread = PaletteThreadBuilder.APaletteThread.StartingWithNothing _
                 .WithThreadId(_thread.ThreadId) _
                 .WithPaletteId(pPaletteId) _
-                .WithSymbolId(_thread.SymbolId) _
+                .WithDoubleThreadSymbolId(_thread.DoubleThreadSymbolId) _
                 .WithIsBead(False) _
                 .Build
             AddNewPaletteThread(_paletteThread)
@@ -1628,7 +1632,7 @@ Public Class FrmStitchDesign
             Dim _paletteThread As PaletteThread = PaletteThreadBuilder.APaletteThread.StartingWithNothing _
                 .WithThreadId(_bead.ThreadId) _
                 .WithPaletteId(pPaletteId) _
-                .WithSymbolId(-1) _
+                .WithDoubleThreadSymbolId(-1) _
                 .WithIsBead(True) _
                 .Build
             AddNewPaletteThread(_paletteThread)
