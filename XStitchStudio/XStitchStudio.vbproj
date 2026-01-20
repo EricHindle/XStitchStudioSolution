@@ -153,12 +153,6 @@
     <Compile Include="Design\FrmText.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Design\ImageViewer.designer.vb">
-      <DependentUpon>ImageViewer.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Design\ImageViewer.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Design\ModDesign.vb" />
     <Compile Include="Domain\Builders\BackstitchBuilder.vb" />
     <Compile Include="Domain\Builders\BeadBuilder.vb" />

@@ -102,6 +102,12 @@ Namespace Domain.Objects
         End Sub
 #End Region
 #Region "methods"
+        Public Function FindSingleThreadSymbolImage() As Image
+            Return FindSymbolImage(_singleThreadSymbolId)
+        End Function
+        Public Function FindDoubleThreadSymbolImage() As Image
+            Return FindSymbolImage(_doubleThreadSymbolId)
+        End Function
         Public Function IsLoaded() As Boolean
             Return _projectId > -1 And _threadId > -1
         End Function
@@ -113,7 +119,7 @@ Namespace Domain.Objects
             _sb.Append("ProjectThread=[") _
                 .Append("ProjectId=[").Append(CStr(_projectId)).Append("], ") _
                 .Append(Thread.ToString).Append(", ") _
-                .Append("DoubleThreadSymbolId=[").Append(CStr(_doubleThreadSymbolId)).Append("], ") _
+                .Append("SymbolId=[").Append(CStr(_doubleThreadSymbolId)).Append("], ") _
                 .Append("SingleThreadSymbolId=[").Append(CStr(_singleThreadSymbolId)).Append("], ") _
                 .Append("Is used=[").Append(_isUsed).Append("]") _
                 .Append("]")

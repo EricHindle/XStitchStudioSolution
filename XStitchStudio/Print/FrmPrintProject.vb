@@ -6,6 +6,7 @@
 '
 
 Imports System.Drawing.Printing
+Imports System.Security.Cryptography
 Imports System.Text
 Imports HindlewareLib.Imaging
 Imports HindlewareLib.Logging
@@ -25,6 +26,14 @@ Public Class FrmPrintProject
         Right
         Bottom
         Left
+    End Enum
+    Private Enum GroupType
+        CrossSingle
+        CrossDouble
+        BackSingle
+        BackDouble
+        KnotSingle
+        KnotDouble
     End Enum
 #End Region
 #Region "constants"
@@ -104,11 +113,13 @@ Public Class FrmPrintProject
     End Sub
     Private Sub BtnPrintKey_Click(sender As Object, e As EventArgs) Handles BtnPrintKey.Click
         LogUtil.ShowStatus("Printing key", LblStatus, MyBase.Name)
+        isLandscape = False
         InitialisePrintDocument()
         oPrintDoc.PrinterSettings.PrinterName = CmbInstalledPrinters.SelectedItem
         ' Set handler to print image 
         AddHandler oPrintDoc.PrintPage, AddressOf OnPrintImage
         CreateKeyBitmap()
+        PicDesign.Image = oPrintBitmap
         ' Print the image (calls PrintPage handler (see above))
         oPrintDoc.Print()
     End Sub
@@ -259,8 +270,8 @@ Public Class FrmPrintProject
     Private Sub PenDispose()
         oPrintBorderPen.dispose
         oPrintCentrePen.dispose
-        oPrintGrid10Pen.dispose
-        oPrintGrid1Pen.Dispose
+        oPrintGrid10Pen.Dispose()
+        oPrintGrid1Pen.Dispose()
         oPrintGrid5Pen.Dispose()
         oPrintKeyPen.Dispose()
     End Sub
@@ -282,6 +293,7 @@ Public Class FrmPrintProject
     End Sub
     Private Sub SetPrintFonts()
         oPrintTitlefont = New Font(BtnTitleFont.Font.FontFamily, BtnTitleFont.Font.SizeInPoints, BtnTitleFont.Font.Style, GraphicsUnit.Point)
+        oPrintGroupfont = New Font(BtnTitleFont.Font.FontFamily, BtnTitleFont.Font.SizeInPoints, FontStyle.Regular, GraphicsUnit.Point)
         oPrintTextfont = New Font(BtnTextFont.Font.FontFamily, BtnTextFont.Font.SizeInPoints, BtnTextFont.Font.Style, GraphicsUnit.Point)
         oPrintFooterfont = New Font(BtnFooterFont.Font.FontFamily, BtnFooterFont.Font.SizeInPoints, BtnFooterFont.Font.Style, GraphicsUnit.Point)
     End Sub
@@ -337,9 +349,9 @@ Public Class FrmPrintProject
             For Each _knot As Knot In oProjectDesign.Knots
                 Dim _actualPosition As New Point(_knot.BlockPosition.X + oPrintProject.OriginX, _knot.BlockPosition.Y + oPrintProject.OriginY)
                 If _actualPosition.X >= pPage.TopLeft.X _
-            And _actualPosition.X <= pPage.BottomRight.X _
-            And _actualPosition.Y >= pPage.TopLeft.Y _
-            And _actualPosition.Y < pPage.BottomRight.Y Then
+                    And _actualPosition.X <= pPage.BottomRight.X _
+                    And _actualPosition.Y >= pPage.TopLeft.Y _
+                    And _actualPosition.Y < pPage.BottomRight.Y Then
                     PrintKnot(_knot, pPageGraphics, pPage)
                 End If
             Next
@@ -349,58 +361,128 @@ Public Class FrmPrintProject
         PrintRowColumnNumbers(pPage, pPageGraphics)
     End Sub
     Private Sub CreateKeyGraphics(pPageGraphics As Graphics, pSize As Size)
-        Dim oThreadCollection As New ProjectThreadCollection(oProjectThreads.Threads)
-        If My.Settings.PrintKeyOrder = 2 Then
-            oThreadCollection.Threads.Sort(Function(x As ProjectThread, y As ProjectThread) x.Thread.SortNumber.CompareTo(y.Thread.SortNumber))
-        Else
-            oThreadCollection.Threads.Sort(Function(x As ProjectThread, y As ProjectThread) x.Thread.ColourName.CompareTo(y.Thread.ColourName))
-        End If
-        Dim oTableWidth As Integer = oAvailablePixelWidth / 2
-        Dim oRowHeight As Integer = oPageTextHeight + 40
-        Dim oTableHeight As Integer = oRowHeight * (oThreadCollection.Threads.Count + 1)
-        Dim oColumn1Width As Integer = oTableWidth / 8
-        Dim oColumn2Width As Integer = oTableWidth * 4 / 8
-        Dim oColumn3Width As Integer = oTableWidth * 1 / 8
-        Dim oSymbolWidth As Integer = oRowHeight * 0.75
-        Dim oBoxWidth As Integer = oSymbolWidth + 4
         Dim _footerText As String = BuildFooter(Nothing, False)
+        Dim oCurrentTopLeft As New Point(oLeftMargin, oTopMargin)
+        Dim oThreadCollection As New ProjectThreadCollection()
+        InitialiseTable()
         pPageGraphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
         pPageGraphics.Clear(Color.White)
-        Dim _currentTopLeft As New Point(oLeftMargin, oTopMargin)
-        DrawKeyTable(pPageGraphics, oTableWidth, oRowHeight, oTableHeight, oColumn1Width, oColumn2Width, oColumn3Width, _currentTopLeft)
-        _currentTopLeft = New Point(_currentTopLeft.X, _currentTopLeft.Y + oRowHeight)
+        PrintHeaderFooter(pPageGraphics, pSize, _footerText)
+        SetThreadGroups()
+        If oCrossDoubleThreadList.Count > 0 Then
+            DrawGroup(oCrossDoubleThreadList, GroupType.CrossDouble, pPageGraphics, oCurrentTopLeft, pSize)
+        End If
+        If oCrossSingleThreadList.Count > 0 Then
+            DrawGroup(oCrossSingleThreadList, GroupType.CrossSingle, pPageGraphics, oCurrentTopLeft, pSize)
+        End If
+        If oBackDoubleThreadList.Count > 0 Then
+            DrawGroup(oBackDoubleThreadList, GroupType.BackDouble, pPageGraphics, oCurrentTopLeft, pSize)
+        End If
+        If oBackSingleThreadList.Count > 0 Then
+            DrawGroup(oBackSingleThreadList, GroupType.BackSingle, pPageGraphics, oCurrentTopLeft, pSize)
+        End If
+        If oKnotDoubleThreadList.Count > 0 Then
+            DrawGroup(oKnotDoubleThreadList, GroupType.KnotDouble, pPageGraphics, oCurrentTopLeft, pSize)
+        End If
+        If oKnotSingleThreadList.Count > 0 Then
+            DrawGroup(oKnotSingleThreadList, GroupType.KnotSingle, pPageGraphics, oCurrentTopLeft, pSize)
+        End If
+    End Sub
+    Private Sub DrawGroup(pThreadCollection As ProjectThreadCollection, pGroupType As GroupType, pPageGraphics As Graphics, ByRef pCurrentTopLeft As Point, pSize As Size)
+        Dim headerText As String = String.Empty
+        If My.Settings.PrintKeyOrder = 2 Then
+            pThreadCollection.Threads.Sort(Function(x As ProjectThread, y As ProjectThread) x.Thread.SortNumber.CompareTo(y.Thread.SortNumber))
+        Else
+            pThreadCollection.Threads.Sort(Function(x As ProjectThread, y As ProjectThread) x.Thread.ColourName.CompareTo(y.Thread.ColourName))
+        End If
+        Select Case pGroupType
+            Case GroupType.CrossSingle
+                headerText = CROSS_SINGLE_STRAND_HEADER
+            Case GroupType.CrossDouble
+                headerText = CROSS_DOUBLE_STRAND_HEADER
+            Case GroupType.BackSingle
+                headerText = BACK_SINGLE_STRAND_HEADER
+            Case GroupType.BackDouble
+                headerText = BACK_DOUBLE_STRAND_HEADER
+            Case GroupType.KnotSingle
+                headerText = KNOT_SINGLE_STRAND_HEADER
+            Case GroupType.KnotDouble
+                headerText = KNOT_DOUBLE_STRAND_HEADER
+        End Select
+        oTableHeight = oRowHeight * (pThreadCollection.Count + 1)
+        DrawGroupHeader(pPageGraphics, pCurrentTopLeft, headerText, oRowHeight)
+        DrawKeyTable(pPageGraphics, oTableWidth, oRowHeight, oTableHeight, oColumn1Width, oColumn2Width, oColumn3Width, pCurrentTopLeft)
+        DrawThreadKey(pPageGraphics, pSize, pThreadCollection, oTableWidth, oRowHeight, oTableHeight, oColumn1Width, oColumn2Width, oColumn3Width, oSymbolWidth, oBoxWidth, pCurrentTopLeft, pGroupType)
+    End Sub
+    Private Sub DrawThreadKey(pPageGraphics As Graphics, pSize As Size, oThreadCollection As ProjectThreadCollection, oTableWidth As Integer, oRowHeight As Integer, oTableHeight As Integer, oColumn1Width As Integer, oColumn2Width As Integer, oColumn3Width As Integer, oSymbolWidth As Integer, oBoxWidth As Integer, ByRef pCurrentTopLeft As Point, pGrouptype As GroupType)
         For Each _thread As ProjectThread In oThreadCollection.Threads
             Dim oColourBrush As Brush = New SolidBrush(_thread.Thread.Colour)
-            Dim _symbol As Bitmap = ImageUtil.ResizeImage(_thread.Symbol, oSymbolWidth, oSymbolWidth)
-            _symbol.SetResolution(PRINT_DPI, PRINT_DPI)
-            pPageGraphics.DrawImage(_symbol, New Point(_currentTopLeft.X + ((oColumn1Width - oSymbolWidth) / 2), _currentTopLeft.Y + (oRowHeight - oSymbolWidth) / 2))
-            pPageGraphics.DrawRectangle(oPrintKeyPen, New Rectangle(New Point(_currentTopLeft.X + ((oColumn1Width - oBoxWidth) / 2), _currentTopLeft.Y + (oRowHeight - oBoxWidth) / 2), New Size(oBoxWidth, oBoxWidth)))
-            pPageGraphics.DrawString(_thread.Thread.ColourName, oPrintTextfont, oPrintKeyBrush, New Point(_currentTopLeft.X + 3 + oColumn1Width, _currentTopLeft.Y + 3))
-            pPageGraphics.FillRectangle(oColourBrush, New Rectangle(New Point(_currentTopLeft.X + oColumn1Width + oColumn2Width + ((oColumn3Width - oBoxWidth) / 2), _currentTopLeft.Y + (oRowHeight - oBoxWidth) / 2), New Size(oBoxWidth, oBoxWidth)))
-            pPageGraphics.DrawString(_thread.Thread.ThreadNo, oPrintTextfont, oPrintKeyBrush, New Point(_currentTopLeft.X + 3 + oColumn1Width + oColumn2Width + oColumn3Width, _currentTopLeft.Y + 3))
-            If _currentTopLeft.Y + oRowHeight < pSize.Height - oBottomMargin Then
-                _currentTopLeft = New Point(_currentTopLeft.X, _currentTopLeft.Y + oRowHeight)
-            Else
-                _currentTopLeft = New Point(_currentTopLeft.X + oTableWidth, oTopMargin)
-                DrawKeyTable(pPageGraphics, oTableWidth, oRowHeight, oTableHeight, oColumn1Width, oColumn2Width, oColumn3Width, _currentTopLeft)
-                _currentTopLeft = New Point(_currentTopLeft.X, _currentTopLeft.Y + oRowHeight)
+            Dim oKnotWidth As Integer = oSymbolWidth - 4
+            Dim oSmallKnotWidth As Integer = oKnotWidth - 4
+            Dim _symbol As Bitmap = Nothing
+            If pGrouptype = GroupType.CrossDouble AndAlso _thread.DoubleThreadSymbolId >= 0 Then
+                _symbol = ImageUtil.ResizeImage(_thread.FindDoubleThreadSymbolImage, oSymbolWidth, oSymbolWidth)
             End If
-            pPageGraphics.DrawLine(oPrintKeyPen, New Point(_currentTopLeft.X, _currentTopLeft.Y), New Point(_currentTopLeft.X + oTableWidth, _currentTopLeft.Y))
+            If pGrouptype = GroupType.CrossSingle AndAlso _thread.SingleThreadSymbolId >= 0 Then
+                _symbol = ImageUtil.ResizeImage(_thread.FindSingleThreadSymbolImage, oSymbolWidth, oSymbolWidth)
+            End If
+            If _symbol IsNot Nothing Then
+                _symbol.SetResolution(PRINT_DPI, PRINT_DPI)
+                pPageGraphics.DrawImage(_symbol, New Point(pCurrentTopLeft.X + ((oColumn1Width - oSymbolWidth) / 2), pCurrentTopLeft.Y + (oRowHeight - oSymbolWidth) / 2))
+            End If
+            Dim lineStart As New Point(pCurrentTopLeft.X + ((oColumn1Width - oBoxWidth) / 2), pCurrentTopLeft.Y + (oRowHeight / 2))
+            Dim lineEnd As New Point(pCurrentTopLeft.X + ((oColumn1Width + oBoxWidth) / 2), pCurrentTopLeft.Y + (oRowHeight / 2))
+            If pGrouptype = GroupType.BackDouble Then
+                pPageGraphics.DrawLine(New Pen(oColourBrush, SetStitchPenWidth(True, oPagePixelsPerCell)), LineStart, lineEnd)
+            End If
+            If pGrouptype = GroupType.BackSingle Then
+                pPageGraphics.DrawLine(New Pen(oColourBrush, SetStitchPenWidth(False, oPagePixelsPerCell)), lineStart, lineEnd)
+            End If
+            If pGrouptype = GroupType.KnotDouble Then
+                pPageGraphics.FillEllipse(oColourBrush, New Rectangle(New Point(pCurrentTopLeft.X + ((oColumn1Width - oKnotWidth) / 2), pCurrentTopLeft.Y + (oRowHeight - oKnotWidth) / 2), New Size(oKnotWidth, oKnotWidth)))
+            End If
+            If pGrouptype = GroupType.KnotSingle Then
+                pPageGraphics.FillEllipse(oColourBrush, New Rectangle(New Point(pCurrentTopLeft.X + ((oColumn1Width - oSmallKnotWidth) / 2), pCurrentTopLeft.Y + (oRowHeight - oSmallKnotWidth) / 2), New Size(oSmallKnotWidth, oSmallKnotWidth)))
+            End If
+            pPageGraphics.DrawRectangle(oPrintKeyPen, New Rectangle(New Point(pCurrentTopLeft.X + ((oColumn1Width - oBoxWidth) / 2), pCurrentTopLeft.Y + (oRowHeight - oBoxWidth) / 2), New Size(oBoxWidth, oBoxWidth)))
+            pPageGraphics.DrawString(_thread.Thread.ColourName, oPrintTextfont, oPrintKeyBrush, New Point(pCurrentTopLeft.X + 3 + oColumn1Width, pCurrentTopLeft.Y + 3))
+            pPageGraphics.FillRectangle(oColourBrush, New Rectangle(New Point(pCurrentTopLeft.X + oColumn1Width + oColumn2Width + ((oColumn3Width - oBoxWidth) / 2), pCurrentTopLeft.Y + (oRowHeight - oBoxWidth) / 2), New Size(oBoxWidth, oBoxWidth)))
+            pPageGraphics.DrawString(_thread.Thread.ThreadNo, oPrintTextfont, oPrintKeyBrush, New Point(pCurrentTopLeft.X + 3 + oColumn1Width + oColumn2Width + oColumn3Width, pCurrentTopLeft.Y + 3))
+            If pCurrentTopLeft.Y + (oRowHeight * 2) < pSize.Height - oBottomMargin Then
+                pCurrentTopLeft = New Point(pCurrentTopLeft.X, pCurrentTopLeft.Y + oRowHeight)
+            Else
+                pCurrentTopLeft = New Point(pCurrentTopLeft.X + oTableWidth, oTopMargin)
+                DrawKeyTable(pPageGraphics, oTableWidth, oRowHeight, oTableHeight, oColumn1Width, oColumn2Width, oColumn3Width, pCurrentTopLeft)
+            End If
+            pPageGraphics.DrawLine(oPrintKeyPen, New Point(pCurrentTopLeft.X, pCurrentTopLeft.Y), New Point(pCurrentTopLeft.X + oTableWidth, pCurrentTopLeft.Y))
+
         Next
-        PrintHeaderFooter(pPageGraphics, pSize, _footerText)
     End Sub
-    Private Sub DrawKeyTable(pPageGraphics As Graphics, oTableWidth As Integer, oRowHeight As Integer, oTableHeight As Integer, oColumn1Width As Integer, oColumn2Width As Integer, oColumn3Width As Integer, _currentTopLeft As Point)
-        pPageGraphics.DrawLine(oPrintKeyPen, _currentTopLeft, New Point(_currentTopLeft.X + oTableWidth, _currentTopLeft.Y))
-        pPageGraphics.DrawLine(oPrintKeyPen, _currentTopLeft, New Point(_currentTopLeft.X, _currentTopLeft.Y + oTableHeight))
-        pPageGraphics.DrawLine(oPrintKeyPen, New Point(_currentTopLeft.X + oTableWidth, oTopMargin), New Point(_currentTopLeft.X + oTableWidth, _currentTopLeft.Y + oTableHeight))
-        pPageGraphics.DrawLine(oPrintKeyPen, New Point(_currentTopLeft.X, oTopMargin + oTableHeight), New Point(_currentTopLeft.X + oTableWidth, _currentTopLeft.Y + oTableHeight))
-        pPageGraphics.DrawLine(oPrintKeyPen, New Point(_currentTopLeft.X, oTopMargin + oRowHeight), New Point(_currentTopLeft.X + oTableWidth, _currentTopLeft.Y + oRowHeight))
-        pPageGraphics.DrawLine(oPrintKeyPen, New Point(_currentTopLeft.X + oColumn1Width, _currentTopLeft.Y), New Point(_currentTopLeft.X + oColumn1Width, _currentTopLeft.Y + oTableHeight))
-        pPageGraphics.DrawLine(oPrintKeyPen, New Point(_currentTopLeft.X + oColumn1Width + oColumn2Width, _currentTopLeft.Y), New Point(_currentTopLeft.X + oColumn1Width + oColumn2Width, _currentTopLeft.Y + oTableHeight))
-        pPageGraphics.DrawLine(oPrintKeyPen, New Point(_currentTopLeft.X + oColumn1Width + oColumn2Width + oColumn3Width, _currentTopLeft.Y), New Point(_currentTopLeft.X + oColumn1Width + oColumn2Width + oColumn3Width, _currentTopLeft.Y + oTableHeight))
-        pPageGraphics.DrawString("Key", oPrintTextfont, oPrintKeyBrush, New Point(_currentTopLeft.X + 3, _currentTopLeft.Y + 3))
-        pPageGraphics.DrawString("Colour Name", oPrintTextfont, oPrintKeyBrush, New Point(_currentTopLeft.X + 3 + oColumn1Width, _currentTopLeft.Y + 3))
-        pPageGraphics.DrawString("DMC code", oPrintTextfont, oPrintKeyBrush, New Point(_currentTopLeft.X + 3 + oColumn1Width + oColumn2Width + oColumn3Width, _currentTopLeft.Y + 3))
+
+    Private Sub DrawKeyTable(pPageGraphics As Graphics, oTableWidth As Integer, oRowHeight As Integer, oTableHeight As Integer, oColumn1Width As Integer, oColumn2Width As Integer, oColumn3Width As Integer, ByRef pCurrentTopLeft As Point)
+        ' Top border
+        pPageGraphics.DrawLine(oPrintKeyPen, pCurrentTopLeft, New Point(pCurrentTopLeft.X + oTableWidth, pCurrentTopLeft.Y))
+        ' Left border
+        pPageGraphics.DrawLine(oPrintKeyPen, pCurrentTopLeft, New Point(pCurrentTopLeft.X, pCurrentTopLeft.Y + oTableHeight))
+        ' Right border
+        pPageGraphics.DrawLine(oPrintKeyPen, New Point(pCurrentTopLeft.X + oTableWidth, pCurrentTopLeft.Y), New Point(pCurrentTopLeft.X + oTableWidth, pCurrentTopLeft.Y + oTableHeight))
+        ' Bottom border
+        pPageGraphics.DrawLine(oPrintKeyPen, New Point(pCurrentTopLeft.X, pCurrentTopLeft.Y + oTableHeight), New Point(pCurrentTopLeft.X + oTableWidth, pCurrentTopLeft.Y + oTableHeight))
+        ' Heading floor
+        pPageGraphics.DrawLine(oPrintKeyPen, New Point(pCurrentTopLeft.X, pCurrentTopLeft.Y + oRowHeight), New Point(pCurrentTopLeft.X + oTableWidth, pCurrentTopLeft.Y + oRowHeight))
+        ' Col1 side
+        pPageGraphics.DrawLine(oPrintKeyPen, New Point(pCurrentTopLeft.X + oColumn1Width, pCurrentTopLeft.Y), New Point(pCurrentTopLeft.X + oColumn1Width, pCurrentTopLeft.Y + oTableHeight))
+        ' Col2 side
+        pPageGraphics.DrawLine(oPrintKeyPen, New Point(pCurrentTopLeft.X + oColumn1Width + oColumn2Width, pCurrentTopLeft.Y), New Point(pCurrentTopLeft.X + oColumn1Width + oColumn2Width, pCurrentTopLeft.Y + oTableHeight))
+        ' Col3 side
+        pPageGraphics.DrawLine(oPrintKeyPen, New Point(pCurrentTopLeft.X + oColumn1Width + oColumn2Width + oColumn3Width, pCurrentTopLeft.Y), New Point(pCurrentTopLeft.X + oColumn1Width + oColumn2Width + oColumn3Width, pCurrentTopLeft.Y + oTableHeight))
+        ' Heading text 1
+        pPageGraphics.DrawString("Key", oPrintTextfont, oPrintKeyBrush, New Point(pCurrentTopLeft.X + 3, pCurrentTopLeft.Y + 3))
+        ' Heading text 2
+        pPageGraphics.DrawString("Colour Name", oPrintTextfont, oPrintKeyBrush, New Point(pCurrentTopLeft.X + 3 + oColumn1Width, pCurrentTopLeft.Y + 3))
+        ' Heading tex 4
+        pPageGraphics.DrawString("DMC code", oPrintTextfont, oPrintKeyBrush, New Point(pCurrentTopLeft.X + 3 + oColumn1Width + oColumn2Width + oColumn3Width, pCurrentTopLeft.Y + 3))
+        pCurrentTopLeft = New Point(pCurrentTopLeft.X, pCurrentTopLeft.Y + oRowHeight)
     End Sub
     Private Function BuildFooter(pPage As Page, pIsShowPageOrder As Boolean) As String
         Dim _footerText As New StringBuilder
@@ -424,6 +506,10 @@ Public Class FrmPrintProject
         End If
         Return _footerText.ToString
     End Function
+    Private Sub DrawGroupHeader(pPageGraphics As Graphics, ByRef pCurrentTopLeft As Point, pText As String, pRowHeight As Integer)
+        pPageGraphics.DrawString(pText, oPrintGroupfont, oTextBrush, pCurrentTopLeft)
+        pCurrentTopLeft = New Point(pCurrentTopLeft.X, pCurrentTopLeft.Y + pRowHeight)
+    End Sub
     Private Sub PrintHeaderFooter(pPageGraphics As Graphics, pSize As Size, pFooterText As String)
         If isPrintHeader Then
             pPageGraphics.DrawString(TxtTitle.Text, oPrintTitlefont, oTextBrush, New Point(oLeftMargin, oPageTopMargin))
@@ -473,7 +559,7 @@ Public Class FrmPrintProject
         Dim _fromCellLocation_y As Integer = ((pBackstitch.FromBlockPosition.Y + oPrintProject.OriginY - pPage.TopLeft.Y) * oPagePixelsPerCell) + oTopMargin
         Dim _toCellLocation_x As Integer = ((pBackstitch.ToBlockPosition.X + oPrintProject.OriginX - pPage.TopLeft.X) * oPagePixelsPerCell) + oLeftMargin
         Dim _toCellLocation_y As Integer = ((pBackstitch.ToBlockPosition.Y + oPrintProject.OriginY - pPage.TopLeft.Y) * oPagePixelsPerCell) + oTopMargin
-        BackStitch(pBackstitch, pDesignGraphics, oPagePixelsPerCell, _fromCellLocation_x, _fromCellLocation_y, _toCellLocation_x, _toCellLocation_y)
+        Backstitch(pBackstitch, pDesignGraphics, oPagePixelsPerCell, _fromCellLocation_x, _fromCellLocation_y, _toCellLocation_x, _toCellLocation_y)
     End Sub
     Friend Sub PrintKnot(pKnot As Knot, pDesignGraphics As Graphics, pPage As Page)
         Dim _knotlocation_x As Integer = ((pKnot.BlockPosition.X + oPrintProject.OriginX - pPage.TopLeft.X) * oPagePixelsPerCell) - (oPagePixelsPerCell / 4) + oLeftMargin

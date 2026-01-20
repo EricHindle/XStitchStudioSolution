@@ -61,7 +61,7 @@ Namespace Domain.Objects
         Public Overrides Function ToString() As String
             Dim _sb As New StringBuilder
             _sb.Append("Symbol=[") _
-                .Append("DoubleThreadSymbolId=[").Append(CStr(_SymbolId)).Append("]]")
+                .Append("SymbolId=[").Append(CStr(_SymbolId)).Append("]]")
             Return _sb.ToString()
         End Function
 #End Region

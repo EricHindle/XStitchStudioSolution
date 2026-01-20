@@ -6,6 +6,7 @@
 '
 
 Imports System.Drawing.Printing
+Imports XStitchStudio.Domain.Objects
 
 Module ModPrint
 #Region "constants"
@@ -15,6 +16,12 @@ Module ModPrint
     Public Const A4_WIDTH As Integer = 2480
     Public Const A4_HEIGHT As Integer = 3508
     Public Const PRODUCT_TEXT As String = "created using CrossStitch Studio [@ XStitch-Studio.co.uk]"
+    Public Const CROSS_DOUBLE_STRAND_HEADER As String = "CrossStitch in two strands"
+    Public Const CROSS_SINGLE_STRAND_HEADER As String = "CrossStitch in one strand"
+    Public Const BACK_DOUBLE_STRAND_HEADER As String = "BackStitch in two strands"
+    Public Const BACK_SINGLE_STRAND_HEADER As String = "BackStitch in one strand"
+    Public Const KNOT_SINGLE_STRAND_HEADER As String = "French Knot in one strand"
+    Public Const KNOT_DOUBLE_STRAND_HEADER As String = "French Knot in two strands"
 #End Region
 #Region "variables"
     Friend oPagesize As Size
@@ -52,6 +59,7 @@ Module ModPrint
     Friend oTextfont As Font
     Friend oFooterfont As Font
     Friend oPrintTitlefont As Font
+    Friend oPrintGroupfont As Font
     Friend oPrintTextfont As Font
     Friend oPrintFooterfont As Font
     Friend oPagePixelsPerCell As Integer
@@ -59,6 +67,20 @@ Module ModPrint
     Friend isPrintFooter As Boolean
     Friend isPrintRowNumbers As Boolean
     Friend isPrintColumnNumbers As Boolean
+    Friend oCrossDoubleThreadList As New ProjectThreadCollection
+    Friend oCrossSingleThreadList As New ProjectThreadCollection
+    Friend oBackDoubleThreadList As New ProjectThreadCollection
+    Friend oBackSingleThreadList As New ProjectThreadCollection
+    Friend oKnotDoubleThreadList As New ProjectThreadCollection
+    Friend oKnotSingleThreadList As New ProjectThreadCollection
+    Friend oRowHeight As Integer
+    Friend oTableWidth As Integer
+    Friend oTableHeight As Integer
+    Friend oColumn1Width As Integer
+    Friend oColumn2Width As Integer
+    Friend oColumn3Width As Integer
+    Friend oSymbolWidth As Integer
+    Friend oBoxWidth As Integer
 #End Region
 #Region "subroutines"
     Friend Sub SetPrintPageMargins(pLeftMargin As Single, pRightMargin As Single, pTopMargin As Single, pBottomMargin As Single)
@@ -114,6 +136,48 @@ Module ModPrint
         oPrinterHardMarginY = oPageSettings.HardMarginY / 100 * PRINT_DPI
         oPrintablePageWidth = oPagesize.Width - (oPrinterHardMarginX * 2)
         oPrintablePageHeight = oPagesize.Height - (oPrinterHardMarginY * 2)
+    End Sub
+    Friend Sub SetThreadGroups()
+        oCrossDoubleThreadList = New ProjectThreadCollection
+        oCrossSingleThreadList = New ProjectThreadCollection
+        oBackDoubleThreadList = New ProjectThreadCollection
+        oBackSingleThreadList = New ProjectThreadCollection
+        oKnotDoubleThreadList = New ProjectThreadCollection
+        oKnotSingleThreadList = New ProjectThreadCollection
+        For Each _blockstitch As BlockStitch In oProjectDesign.BlockStitches
+            If _blockstitch.Strands = 2 AndAlso Not oCrossDoubleThreadList.Exists(_blockstitch.ThreadId) Then
+                oCrossDoubleThreadList.Add(_blockstitch.ProjThread)
+            End If
+            If _blockstitch.Strands = 1 AndAlso Not oCrossSingleThreadList.Exists(_blockstitch.ThreadId) Then
+                oCrossSingleThreadList.Add(_blockstitch.ProjThread)
+            End If
+        Next
+        For Each _backstitch As BackStitch In oProjectDesign.BackStitches
+            If _backstitch.Strands = 2 AndAlso Not oBackDoubleThreadList.Exists(_backstitch.ThreadId) Then
+                oBackDoubleThreadList.Add(_backstitch.ProjThread)
+            End If
+            If _backstitch.Strands = 1 AndAlso Not oBackSingleThreadList.Exists(_backstitch.ThreadId) Then
+                oBackSingleThreadList.Add(_backstitch.ProjThread)
+            End If
+        Next
+        For Each _knot As Knot In oProjectDesign.Knots
+            If _knot.Strands = 2 AndAlso Not oKnotDoubleThreadList.Exists(_knot.ThreadId) Then
+                oKnotDoubleThreadList.Add(_knot.ProjThread)
+            End If
+            If _knot.Strands = 1 AndAlso Not oKnotSingleThreadList.Exists(_knot.ThreadId) Then
+                oKnotSingleThreadList.Add(_knot.ProjThread)
+            End If
+        Next
+
+    End Sub
+    Friend Sub InitialiseTable()
+        oTableWidth = oAvailablePixelWidth / 2
+        oRowHeight = oPageTextHeight + 40
+        oColumn1Width = oTableWidth / 8
+        oColumn2Width = oTableWidth * 4 / 8
+        oColumn3Width = oTableWidth * 1 / 8
+        oSymbolWidth = oRowHeight * 0.75
+        oBoxWidth = oSymbolWidth + 4
     End Sub
 #End Region
 End Module

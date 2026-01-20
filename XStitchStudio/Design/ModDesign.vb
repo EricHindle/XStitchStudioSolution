@@ -441,15 +441,15 @@ Module ModDesign
 
         If pStitchDisplayStyle = StitchDisplayStyle.ColouredSymbols Then
             Dim _imageAttributes As ImageAttributes = MakeColourChangeAttributes(pBlockStitch.ProjThread.Thread)
-            DrawSymbol(pBlockStitch.ThreadId, pDesignGraphics, _tl, pPixelsPerCell, _imageAttributes)
+            DrawSymbol(pBlockStitch.ThreadId, pDesignGraphics, _tl, pPixelsPerCell, _imageAttributes, pBlockStitch.Strands)
         End If
         If pStitchDisplayStyle = StitchDisplayStyle.BlackWhiteSymbols Or pStitchDisplayStyle = StitchDisplayStyle.BlocksWithSymbols Then
-            DrawSymbol(pBlockStitch.ThreadId, pDesignGraphics, _tl, pPixelsPerCell, New ImageAttributes)
+            DrawSymbol(pBlockStitch.ThreadId, pDesignGraphics, _tl, pPixelsPerCell, New ImageAttributes, pBlockStitch.Strands)
         End If
         _crossPen.Dispose()
     End Sub
-    Friend Sub DrawSymbol(pThreadId As Integer, pDesignGraphics As Graphics, _tl As Point, pSize As Integer, pImageAttributes As ImageAttributes)
-        pDesignGraphics.DrawImage(MakeImage(pThreadId, pSize), New Rectangle(_tl, New Size(pSize, pSize)), 0, 0, pSize, pSize, GraphicsUnit.Pixel, pImageAttributes)
+    Friend Sub DrawSymbol(pThreadId As Integer, pDesignGraphics As Graphics, _tl As Point, pSize As Integer, pImageAttributes As ImageAttributes, pStrands As Integer)
+        pDesignGraphics.DrawImage(MakeImage(pThreadId, pSize, pStrands), New Rectangle(_tl, New Size(pSize, pSize)), 0, 0, pSize, pSize, GraphicsUnit.Pixel, pImageAttributes)
     End Sub
     Public Sub DrawThreeQuarterBlockStitch(pBlockstitch As BlockStitch, pDesignGraphics As Graphics)
         Dim pX As Integer = (pBlockstitch.BlockPosition.X + iOriginX) * iPixelsPerCell
@@ -526,13 +526,13 @@ Module ModDesign
         Dim _qtr As BlockStitchQuarter = GetQuarter(pBlockstitch, pQtr)
         Select Case pQtr
             Case BlockQuarter.TopLeft
-                DrawSymbol(_qtr.ThreadId, pDesignGraphics, _tl, _rectSize, _imageAttributes)
+                DrawSymbol(_qtr.ThreadId, pDesignGraphics, _tl, _rectSize, _imageAttributes, pBlockstitch.Strands)
             Case BlockQuarter.TopRight
-                DrawSymbol(_qtr.ThreadId, pDesignGraphics, _trq, _rectSize, _imageAttributes)
+                DrawSymbol(_qtr.ThreadId, pDesignGraphics, _trq, _rectSize, _imageAttributes, pBlockstitch.Strands)
             Case BlockQuarter.BottomLeft
-                DrawSymbol(_qtr.ThreadId, pDesignGraphics, _blq, _rectSize, _imageAttributes)
+                DrawSymbol(_qtr.ThreadId, pDesignGraphics, _blq, _rectSize, _imageAttributes, pBlockstitch.Strands)
             Case BlockQuarter.BottomRight
-                DrawSymbol(_qtr.ThreadId, pDesignGraphics, _brq, _rectSize, _imageAttributes)
+                DrawSymbol(_qtr.ThreadId, pDesignGraphics, _brq, _rectSize, _imageAttributes, pBlockstitch.Strands)
         End Select
     End Sub
     Private Function GetQuarter(pBlockstitch As BlockStitch, pQtr As BlockQuarter)
@@ -696,14 +696,19 @@ Module ModDesign
         }))
         Return _imageAttributes
     End Function
-    Public Function MakeImage(pThreadId As Integer, pPixels As Integer) As Image
+    Public Function MakeImage(pThreadId As Integer, pPixels As Integer, pStrands As Integer) As Image
         Dim _image As Image = New Bitmap(1, 1)
         Dim _projectThread As ProjectThread = CType(oProjectThreads.Threads.Find(Function(p) p.ThreadId = pThreadId), ProjectThread)
         If _projectThread Is Nothing Then
             LogUtil.Problem("Thread missing from project :" & vbCrLf & pThreadId.ToString, "MakeImage")
         Else
-            Dim _symbol As Symbol = FindSymbolById(_projectThread.DoubleThreadSymbolId)
-            _image = ImageUtil.ResizeImage(_symbol.SymbolImage, pPixels, pPixels)
+            Dim _symbol As Symbol
+            If pstrands = 1 Then
+                _symbol = FindSymbolById(_projectThread.SingleThreadSymbolId)
+            Else
+            _symbol = FindSymbolById(_projectThread.DoubleThreadSymbolId)
+        End If
+        _image = ImageUtil.ResizeImage(_symbol.SymbolImage, pPixels, pPixels)
         End If
         Return _image
     End Function

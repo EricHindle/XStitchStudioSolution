@@ -1288,7 +1288,7 @@ Public Class FrmStitchDesign
             Dim _thread As Thread = _projectThread.Thread
             Dim _picThread As New PictureBox()
             Dim _image As Image = New Bitmap(_picSize, _picSize)
-            Dim _pen As New Pen(_thread.Colour, _picSize / 8) With {
+            Dim _pen As New Pen(_thread.Colour, _picSize / If(RbDouble.Checked, 8, 12)) With {
                                             .StartCap = Drawing2D.LineCap.Round,
                                             .EndCap = Drawing2D.LineCap.Round
                                         }
@@ -1303,29 +1303,24 @@ Public Class FrmStitchDesign
                         .BackColor = _thread.Colour
                     Case StitchDisplayStyle.BlocksWithSymbols
                         .BackColor = _thread.Colour
-                        If _projectThread.DoubleThreadSymbolId > 0 Then
-                            _image = FindSymbolById(_projectThread.DoubleThreadSymbolId).SymbolImage
-                        End If
+                        _image = FindSymbolImage(_projectThread, _image)
                     Case StitchDisplayStyle.Crosses
                         Using _graphics As Graphics = Graphics.FromImage(_image)
                             _graphics.DrawLine(_pen, 2, 2, _picSize - 2, _picSize - 2)
                             _graphics.DrawLine(_pen, _picSize - 2, 2, 2, _picSize - 2)
                         End Using
                     Case StitchDisplayStyle.BlackWhiteSymbols
-                        If _projectThread.DoubleThreadSymbolId > 0 Then
-                            _image = FindSymbolById(_projectThread.DoubleThreadSymbolId).SymbolImage
-                        End If
+                        _image = FindSymbolImage(_projectThread, _image)
                     Case StitchDisplayStyle.ColouredSymbols
-                        If _projectThread.DoubleThreadSymbolId > 0 Then
-                            _image = FindSymbolById(_projectThread.DoubleThreadSymbolId).SymbolImage
-                            If _image IsNot Nothing Then
+                        _image = FindSymbolImage(_projectThread, _image)
+                        If _image IsNot Nothing Then
                                 Dim _symbolColour As Color = _thread.Colour
                                 Dim _imageAttributes As ImageAttributes = MakeColourChangeAttributes(_thread)
                                 Using _graphics As Graphics = Graphics.FromImage(_image)
                                     _graphics.DrawImage(_image, New Rectangle(New Point(0, 0), _image.Size), 0, 0, _image.Width, _image.Height, GraphicsUnit.Pixel, _imageAttributes)
                                 End Using
                             End If
-                        End If
+
                 End Select
                 If _projectThread.IsUsed Then
                     Using _graphics As Graphics = Graphics.FromImage(_image)
@@ -1347,6 +1342,23 @@ Public Class FrmStitchDesign
         End If
 
     End Sub
+    Private Function FindSymbolImage(_projectThread As ProjectThread, _image As Image) As Image
+        If RbDouble.Checked Then
+            If _projectThread.DoubleThreadSymbolId > 0 Then
+                _image = FindSymbolById(_projectThread.DoubleThreadSymbolId).SymbolImage
+            End If
+        Else
+            If _projectThread.SingleThreadSymbolId > 0 Then
+                _image = FindSymbolById(_projectThread.SingleThreadSymbolId).SymbolImage
+            Else
+                If _projectThread.DoubleThreadSymbolId > 0 Then
+                    _image = FindSymbolById(_projectThread.DoubleThreadSymbolId).SymbolImage
+                End If
+            End If
+        End If
+
+        Return _image
+    End Function
     Private Sub LoadBeadPalette()
         BeadLayoutPanel.Controls.Clear()
         oProjectBeads = FindProjectBeads(oProject.ProjectId)
@@ -1623,7 +1635,7 @@ Public Class FrmStitchDesign
             Dim _paletteThread As PaletteThread = PaletteThreadBuilder.APaletteThread.StartingWithNothing _
                 .WithThreadId(_thread.ThreadId) _
                 .WithPaletteId(pPaletteId) _
-                .WithDoubleThreadSymbolId(_thread.DoubleThreadSymbolId) _
+                .WithSymbolId(_thread.DoubleThreadSymbolId) _
                 .WithIsBead(False) _
                 .Build
             AddNewPaletteThread(_paletteThread)
@@ -1632,7 +1644,7 @@ Public Class FrmStitchDesign
             Dim _paletteThread As PaletteThread = PaletteThreadBuilder.APaletteThread.StartingWithNothing _
                 .WithThreadId(_bead.ThreadId) _
                 .WithPaletteId(pPaletteId) _
-                .WithDoubleThreadSymbolId(-1) _
+                .WithSymbolId(-1) _
                 .WithIsBead(True) _
                 .Build
             AddNewPaletteThread(_paletteThread)
@@ -3077,6 +3089,12 @@ Public Class FrmStitchDesign
             _newList.Add(New StitchAction(_action.Stitch, _action.DoneAction, _action.NewThread))
         Next
         oUndoList.Add(_newList)
+    End Sub
+
+    Private Sub RbSingle_CheckedChanged(sender As Object, e As EventArgs) Handles RbSingle.CheckedChanged, RbDouble.CheckedChanged
+        If isComponentInitialised Then
+            InitialisePalette()
+        End If
     End Sub
 
 #End Region

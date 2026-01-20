@@ -38,14 +38,6 @@ Partial Class FrmThreadSymbols
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.PnlThreads = New System.Windows.Forms.Panel()
         Me.DgvThreads = New System.Windows.Forms.DataGridView()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
-        Me.LblProjectName = New System.Windows.Forms.Label()
-        Me.BtnClearSymbol = New System.Windows.Forms.Button()
-        Me.PicSingle = New System.Windows.Forms.PictureBox()
-        Me.PicDouble = New System.Windows.Forms.PictureBox()
-        Me.RbSingle = New System.Windows.Forms.RadioButton()
-        Me.RbDouble = New System.Windows.Forms.RadioButton()
         Me.threadId = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.threadName = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.threadNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -55,6 +47,14 @@ Partial Class FrmThreadSymbols
         Me.threadsymbol = New System.Windows.Forms.DataGridViewImageColumn()
         Me.threadsymbolid = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.threadsymbol1id = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
+        Me.LblProjectName = New System.Windows.Forms.Label()
+        Me.BtnClearSymbol = New System.Windows.Forms.Button()
+        Me.PicSingle = New System.Windows.Forms.PictureBox()
+        Me.PicDouble = New System.Windows.Forms.PictureBox()
+        Me.RbSingle = New System.Windows.Forms.RadioButton()
+        Me.RbDouble = New System.Windows.Forms.RadioButton()
         Me.LblColourName = New System.Windows.Forms.Label()
         Me.GrpSelectedColour = New System.Windows.Forms.GroupBox()
         Me.PnlThreads.SuspendLayout()
@@ -177,100 +177,6 @@ Partial Class FrmThreadSymbols
         Me.DgvThreads.Size = New System.Drawing.Size(430, 388)
         Me.DgvThreads.TabIndex = 140
         '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Felix Titling", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.ForeColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(21, Byte), Integer))
-        Me.Label7.Location = New System.Drawing.Point(4, 14)
-        Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(98, 23)
-        Me.Label7.TabIndex = 145
-        Me.Label7.Text = "THREADS"
-        '
-        'StatusStrip1
-        '
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 605)
-        Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(930, 22)
-        Me.StatusStrip1.TabIndex = 162
-        Me.StatusStrip1.Text = "StatusStrip1"
-        '
-        'LblProjectName
-        '
-        Me.LblProjectName.AutoSize = True
-        Me.LblProjectName.Font = New System.Drawing.Font("Felix Titling", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblProjectName.ForeColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(21, Byte), Integer))
-        Me.LblProjectName.Location = New System.Drawing.Point(8, 9)
-        Me.LblProjectName.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.LblProjectName.Name = "LblProjectName"
-        Me.LblProjectName.Size = New System.Drawing.Size(152, 23)
-        Me.LblProjectName.TabIndex = 163
-        Me.LblProjectName.Text = "Project Name"
-        '
-        'BtnClearSymbol
-        '
-        Me.BtnClearSymbol.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.BtnClearSymbol.BackColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(21, Byte), Integer))
-        Me.BtnClearSymbol.FlatAppearance.BorderColor = System.Drawing.Color.Black
-        Me.BtnClearSymbol.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnClearSymbol.Font = New System.Drawing.Font("Tahoma", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnClearSymbol.ForeColor = System.Drawing.Color.WhiteSmoke
-        Me.BtnClearSymbol.Location = New System.Drawing.Point(143, 554)
-        Me.BtnClearSymbol.Margin = New System.Windows.Forms.Padding(4)
-        Me.BtnClearSymbol.Name = "BtnClearSymbol"
-        Me.BtnClearSymbol.Size = New System.Drawing.Size(102, 37)
-        Me.BtnClearSymbol.TabIndex = 164
-        Me.BtnClearSymbol.Text = "Clear Symbol"
-        Me.BtnClearSymbol.UseVisualStyleBackColor = False
-        '
-        'PicSingle
-        '
-        Me.PicSingle.BackColor = System.Drawing.Color.White
-        Me.PicSingle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.PicSingle.Location = New System.Drawing.Point(79, 41)
-        Me.PicSingle.Name = "PicSingle"
-        Me.PicSingle.Size = New System.Drawing.Size(23, 22)
-        Me.PicSingle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.PicSingle.TabIndex = 165
-        Me.PicSingle.TabStop = False
-        '
-        'PicDouble
-        '
-        Me.PicDouble.BackColor = System.Drawing.Color.White
-        Me.PicDouble.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.PicDouble.Location = New System.Drawing.Point(256, 41)
-        Me.PicDouble.Name = "PicDouble"
-        Me.PicDouble.Size = New System.Drawing.Size(23, 22)
-        Me.PicDouble.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.PicDouble.TabIndex = 166
-        Me.PicDouble.TabStop = False
-        '
-        'RbSingle
-        '
-        Me.RbSingle.AutoSize = True
-        Me.RbSingle.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.RbSingle.Location = New System.Drawing.Point(108, 43)
-        Me.RbSingle.Name = "RbSingle"
-        Me.RbSingle.Size = New System.Drawing.Size(138, 18)
-        Me.RbSingle.TabIndex = 167
-        Me.RbSingle.Text = "Single thread symbol"
-        Me.RbSingle.UseVisualStyleBackColor = True
-        '
-        'RbDouble
-        '
-        Me.RbDouble.AutoSize = True
-        Me.RbDouble.Checked = True
-        Me.RbDouble.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.RbDouble.Location = New System.Drawing.Point(285, 43)
-        Me.RbDouble.Name = "RbDouble"
-        Me.RbDouble.Size = New System.Drawing.Size(144, 18)
-        Me.RbDouble.TabIndex = 168
-        Me.RbDouble.TabStop = True
-        Me.RbDouble.Text = "Double thread symbol"
-        Me.RbDouble.UseVisualStyleBackColor = True
-        '
         'threadId
         '
         Me.threadId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
@@ -341,6 +247,100 @@ Partial Class FrmThreadSymbols
         Me.threadsymbol1id.Name = "threadsymbol1id"
         Me.threadsymbol1id.ReadOnly = True
         Me.threadsymbol1id.Visible = False
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Felix Titling", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.ForeColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(21, Byte), Integer))
+        Me.Label7.Location = New System.Drawing.Point(4, 14)
+        Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(98, 23)
+        Me.Label7.TabIndex = 145
+        Me.Label7.Text = "THREADS"
+        '
+        'StatusStrip1
+        '
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 605)
+        Me.StatusStrip1.Name = "StatusStrip1"
+        Me.StatusStrip1.Size = New System.Drawing.Size(930, 22)
+        Me.StatusStrip1.TabIndex = 162
+        Me.StatusStrip1.Text = "StatusStrip1"
+        '
+        'LblProjectName
+        '
+        Me.LblProjectName.AutoSize = True
+        Me.LblProjectName.Font = New System.Drawing.Font("Felix Titling", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblProjectName.ForeColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(21, Byte), Integer))
+        Me.LblProjectName.Location = New System.Drawing.Point(8, 9)
+        Me.LblProjectName.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.LblProjectName.Name = "LblProjectName"
+        Me.LblProjectName.Size = New System.Drawing.Size(152, 23)
+        Me.LblProjectName.TabIndex = 163
+        Me.LblProjectName.Text = "Project Name"
+        '
+        'BtnClearSymbol
+        '
+        Me.BtnClearSymbol.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.BtnClearSymbol.BackColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(21, Byte), Integer))
+        Me.BtnClearSymbol.FlatAppearance.BorderColor = System.Drawing.Color.Black
+        Me.BtnClearSymbol.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnClearSymbol.Font = New System.Drawing.Font("Tahoma", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnClearSymbol.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.BtnClearSymbol.Location = New System.Drawing.Point(143, 554)
+        Me.BtnClearSymbol.Margin = New System.Windows.Forms.Padding(4)
+        Me.BtnClearSymbol.Name = "BtnClearSymbol"
+        Me.BtnClearSymbol.Size = New System.Drawing.Size(102, 37)
+        Me.BtnClearSymbol.TabIndex = 164
+        Me.BtnClearSymbol.Text = "Clear Symbol"
+        Me.BtnClearSymbol.UseVisualStyleBackColor = False
+        '
+        'PicSingle
+        '
+        Me.PicSingle.BackColor = System.Drawing.Color.White
+        Me.PicSingle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.PicSingle.Location = New System.Drawing.Point(58, 41)
+        Me.PicSingle.Name = "PicSingle"
+        Me.PicSingle.Size = New System.Drawing.Size(23, 22)
+        Me.PicSingle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.PicSingle.TabIndex = 165
+        Me.PicSingle.TabStop = False
+        '
+        'PicDouble
+        '
+        Me.PicDouble.BackColor = System.Drawing.Color.White
+        Me.PicDouble.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.PicDouble.Location = New System.Drawing.Point(235, 41)
+        Me.PicDouble.Name = "PicDouble"
+        Me.PicDouble.Size = New System.Drawing.Size(23, 22)
+        Me.PicDouble.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.PicDouble.TabIndex = 166
+        Me.PicDouble.TabStop = False
+        '
+        'RbSingle
+        '
+        Me.RbSingle.AutoSize = True
+        Me.RbSingle.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.RbSingle.Location = New System.Drawing.Point(87, 43)
+        Me.RbSingle.Name = "RbSingle"
+        Me.RbSingle.Size = New System.Drawing.Size(138, 18)
+        Me.RbSingle.TabIndex = 167
+        Me.RbSingle.Text = "Single thread symbol"
+        Me.RbSingle.UseVisualStyleBackColor = True
+        '
+        'RbDouble
+        '
+        Me.RbDouble.AutoSize = True
+        Me.RbDouble.Checked = True
+        Me.RbDouble.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.RbDouble.Location = New System.Drawing.Point(264, 43)
+        Me.RbDouble.Name = "RbDouble"
+        Me.RbDouble.Size = New System.Drawing.Size(144, 18)
+        Me.RbDouble.TabIndex = 168
+        Me.RbDouble.TabStop = True
+        Me.RbDouble.Text = "Double thread symbol"
+        Me.RbDouble.UseVisualStyleBackColor = True
         '
         'LblColourName
         '

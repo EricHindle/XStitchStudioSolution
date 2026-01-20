@@ -9,8 +9,8 @@ Imports XStitchStudio.Domain.Objects
 Imports XStitchStudio.MyStitchDataSet
 Namespace Domain.Builders
     Public Class PaletteThreadBuilder
-        Private _doubleThreadSymbolId As Integer
-        Private _singleThreadSymbolId As Integer
+        Private _symbolId As Integer
+        '        Private _singleThreadSymbolId As Integer
         Private _PaletteId As Integer
         Private _threadId As Integer
         Private _isBead As Boolean
@@ -18,8 +18,8 @@ Namespace Domain.Builders
             Return New PaletteThreadBuilder
         End Function
         Public Function StartingWithNothing() As PaletteThreadBuilder
-            _doubleThreadSymbolId = -1
-            _singleThreadSymbolId = -1
+            _symbolId = -1
+            '           _singleThreadSymbolId = -1
             _threadId = -1
             _PaletteId = -1
             _isBead = False
@@ -31,8 +31,8 @@ Namespace Domain.Builders
                 With pThread
                     _PaletteId = .PaletteId
                     _threadId = .ThreadId
-                    _doubleThreadSymbolId = .DoubleThreadSymbolId
-                    _singleThreadSymbolId = .SingleThreadSymbolId
+                    _symbolId = .SymbolId
+                    '                   _singleThreadSymbolId = .SingleThreadSymbolId
                     _isBead = .IsBead
                 End With
             End If
@@ -46,8 +46,8 @@ Namespace Domain.Builders
                     '_thread = Nothing
                     _PaletteId = .palette_id
                     _threadId = .thread_id
-                    _doubleThreadSymbolId = .symbol_id
-                    _singleThreadSymbolId = .single_thread_symbol_id
+                    _symbolId = .symbol_id
+                    '                    _singleThreadSymbolId = .single_thread_symbol_id
                     _isBead = (.isbead = 1)
                 End With
             End If
@@ -61,20 +61,20 @@ Namespace Domain.Builders
             _PaletteId = pId
             Return Me
         End Function
-        Public Function WithDoubleThreadSymbolId(pSymbolId As Integer) As PaletteThreadBuilder
-            _doubleThreadSymbolId = pSymbolId
+        Public Function WithSymbolId(pSymbolId As Integer) As PaletteThreadBuilder
+            _symbolId = pSymbolId
             Return Me
         End Function
-        Public Function WithSingleThreadSymbolId(pSymbolId As Integer) As PaletteThreadBuilder
-            _singleThreadSymbolId = pSymbolId
-            Return Me
-        End Function
+        'Public Function WithSingleThreadSymbolId(pSymbolId As Integer) As PaletteThreadBuilder
+        '    _singleThreadSymbolId = pSymbolId
+        '    Return Me
+        'End Function
         Public Function WithIsBead(pIsBead As Boolean) As PaletteThreadBuilder
             _isBead = pIsBead
             Return Me
         End Function
         Public Function Build() As PaletteThread
-            Return New PaletteThread(_PaletteId, _threadId, _doubleThreadSymbolId, _singleThreadSymbolId, _isBead)
+            Return New PaletteThread(_PaletteId, _threadId, _symbolId, _isBead)
         End Function
     End Class
 End Namespace

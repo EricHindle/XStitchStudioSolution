@@ -10,21 +10,21 @@ Namespace Domain.Objects
     Public Class PaletteThread
 #Region "properties"
         Private _thread As Thread
-        Private _doubleThreadSymbolId As Integer
+        Private _symbolId As Integer
         Private _PaletteId As Integer
         Private _threadId As Integer
         Private _symbol As Image
         Private _isBead As Boolean
         Private _stitchCount As Integer
-        Private _singleThreadSymbolId As Integer
-        Public Property SingleThreadSymbolId() As Integer
-            Get
-                Return _singleThreadSymbolId
-            End Get
-            Set(ByVal value As Integer)
-                _singleThreadSymbolId = value
-            End Set
-        End Property
+        'Private _singleThreadSymbolId As Integer
+        'Public Property SingleThreadSymbolId() As Integer
+        '    Get
+        '        Return _singleThreadSymbolId
+        '    End Get
+        '    Set(ByVal value As Integer)
+        '        _singleThreadSymbolId = value
+        '    End Set
+        'End Property
         Public Property StitchCount() As Integer
             Get
                 Return _stitchCount
@@ -57,12 +57,12 @@ Namespace Domain.Objects
                 _PaletteId = value
             End Set
         End Property
-        Public Property DoubleThreadSymbolId() As Integer
+        Public Property SymbolId() As Integer
             Get
-                Return _doubleThreadSymbolId
+                Return _symbolId
             End Get
             Set(ByVal value As Integer)
-                _doubleThreadSymbolId = value
+                _symbolId = value
             End Set
         End Property
         Public ReadOnly Property Thread() As Thread
@@ -80,7 +80,7 @@ Namespace Domain.Objects
         Public ReadOnly Property Symbol() As Image
             Get
                 If _symbol Is Nothing Then
-                    _symbol = FindSymbolImage(_doubleThreadSymbolId)
+                    _symbol = FindSymbolImage(_symbolId)
                 End If
                 Return _symbol
             End Get
@@ -90,8 +90,8 @@ Namespace Domain.Objects
 #Region "constructors"
         Private Sub InitialisePaletteThread()
             _thread = Nothing
-            _doubleThreadSymbolId = -1
-            _singleThreadSymbolId = -1
+            _symbolId = -1
+            '_singleThreadSymbolId = -1
             _PaletteId = -1
             _threadId = -1
             _symbol = Nothing
@@ -103,14 +103,13 @@ Namespace Domain.Objects
         End Sub
         Public Sub New(pPaletteId As Integer,
                        pThreadId As Integer,
-                       pDoubleSymbolId As Integer,
-                       pSingleSymbolId As Integer,
+                       pSymbolId As Integer,
                        pIsBead As Boolean)
             InitialisePaletteThread()
             _PaletteId = pPaletteId
             _threadId = pThreadId
-            _doubleThreadSymbolId = pDoubleSymbolId
-            _singleThreadSymbolId = pSingleSymbolId
+            _symbolId = pSymbolId
+            '_singleThreadSymbolId = pSingleSymbolId
             _isBead = pIsBead
         End Sub
 #End Region
@@ -130,8 +129,7 @@ Namespace Domain.Objects
             _sb.Append("PaletteThread=[") _
                 .Append("PaletteId=[").Append(CStr(_PaletteId)).Append("], ") _
                 .Append(Thread.ToString).Append(", ") _
-                .Append("DoubleThreadSymbolId=[").Append(CStr(_doubleThreadSymbolId)).Append("],") _
-                .Append("SingleThreadSymbolId=[").Append(CStr(_singleThreadSymbolId)).Append("],") _
+                .Append("SymbolId=[").Append(CStr(_symbolId)).Append("], ") _
                 .Append(If(_isBead, "Bead", "Thread")) _
                 .Append("]")
             Return _sb.ToString()

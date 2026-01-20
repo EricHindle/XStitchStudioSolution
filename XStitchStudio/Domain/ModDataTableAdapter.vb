@@ -1272,7 +1272,7 @@ Namespace Domain
             With pPaletteThread
                 pPaletteThreadRow.palette_id = .PaletteId
                 pPaletteThreadRow.thread_id = .ThreadId
-                pPaletteThreadRow.symbol_id = .DoubleThreadSymbolId
+                pPaletteThreadRow.symbol_id = .SymbolId
                 pPaletteThreadRow.isbead = If(.IsBead, 1, 0)
             End With
             Return pPaletteThreadRow
