@@ -907,6 +907,52 @@
         }
         "FileType"
         {
+            "{5EB83D71-FA18-4901-BE56-DE22E13CC478}:_3D357EA7FF36494EAB81F2BE87FAED53"
+            {
+            "Name" = "8:CrossStitch Archive File"
+            "Description" = "8:CrossStitch Studio Design Archive File"
+            "Extensions" = "8:.hsa"
+            "MIME" = "8:"
+            "Icon" = "8:"
+            "IconIndex" = "3:0"
+                "Command"
+                {
+                "Command" = "8:_1DC05850DC664F94B1442081417B066F"
+                }
+                "Verbs"
+                {
+                    "{95C0C507-CBF0-42B8-B119-07219E384A4A}:_29901ECE408D43319224F16385292FAA"
+                    {
+                    "Command" = "8:&Open"
+                    "Verb" = "8:open"
+                    "Arguments" = "8:\"%1\""
+                    "Order" = "3:0"
+                    }
+                }
+            }
+            "{5EB83D71-FA18-4901-BE56-DE22E13CC478}:_559AA01844BD4543A57C0013392B1F9D"
+            {
+            "Name" = "8:CrossStitch Design File"
+            "Description" = "8:CrossStitch Studio Design File"
+            "Extensions" = "8:.hsz"
+            "MIME" = "8:"
+            "Icon" = "8:_77E1FE748EED46EC9BA92F24F495D5DE"
+            "IconIndex" = "3:0"
+                "Command"
+                {
+                "Command" = "8:_1DC05850DC664F94B1442081417B066F"
+                }
+                "Verbs"
+                {
+                    "{95C0C507-CBF0-42B8-B119-07219E384A4A}:_3031DEFA21B04B168FD59A058BA2D8FD"
+                    {
+                    "Command" = "8:&Open"
+                    "Verb" = "8:open"
+                    "Arguments" = "8:\"%1\""
+                    "Order" = "3:0"
+                    }
+                }
+            }
         }
         "Folder"
         {
@@ -1005,7 +1051,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:CrossStitch Studio"
         "ProductCode" = "8:{16B38F1E-771A-45EF-94D5-A572ACCCE513}"
-        "PackageCode" = "8:{3E1457AF-293B-46D6-989C-62B81B559F37}"
+        "PackageCode" = "8:{B49A0706-D8D1-4108-83E2-88033222BD6D}"
         "UpgradeCode" = "8:{CB905F24-9995-4063-9549-E2529BE921C0}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"

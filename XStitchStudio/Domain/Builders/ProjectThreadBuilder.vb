@@ -62,7 +62,7 @@ Namespace Domain.Builders
             Dim _values As String() = oString.Split(DESIGN_DELIM)
             _project = Nothing
             _thread = Nothing
-            If _values.Length > 4 Then
+            If _values.Length > 4 AndAlso Boolean.TryParse(_values(4), _isUsed) Then
                 _projectId = _values(0)
                 _threadId = _values(1)
                 _doubleThreadSymbolId = _values(2)
