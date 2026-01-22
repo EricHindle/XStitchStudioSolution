@@ -75,6 +75,24 @@ Namespace Domain.Objects
             Private _midRow As Integer
             Private _borders As Boolean()    'top,right,bottom,left
             Private _pageNo As String
+            Private _pageColumns As Integer
+            Private _pageType As PageType
+            Public Property PageType() As PageType
+                Get
+                    Return _pageType
+                End Get
+                Set(ByVal value As PageType)
+                    _pageType = value
+                End Set
+            End Property
+            Public Property PageColumns() As Integer
+                Get
+                    Return _pageColumns
+                End Get
+                Set(ByVal value As Integer)
+                    _pageColumns = value
+                End Set
+            End Property
             Public Property PageNo() As String
                 Get
                     Return _pageNo
@@ -141,6 +159,8 @@ Namespace Domain.Objects
                 _midCol = -1
                 _midRow = -1
                 _borders = {False, False, False, False}
+                _pageColumns = 0
+                _pageType = 0
             End Sub
             Public Function Clone() As Page
                 Dim _clone As New Page
@@ -152,6 +172,8 @@ Namespace Domain.Objects
                     .MidRow = _midRow
                     .Borders = _borders
                     .PageNo = _pageNo
+                    .PageColumns = _pageColumns
+                    .PageType = _pageType
                 End With
                 Return _clone
             End Function

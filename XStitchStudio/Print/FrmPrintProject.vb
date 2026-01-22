@@ -20,22 +20,7 @@ Public Class FrmPrintProject
         End Set
     End Property
 #End Region
-#Region "enum"
-    Private Enum Borders
-        Top
-        Right
-        Bottom
-        Left
-    End Enum
-    Private Enum GroupType
-        CrossSingle
-        CrossDouble
-        BackSingle
-        BackDouble
-        KnotSingle
-        KnotDouble
-    End Enum
-#End Region
+
 #Region "constants"
 #End Region
 #Region "variables"
@@ -101,28 +86,38 @@ Public Class FrmPrintProject
             oPrintDoc.PrinterSettings.PrinterName = CmbInstalledPrinters.SelectedItem
             AddHandler oPrintDoc.PrintPage, AddressOf OnPrintImage
             For Each _page As Page In oPageList
-                oSelectedPage = _page
-                CreatePrintBitmap()
-                oPrintDoc.Print()
+                If _page.PageType = PageType.DesignPage Then
+                    oSelectedPage = _page
+                    CreatePrintBitmap()
+                    oPrintDoc.Print()
+                End If
             Next
             If isPrintKey Then
-                CreateKeyBitmap()
-                oPrintDoc.Print()
+                For Each _page As Page In oPageList
+                    If _page.PageType = PageType.KeyPage Then
+                        PrintKeyPage()
+                    End If
+                Next
             End If
         End If
     End Sub
     Private Sub BtnPrintKey_Click(sender As Object, e As EventArgs) Handles BtnPrintKey.Click
+        PrintKeyPage()
+    End Sub
+
+    Private Sub PrintKeyPage()
         LogUtil.ShowStatus("Printing key", LblStatus, MyBase.Name)
-        isLandscape = False
+        'isLandscape = False
+        'SetPortraitValues()
         InitialisePrintDocument()
         oPrintDoc.PrinterSettings.PrinterName = CmbInstalledPrinters.SelectedItem
         ' Set handler to print image 
         AddHandler oPrintDoc.PrintPage, AddressOf OnPrintImage
         CreateKeyBitmap()
-        PicDesign.Image = oPrintBitmap
         ' Print the image (calls PrintPage handler (see above))
         oPrintDoc.Print()
     End Sub
+
     Private Sub BtnFont_Click(sender As Object, e As EventArgs) Handles BtnTitleFont.Click,
                                                                         BtnTextFont.Click,
                                                                         BtnFooterFont.Click
@@ -159,21 +154,29 @@ Public Class FrmPrintProject
         If isComponentInitialised Then
             isLandscape = RbLandscape.Checked
             If isLandscape Then
-                oPagesize = New Size(A4_HEIGHT, A4_WIDTH)
-                Me.Size = New Size(Me.Size.Width + oWidthHeightDifference, Me.Size.Height)
-                PnlDesignPicture.Size = New Size(PnlDesignPicture.Size.Width + oWidthHeightDifference, PnlDesignPicture.Height - oWidthHeightDifference)
-                PicDesign.Size = New Size(PicDesign.Size.Width + oWidthHeightDifference, PicDesign.Height - oWidthHeightDifference)
+                SetLandscapeValues()
             Else
-                oPagesize = New Size(A4_WIDTH, A4_HEIGHT)
-                Me.Size = New Size(Me.Size.Width - oWidthHeightDifference, Me.Size.Height)
-                PnlDesignPicture.Size = New Size(PnlDesignPicture.Size.Width - oWidthHeightDifference, PnlDesignPicture.Height + oWidthHeightDifference)
-                PicDesign.Size = New Size(PicDesign.Size.Width - oWidthHeightDifference, PicDesign.Height + oWidthHeightDifference)
+                SetPortraitValues()
             End If
             If Not isPrintLoading Then
                 InitialisePrintDocument()
                 LoadFormPages()
             End If
         End If
+    End Sub
+
+    Private Sub SetPortraitValues()
+        oPagesize = New Size(A4_WIDTH, A4_HEIGHT)
+        Me.Size = New Size(Me.Size.Width - oWidthHeightDifference, Me.Size.Height)
+        PnlDesignPicture.Size = New Size(PnlDesignPicture.Size.Width - oWidthHeightDifference, PnlDesignPicture.Height + oWidthHeightDifference)
+        PicDesign.Size = New Size(PicDesign.Size.Width - oWidthHeightDifference, PicDesign.Height + oWidthHeightDifference)
+    End Sub
+
+    Private Sub SetLandscapeValues()
+        oPagesize = New Size(A4_HEIGHT, A4_WIDTH)
+        Me.Size = New Size(Me.Size.Width + oWidthHeightDifference, Me.Size.Height)
+        PnlDesignPicture.Size = New Size(PnlDesignPicture.Size.Width + oWidthHeightDifference, PnlDesignPicture.Height - oWidthHeightDifference)
+        PicDesign.Size = New Size(PicDesign.Size.Width + oWidthHeightDifference, PicDesign.Height - oWidthHeightDifference)
     End Sub
 #End Region
 #Region "subroutines"
@@ -192,6 +195,7 @@ Public Class FrmPrintProject
         SetPrintFonts()
         CbDisplayStyle.SelectedIndex = oStitchDisplayStyle
         TxtTitle.Text = oPrintProject.ProjectName
+        SetThreadGroups()
         isPrintLoading = False
         LoadFormPages()
     End Sub
@@ -289,11 +293,10 @@ Public Class FrmPrintProject
         oOverlapBrush = New SolidBrush(oOverlapColourList(CbShading.SelectedIndex))
         LblOnePage.Text = String.Format(LblOnePage.Text, oOnePageSqPerInch)
         InitialisePageLists()
-        isPagesLoaded = True
     End Sub
     Private Sub SetPrintFonts()
         oPrintTitlefont = New Font(BtnTitleFont.Font.FontFamily, BtnTitleFont.Font.SizeInPoints, BtnTitleFont.Font.Style, GraphicsUnit.Point)
-        oPrintGroupfont = New Font(BtnTitleFont.Font.FontFamily, BtnTitleFont.Font.SizeInPoints, FontStyle.Regular, GraphicsUnit.Point)
+        oPrintGroupfont = New Font(BtnTitleFont.Font.FontFamily, BtnTextFont.Font.SizeInPoints, FontStyle.Bold, GraphicsUnit.Point)
         oPrintTextfont = New Font(BtnTextFont.Font.FontFamily, BtnTextFont.Font.SizeInPoints, BtnTextFont.Font.Style, GraphicsUnit.Point)
         oPrintFooterfont = New Font(BtnFooterFont.Font.FontFamily, BtnFooterFont.Font.SizeInPoints, BtnFooterFont.Font.Style, GraphicsUnit.Point)
     End Sub
@@ -360,37 +363,36 @@ Public Class FrmPrintProject
         PrintHeaderFooter(pPageGraphics, pSize, _footerText)
         PrintRowColumnNumbers(pPage, pPageGraphics)
     End Sub
-    Private Sub CreateKeyGraphics(pPageGraphics As Graphics, pSize As Size)
+    Private Sub CreateKeyGraphics(pPageGraphics As Graphics, pSize As Size, pTopLeft As Point, pTableAreaSize As Size)
         Dim _footerText As String = BuildFooter(Nothing, False)
-        Dim oCurrentTopLeft As New Point(oLeftMargin, oTopMargin)
+        Dim oCurrentTopLeft As Point = pTopLeft
         Dim oThreadCollection As New ProjectThreadCollection()
-        InitialiseTable()
+        InitialiseTable(If(isLandscape, 3, 2))
         pPageGraphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
         pPageGraphics.Clear(Color.White)
         PrintHeaderFooter(pPageGraphics, pSize, _footerText)
-        SetThreadGroups()
         If oCrossDoubleThreadList.Count > 0 Then
-            DrawGroup(oCrossDoubleThreadList, GroupType.CrossDouble, pPageGraphics, oCurrentTopLeft, pSize)
+            DrawGroup(oCrossDoubleThreadList, GroupType.CrossDouble, pPageGraphics, oCurrentTopLeft, pTableAreaSize)
         End If
         If oCrossSingleThreadList.Count > 0 Then
-            DrawGroup(oCrossSingleThreadList, GroupType.CrossSingle, pPageGraphics, oCurrentTopLeft, pSize)
+            DrawGroup(oCrossSingleThreadList, GroupType.CrossSingle, pPageGraphics, oCurrentTopLeft, pTableAreaSize)
         End If
         If oBackDoubleThreadList.Count > 0 Then
-            DrawGroup(oBackDoubleThreadList, GroupType.BackDouble, pPageGraphics, oCurrentTopLeft, pSize)
+            DrawGroup(oBackDoubleThreadList, GroupType.BackDouble, pPageGraphics, oCurrentTopLeft, pTableAreaSize)
         End If
         If oBackSingleThreadList.Count > 0 Then
-            DrawGroup(oBackSingleThreadList, GroupType.BackSingle, pPageGraphics, oCurrentTopLeft, pSize)
+            DrawGroup(oBackSingleThreadList, GroupType.BackSingle, pPageGraphics, oCurrentTopLeft, pTableAreaSize)
         End If
         If oKnotDoubleThreadList.Count > 0 Then
-            DrawGroup(oKnotDoubleThreadList, GroupType.KnotDouble, pPageGraphics, oCurrentTopLeft, pSize)
+            DrawGroup(oKnotDoubleThreadList, GroupType.KnotDouble, pPageGraphics, oCurrentTopLeft, pTableAreaSize)
         End If
         If oKnotSingleThreadList.Count > 0 Then
-            DrawGroup(oKnotSingleThreadList, GroupType.KnotSingle, pPageGraphics, oCurrentTopLeft, pSize)
+            DrawGroup(oKnotSingleThreadList, GroupType.KnotSingle, pPageGraphics, oCurrentTopLeft, pTableAreaSize)
         End If
     End Sub
-    Private Sub DrawGroup(pThreadCollection As ProjectThreadCollection, pGroupType As GroupType, pPageGraphics As Graphics, ByRef pCurrentTopLeft As Point, pSize As Size)
+    Private Sub DrawGroup(pThreadCollection As ProjectThreadCollection, pGroupType As GroupType, pPageGraphics As Graphics, ByRef pCurrentTopLeft As Point, pTableAreaSize As Size)
         Dim headerText As String = String.Empty
-        If My.Settings.PrintKeyOrder = 2 Then
+        If CbKeyOrder.SelectedIndex = 2 Then
             pThreadCollection.Threads.Sort(Function(x As ProjectThread, y As ProjectThread) x.Thread.SortNumber.CompareTo(y.Thread.SortNumber))
         Else
             pThreadCollection.Threads.Sort(Function(x As ProjectThread, y As ProjectThread) x.Thread.ColourName.CompareTo(y.Thread.ColourName))
@@ -410,12 +412,29 @@ Public Class FrmPrintProject
                 headerText = KNOT_DOUBLE_STRAND_HEADER
         End Select
         oTableHeight = oRowHeight * (pThreadCollection.Count + 1)
-        DrawGroupHeader(pPageGraphics, pCurrentTopLeft, headerText, oRowHeight)
-        DrawKeyTable(pPageGraphics, oTableWidth, oRowHeight, oTableHeight, oColumn1Width, oColumn2Width, oColumn3Width, pCurrentTopLeft)
-        DrawThreadKey(pPageGraphics, pSize, pThreadCollection, oTableWidth, oRowHeight, oTableHeight, oColumn1Width, oColumn2Width, oColumn3Width, oSymbolWidth, oBoxWidth, pCurrentTopLeft, pGroupType)
+        If pCurrentTopLeft.Y + (oRowHeight * 3) >= pTableAreaSize.Height Then
+            pCurrentTopLeft = New Point(pCurrentTopLeft.X + oTableWidth, oTopMargin)
+        End If
+        If pCurrentTopLeft.X > pTableAreaSize.Width - oLeftMargin Then
+            StartNewKeyPage()
+        Else
+            DrawGroupHeader(pPageGraphics, pCurrentTopLeft, headerText, oRowHeight)
+            DrawKeyTable(pPageGraphics, oTableWidth, oRowHeight, oTableHeight, oColumn1Width, oColumn2Width, oColumn3Width, pCurrentTopLeft, pTableAreaSize)
+            DrawThreadKey(pPageGraphics, pTableAreaSize, pThreadCollection, oTableWidth, oRowHeight, oTableHeight, oColumn1Width, oColumn2Width, oColumn3Width, oSymbolWidth, oBoxWidth, pCurrentTopLeft, pGroupType)
+        End If
     End Sub
-    Private Sub DrawThreadKey(pPageGraphics As Graphics, pSize As Size, oThreadCollection As ProjectThreadCollection, oTableWidth As Integer, oRowHeight As Integer, oTableHeight As Integer, oColumn1Width As Integer, oColumn2Width As Integer, oColumn3Width As Integer, oSymbolWidth As Integer, oBoxWidth As Integer, ByRef pCurrentTopLeft As Point, pGrouptype As GroupType)
+    Private Sub StartNewKeyPage()
+
+    End Sub
+    Private Sub DrawThreadKey(pPageGraphics As Graphics, pTableAreaSize As Size, oThreadCollection As ProjectThreadCollection, oTableWidth As Integer, oRowHeight As Integer, oTableHeight As Integer, oColumn1Width As Integer, oColumn2Width As Integer, oColumn3Width As Integer, oSymbolWidth As Integer, oBoxWidth As Integer, ByRef pCurrentTopLeft As Point, pGrouptype As GroupType)
         For Each _thread As ProjectThread In oThreadCollection.Threads
+            If pCurrentTopLeft.Y + oRowHeight >= pTableAreaSize.Height Then
+                pCurrentTopLeft = New Point(pCurrentTopLeft.X + oTableWidth, oTopMargin + oRowHeight)
+                If pCurrentTopLeft.X + oTableWidth > pTableAreaSize.Width - oLeftMargin Then
+                    Exit For
+                End If
+                DrawKeyTable(pPageGraphics, oTableWidth, oRowHeight, oTableHeight, oColumn1Width, oColumn2Width, oColumn3Width, pCurrentTopLeft, pTableAreaSize)
+            End If
             Dim oColourBrush As Brush = New SolidBrush(_thread.Thread.Colour)
             Dim oKnotWidth As Integer = oSymbolWidth - 4
             Dim oSmallKnotWidth As Integer = oKnotWidth - 4
@@ -433,7 +452,7 @@ Public Class FrmPrintProject
             Dim lineStart As New Point(pCurrentTopLeft.X + ((oColumn1Width - oBoxWidth) / 2), pCurrentTopLeft.Y + (oRowHeight / 2))
             Dim lineEnd As New Point(pCurrentTopLeft.X + ((oColumn1Width + oBoxWidth) / 2), pCurrentTopLeft.Y + (oRowHeight / 2))
             If pGrouptype = GroupType.BackDouble Then
-                pPageGraphics.DrawLine(New Pen(oColourBrush, SetStitchPenWidth(True, oPagePixelsPerCell)), LineStart, lineEnd)
+                pPageGraphics.DrawLine(New Pen(oColourBrush, SetStitchPenWidth(True, oPagePixelsPerCell)), lineStart, lineEnd)
             End If
             If pGrouptype = GroupType.BackSingle Then
                 pPageGraphics.DrawLine(New Pen(oColourBrush, SetStitchPenWidth(False, oPagePixelsPerCell)), lineStart, lineEnd)
@@ -448,34 +467,30 @@ Public Class FrmPrintProject
             pPageGraphics.DrawString(_thread.Thread.ColourName, oPrintTextfont, oPrintKeyBrush, New Point(pCurrentTopLeft.X + 3 + oColumn1Width, pCurrentTopLeft.Y + 3))
             pPageGraphics.FillRectangle(oColourBrush, New Rectangle(New Point(pCurrentTopLeft.X + oColumn1Width + oColumn2Width + ((oColumn3Width - oBoxWidth) / 2), pCurrentTopLeft.Y + (oRowHeight - oBoxWidth) / 2), New Size(oBoxWidth, oBoxWidth)))
             pPageGraphics.DrawString(_thread.Thread.ThreadNo, oPrintTextfont, oPrintKeyBrush, New Point(pCurrentTopLeft.X + 3 + oColumn1Width + oColumn2Width + oColumn3Width, pCurrentTopLeft.Y + 3))
-            If pCurrentTopLeft.Y + (oRowHeight * 2) < pSize.Height - oBottomMargin Then
-                pCurrentTopLeft = New Point(pCurrentTopLeft.X, pCurrentTopLeft.Y + oRowHeight)
-            Else
-                pCurrentTopLeft = New Point(pCurrentTopLeft.X + oTableWidth, oTopMargin)
-                DrawKeyTable(pPageGraphics, oTableWidth, oRowHeight, oTableHeight, oColumn1Width, oColumn2Width, oColumn3Width, pCurrentTopLeft)
-            End If
+            pCurrentTopLeft = New Point(pCurrentTopLeft.X, pCurrentTopLeft.Y + oRowHeight)
             pPageGraphics.DrawLine(oPrintKeyPen, New Point(pCurrentTopLeft.X, pCurrentTopLeft.Y), New Point(pCurrentTopLeft.X + oTableWidth, pCurrentTopLeft.Y))
 
         Next
     End Sub
 
-    Private Sub DrawKeyTable(pPageGraphics As Graphics, oTableWidth As Integer, oRowHeight As Integer, oTableHeight As Integer, oColumn1Width As Integer, oColumn2Width As Integer, oColumn3Width As Integer, ByRef pCurrentTopLeft As Point)
+    Private Sub DrawKeyTable(pPageGraphics As Graphics, oTableWidth As Integer, oRowHeight As Integer, oTableHeight As Integer, oColumn1Width As Integer, oColumn2Width As Integer, oColumn3Width As Integer, ByRef pCurrentTopLeft As Point, pTableAreaSize As Size)
+        Dim iAvailableHeight As Integer = Math.Min(oTableHeight, (Math.Floor((pTableAreaSize.Height - pCurrentTopLeft.Y + oTopMargin) / oRowHeight) - 1) * oRowHeight)
         ' Top border
         pPageGraphics.DrawLine(oPrintKeyPen, pCurrentTopLeft, New Point(pCurrentTopLeft.X + oTableWidth, pCurrentTopLeft.Y))
         ' Left border
-        pPageGraphics.DrawLine(oPrintKeyPen, pCurrentTopLeft, New Point(pCurrentTopLeft.X, pCurrentTopLeft.Y + oTableHeight))
+        pPageGraphics.DrawLine(oPrintKeyPen, pCurrentTopLeft, New Point(pCurrentTopLeft.X, pCurrentTopLeft.Y + iAvailableHeight))
         ' Right border
-        pPageGraphics.DrawLine(oPrintKeyPen, New Point(pCurrentTopLeft.X + oTableWidth, pCurrentTopLeft.Y), New Point(pCurrentTopLeft.X + oTableWidth, pCurrentTopLeft.Y + oTableHeight))
+        pPageGraphics.DrawLine(oPrintKeyPen, New Point(pCurrentTopLeft.X + oTableWidth, pCurrentTopLeft.Y), New Point(pCurrentTopLeft.X + oTableWidth, pCurrentTopLeft.Y + iAvailableHeight))
         ' Bottom border
-        pPageGraphics.DrawLine(oPrintKeyPen, New Point(pCurrentTopLeft.X, pCurrentTopLeft.Y + oTableHeight), New Point(pCurrentTopLeft.X + oTableWidth, pCurrentTopLeft.Y + oTableHeight))
+        pPageGraphics.DrawLine(oPrintKeyPen, New Point(pCurrentTopLeft.X, pCurrentTopLeft.Y + iAvailableHeight), New Point(pCurrentTopLeft.X + oTableWidth, pCurrentTopLeft.Y + iAvailableHeight))
         ' Heading floor
         pPageGraphics.DrawLine(oPrintKeyPen, New Point(pCurrentTopLeft.X, pCurrentTopLeft.Y + oRowHeight), New Point(pCurrentTopLeft.X + oTableWidth, pCurrentTopLeft.Y + oRowHeight))
         ' Col1 side
-        pPageGraphics.DrawLine(oPrintKeyPen, New Point(pCurrentTopLeft.X + oColumn1Width, pCurrentTopLeft.Y), New Point(pCurrentTopLeft.X + oColumn1Width, pCurrentTopLeft.Y + oTableHeight))
+        pPageGraphics.DrawLine(oPrintKeyPen, New Point(pCurrentTopLeft.X + oColumn1Width, pCurrentTopLeft.Y), New Point(pCurrentTopLeft.X + oColumn1Width, pCurrentTopLeft.Y + iAvailableHeight))
         ' Col2 side
-        pPageGraphics.DrawLine(oPrintKeyPen, New Point(pCurrentTopLeft.X + oColumn1Width + oColumn2Width, pCurrentTopLeft.Y), New Point(pCurrentTopLeft.X + oColumn1Width + oColumn2Width, pCurrentTopLeft.Y + oTableHeight))
+        pPageGraphics.DrawLine(oPrintKeyPen, New Point(pCurrentTopLeft.X + oColumn1Width + oColumn2Width, pCurrentTopLeft.Y), New Point(pCurrentTopLeft.X + oColumn1Width + oColumn2Width, pCurrentTopLeft.Y + iAvailableHeight))
         ' Col3 side
-        pPageGraphics.DrawLine(oPrintKeyPen, New Point(pCurrentTopLeft.X + oColumn1Width + oColumn2Width + oColumn3Width, pCurrentTopLeft.Y), New Point(pCurrentTopLeft.X + oColumn1Width + oColumn2Width + oColumn3Width, pCurrentTopLeft.Y + oTableHeight))
+        pPageGraphics.DrawLine(oPrintKeyPen, New Point(pCurrentTopLeft.X + oColumn1Width + oColumn2Width + oColumn3Width, pCurrentTopLeft.Y), New Point(pCurrentTopLeft.X + oColumn1Width + oColumn2Width + oColumn3Width, pCurrentTopLeft.Y + iAvailableHeight))
         ' Heading text 1
         pPageGraphics.DrawString("Key", oPrintTextfont, oPrintKeyBrush, New Point(pCurrentTopLeft.X + 3, pCurrentTopLeft.Y + 3))
         ' Heading text 2
@@ -507,7 +522,7 @@ Public Class FrmPrintProject
         Return _footerText.ToString
     End Function
     Private Sub DrawGroupHeader(pPageGraphics As Graphics, ByRef pCurrentTopLeft As Point, pText As String, pRowHeight As Integer)
-        pPageGraphics.DrawString(pText, oPrintGroupfont, oTextBrush, pCurrentTopLeft)
+        pPageGraphics.DrawString(pText, oPrintGroupfont, oTextBrush, New Point(pCurrentTopLeft.X + 5, pCurrentTopLeft.Y + 8))
         pCurrentTopLeft = New Point(pCurrentTopLeft.X, pCurrentTopLeft.Y + pRowHeight)
     End Sub
     Private Sub PrintHeaderFooter(pPageGraphics As Graphics, pSize As Size, pFooterText As String)
@@ -587,8 +602,6 @@ Public Class FrmPrintProject
         TabControl1.TabPages.Clear()
         isPrintLoading = False
         oPageList = New List(Of Page)
-        Dim _designMiddleColumn As Integer = Math.Floor(oProjectDesign.Columns / 2)
-        Dim _designMiddleRow As Integer = Math.Floor(oProjectDesign.Rows / 2)
         Dim _pagesAcross As Integer
         Dim _pagesDown As Integer = 0
         Dim _pagesTotal As Integer = 0
@@ -597,6 +610,8 @@ Public Class FrmPrintProject
         Dim _colsLeft As Integer
         Dim _overlap As Integer = NudOverlap.Value
         Dim _newPage As Page
+        Dim _designPage As Page
+        Dim _keyPage As Page
         Do Until _rowsLeft <= 0
             _colsLeft = oProjectDesign.Columns
             _pagesAcross = 0
@@ -610,54 +625,78 @@ Public Class FrmPrintProject
                 _rowsLeft -= oAvailableCellsHeight
                 _rowsLeft += _overlap
             End If
-
             Do Until _colsLeft <= 0
-                _newPage = New Page
-                Dim _pageColumns As Integer
-                If _pagesAcross = 0 Then
-                    _pageColumns = Math.Min(oAvailableCellsWidth, _colsLeft)
-                    _colsLeft -= oAvailableCellsWidth
-                    _newPage.Borders(Borders.Left) = True
-                Else
-                    _pageColumns = Math.Min(oAvailableCellsWidth - _overlap, _colsLeft)
-                    _pageColumns += _overlap
-                    _colsLeft -= oAvailableCellsWidth
-                    _colsLeft += _overlap
-                End If
-                If _colsLeft <= 0 Then
-                    _newPage.Borders(Borders.Right) = True
-                End If
-                _newPage.PagePosition = New Point(_pagesAcross, _pagesDown)
-                If _pagesDown = 0 Then
-                    _newPage.Borders(Borders.Top) = True
-                End If
-                If _rowsLeft <= 0 Then
-                    _newPage.Borders(Borders.Bottom) = True
-                End If
-                _pagesTotal += 1
-                _newPage.PageNo = CStr(_pagesTotal)
-                TabControl1.TabPages.Add("Page " & CStr(_pagesTotal))
-                _newPage.TopLeft = _pageTopLeft
-                _newPage.BottomRight = New Point(_pageTopLeft.X + _pageColumns, _pageTopLeft.Y + _pageRows)
-                If _designMiddleRow >= _newPage.TopLeft.Y AndAlso _designMiddleRow <= _newPage.BottomRight.Y Then
-                    _newPage.MidRow = _designMiddleRow
-                End If
-                If _designMiddleColumn >= _newPage.TopLeft.X AndAlso _designMiddleColumn <= _newPage.BottomRight.X Then
-                    _newPage.MidCol = _designMiddleColumn
-                End If
-                Dim _page As Page = _newPage.Clone
-                oPageList.Add(_page)
+                _newPage = CreateNewDesignPage(_pagesAcross, _pagesDown, _pagesTotal, _pageTopLeft, _rowsLeft, _colsLeft, _overlap, _pageRows)
+                _designPage = _newPage.Clone
+                Dim _pageColumns As Integer = _designPage.PageColumns
+                oPageList.Add(_designPage)
                 _pageTopLeft = New Point(_pageTopLeft.X + _pageColumns - _overlap, _pageTopLeft.Y)
                 _pagesAcross += 1
             Loop
             _pageTopLeft = New Point(0, _pageTopLeft.Y + _pageRows - _overlap)
             _pagesDown += 1
         Loop
+        Dim _keyPageNo As Integer = 0
+        If ChkPrintKey.Checked Then
+            _newPage = CreateNewKeyPage(_pagesTotal, _keyPageNo)
+            _keyPage = _newPage.Clone
+            oPageList.Add(_keyPage)
+        End If
         LblPageCt.Text = CStr(_pagesTotal)
         isPagesLoaded = True
         TabControl1.SelectedIndex = 0
         DisplayPageImage()
     End Sub
+    Private Function CreateNewKeyPage(ByRef _pagesTotal As Integer, ByRef _keyPageNo As Integer) As Page
+        Dim oNewPage As New Page
+        oNewPage.PageType = PageType.DesignPage
+        _pagesTotal += 1
+        _keyPageNo += 1
+        oNewPage.PageNo = CStr(_pagesTotal)
+        TabControl1.TabPages.Add("Key " & CStr(_keyPageNo))
+        Return oNewPage
+    End Function
+    Private Function CreateNewDesignPage(_pagesAcross As Integer, _pagesDown As Integer, ByRef _pagesTotal As Integer, _pageTopLeft As Point, _rowsLeft As Integer, ByRef _colsLeft As Integer, _overlap As Integer, _pageRows As Integer) As Page
+        Dim _designMiddleColumn As Integer = Math.Floor(oProjectDesign.Columns / 2)
+        Dim _designMiddleRow As Integer = Math.Floor(oProjectDesign.Rows / 2)
+        Dim oNewPage As New Page
+        Dim _pageColumns As Integer
+        oNewPage.PageType = PageType.KeyPage
+        If _pagesAcross = 0 Then
+            _pageColumns = Math.Min(oAvailableCellsWidth, _colsLeft)
+            _colsLeft -= oAvailableCellsWidth
+            oNewPage.Borders(Borders.Left) = True
+        Else
+            _pageColumns = Math.Min(oAvailableCellsWidth - _overlap, _colsLeft)
+            _pageColumns += _overlap
+            _colsLeft -= oAvailableCellsWidth
+            _colsLeft += _overlap
+        End If
+        oNewPage.PageColumns = _pageColumns
+        If _colsLeft <= 0 Then
+            oNewPage.Borders(Borders.Right) = True
+        End If
+        oNewPage.PagePosition = New Point(_pagesAcross, _pagesDown)
+        If _pagesDown = 0 Then
+            oNewPage.Borders(Borders.Top) = True
+        End If
+        If _rowsLeft <= 0 Then
+            oNewPage.Borders(Borders.Bottom) = True
+        End If
+        _pagesTotal += 1
+        oNewPage.PageNo = CStr(_pagesTotal)
+        TabControl1.TabPages.Add("Page " & CStr(_pagesTotal))
+        oNewPage.TopLeft = _pageTopLeft
+        oNewPage.BottomRight = New Point(_pageTopLeft.X + _pageColumns, _pageTopLeft.Y + _pageRows)
+        If _designMiddleRow >= oNewPage.TopLeft.Y AndAlso _designMiddleRow <= oNewPage.BottomRight.Y Then
+            oNewPage.MidRow = _designMiddleRow
+        End If
+        If _designMiddleColumn >= oNewPage.TopLeft.X AndAlso _designMiddleColumn <= oNewPage.BottomRight.X Then
+            oNewPage.MidCol = _designMiddleColumn
+        End If
+        Return oNewPage
+    End Function
+
     Private Sub PrintOverlapShade(pPage As Page, pPageGraphics As Graphics)
         Dim _widthInColumns As Integer = pPage.BottomRight.X - pPage.TopLeft.X
         Dim _heightInRows As Integer = pPage.BottomRight.Y - pPage.TopLeft.Y
@@ -793,9 +832,13 @@ Public Class FrmPrintProject
     Private Sub DisplayPageImage()
         If isPagesLoaded Then
             oSelectedPage = oPageList(TabControl1.SelectedIndex)
-            CreatePrintBitmap()
+            If TabControl1.SelectedTab.Text.StartsWith("Page") Then
+                CreatePrintBitmap()
+            Else
+                CreateKeyBitmap()
+            End If
             PicDesign.Image = oPrintBitmap
-        End If
+            End If
     End Sub
     Private Sub CreatePrintBitmap()
         SetPrintFonts()
@@ -809,7 +852,9 @@ Public Class FrmPrintProject
         oPrintBitmap = New Bitmap(oPrintablePageWidth, oPrintablePageHeight)
         oPrintBitmap.SetResolution(PRINT_DPI, PRINT_DPI)
         oPrintGraphics = Graphics.FromImage(oPrintBitmap)
-        CreateKeyGraphics(oPrintGraphics, oPrintBitmap.Size)
+        Dim oTableAreaSize As New Size(oPrintBitmap.Width - oLeftMargin - oRightMargin, oPrintBitmap.Height - oTopMargin - oBottomMargin)
+        Dim oTableAreaTopLeft As New Point(oLeftMargin, oTopMargin)
+        CreateKeyGraphics(oPrintGraphics, oPrintBitmap.Size, oTableAreaTopLeft, oTableAreaSize)
     End Sub
 #End Region
 End Class

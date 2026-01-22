@@ -113,10 +113,10 @@ Partial Class FrmPrintProject
         'StatusStrip1
         '
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LblStatus})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 659)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 679)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Padding = New System.Windows.Forms.Padding(1, 0, 16, 0)
-        Me.StatusStrip1.Size = New System.Drawing.Size(762, 22)
+        Me.StatusStrip1.Size = New System.Drawing.Size(764, 22)
         Me.StatusStrip1.TabIndex = 5
         Me.StatusStrip1.Text = "StatusStrip1"
         '
@@ -133,7 +133,7 @@ Partial Class FrmPrintProject
         Me.TabControl1.Multiline = True
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(376, 51)
+        Me.TabControl1.Size = New System.Drawing.Size(376, 69)
         Me.TabControl1.TabIndex = 0
         '
         'TabPage1
@@ -141,7 +141,7 @@ Partial Class FrmPrintProject
         Me.TabPage1.Location = New System.Drawing.Point(4, 25)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(368, 22)
+        Me.TabPage1.Size = New System.Drawing.Size(368, 40)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Page1"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -150,7 +150,7 @@ Partial Class FrmPrintProject
         '
         Me.PicDesign.BackColor = System.Drawing.Color.White
         Me.PicDesign.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.PicDesign.Location = New System.Drawing.Point(3, 4)
+        Me.PicDesign.Location = New System.Drawing.Point(2, 3)
         Me.PicDesign.Margin = New System.Windows.Forms.Padding(4)
         Me.PicDesign.Name = "PicDesign"
         Me.PicDesign.Size = New System.Drawing.Size(370, 523)
@@ -166,7 +166,7 @@ Partial Class FrmPrintProject
         Me.BtnPrintPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BtnPrintPage.Font = New System.Drawing.Font("Tahoma", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnPrintPage.ForeColor = System.Drawing.Color.WhiteSmoke
-        Me.BtnPrintPage.Location = New System.Drawing.Point(377, 614)
+        Me.BtnPrintPage.Location = New System.Drawing.Point(379, 634)
         Me.BtnPrintPage.Margin = New System.Windows.Forms.Padding(5)
         Me.BtnPrintPage.Name = "BtnPrintPage"
         Me.BtnPrintPage.Size = New System.Drawing.Size(84, 36)
@@ -182,7 +182,7 @@ Partial Class FrmPrintProject
         Me.BtnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BtnClose.Font = New System.Drawing.Font("Tahoma", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnClose.ForeColor = System.Drawing.Color.WhiteSmoke
-        Me.BtnClose.Location = New System.Drawing.Point(671, 604)
+        Me.BtnClose.Location = New System.Drawing.Point(673, 624)
         Me.BtnClose.Margin = New System.Windows.Forms.Padding(5)
         Me.BtnClose.Name = "BtnClose"
         Me.BtnClose.Size = New System.Drawing.Size(77, 46)
@@ -738,7 +738,7 @@ Partial Class FrmPrintProject
         'PnlDesignPicture
         '
         Me.PnlDesignPicture.Controls.Add(Me.PicDesign)
-        Me.PnlDesignPicture.Location = New System.Drawing.Point(374, 64)
+        Me.PnlDesignPicture.Location = New System.Drawing.Point(374, 84)
         Me.PnlDesignPicture.Margin = New System.Windows.Forms.Padding(3, 0, 3, 3)
         Me.PnlDesignPicture.Name = "PnlDesignPicture"
         Me.PnlDesignPicture.Size = New System.Drawing.Size(376, 530)
@@ -752,7 +752,7 @@ Partial Class FrmPrintProject
         Me.BtnPrintAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BtnPrintAll.Font = New System.Drawing.Font("Tahoma", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnPrintAll.ForeColor = System.Drawing.Color.WhiteSmoke
-        Me.BtnPrintAll.Location = New System.Drawing.Point(568, 614)
+        Me.BtnPrintAll.Location = New System.Drawing.Point(570, 634)
         Me.BtnPrintAll.Margin = New System.Windows.Forms.Padding(5)
         Me.BtnPrintAll.Name = "BtnPrintAll"
         Me.BtnPrintAll.Size = New System.Drawing.Size(77, 36)
@@ -768,7 +768,7 @@ Partial Class FrmPrintProject
         Me.BtnPrintKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BtnPrintKey.Font = New System.Drawing.Font("Tahoma", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnPrintKey.ForeColor = System.Drawing.Color.WhiteSmoke
-        Me.BtnPrintKey.Location = New System.Drawing.Point(476, 614)
+        Me.BtnPrintKey.Location = New System.Drawing.Point(478, 634)
         Me.BtnPrintKey.Margin = New System.Windows.Forms.Padding(5)
         Me.BtnPrintKey.Name = "BtnPrintKey"
         Me.BtnPrintKey.Size = New System.Drawing.Size(77, 36)
@@ -792,7 +792,7 @@ Partial Class FrmPrintProject
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(762, 681)
+        Me.ClientSize = New System.Drawing.Size(764, 701)
         Me.Controls.Add(Me.LblTextSizer)
         Me.Controls.Add(Me.BtnPrintKey)
         Me.Controls.Add(Me.BtnPrintAll)
@@ -806,7 +806,7 @@ Partial Class FrmPrintProject
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.MaximizeBox = False
-        Me.MinimumSize = New System.Drawing.Size(778, 720)
+        Me.MinimumSize = New System.Drawing.Size(780, 740)
         Me.Name = "FrmPrintProject"
         Me.Text = "Print Project"
         Me.StatusStrip1.ResumeLayout(False)

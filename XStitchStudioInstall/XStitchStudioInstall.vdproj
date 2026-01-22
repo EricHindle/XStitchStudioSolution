@@ -1005,7 +1005,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:CrossStitch Studio"
         "ProductCode" = "8:{16B38F1E-771A-45EF-94D5-A572ACCCE513}"
-        "PackageCode" = "8:{01DF0614-BFE8-496E-A61E-F2882B85B749}"
+        "PackageCode" = "8:{3E1457AF-293B-46D6-989C-62B81B559F37}"
         "UpgradeCode" = "8:{CB905F24-9995-4063-9549-E2529BE921C0}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"

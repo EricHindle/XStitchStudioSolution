@@ -117,7 +117,7 @@ Public Class FrmImportImage
                     For Each x As Integer In Enumerable.Range(0, oTargetImage.Size.Width)
                         Dim _cellColor As Color = oTargetImage.GetPixel(x, y)
                         Dim _thread As Thread = GetNearestThread(_cellColor)
-                        Dim _blockstitch As BlockStitch = GenerateBlockstitchForThread(x, y, _thread)
+                        Dim _blockstitch As BlockStitch = GenerateBlockstitchForThread(x, y, _thread, 2)
                         AddBlockstitchToDesign(_blockstitch, oProjectDesign)
                         DrawImportBlockStitch(_blockstitch)
                     Next
@@ -142,7 +142,7 @@ Public Class FrmImportImage
                         For Each x As Integer In Enumerable.Range(0, oTargetImage.Size.Width)
                             Dim _cellColor As Color = oTargetImage.GetPixel(x, y)
                             Dim _thread As Thread = GetNearestThread(_cellColor)
-                            Dim _blockstitch As BlockStitch = GenerateBlockstitchForThread(x, y, _thread)
+                            Dim _blockstitch As BlockStitch = GenerateBlockstitchForThread(x, y, _thread, 2)
                             AddBlockstitchToDesign(_blockstitch, oProjectDesign)
                             DrawImportBlockStitch(_blockstitch)
                         Next
@@ -225,14 +225,14 @@ Public Class FrmImportImage
         End If
         Return _nearerThread
     End Function
-
-    Private Function GenerateBlockstitchForThread(pLocX As Integer, pLocY As Integer, pThread As Thread) As BlockStitch
+    Private Function GenerateBlockstitchForThread(pLocX As Integer, pLocY As Integer, pThread As Thread, pStrands As Integer) As BlockStitch
         Dim _stitch As Stitch = BlockStitchBuilder.ABlockStitch() _
             .StartingWithNothing _
             .WithProjectId(999) _
             .WithBlockLocation(New Point(pLocX, pLocY)) _
             .WithStitchType(BlockStitchType.Full) _
             .WithThreadId(pThread.ThreadId) _
+            .WithStrandCount(pStrands) _
             .Build
         Dim _blockstitch As BlockStitch = BlockStitchBuilder.ABlockStitch() _
             .StartingWith(_stitch) _

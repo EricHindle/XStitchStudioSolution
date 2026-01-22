@@ -9,6 +9,26 @@ Imports System.Drawing.Printing
 Imports XStitchStudio.Domain.Objects
 
 Module ModPrint
+#Region "enum"
+    Friend Enum Borders
+        Top
+        Right
+        Bottom
+        Left
+    End Enum
+    Friend Enum GroupType
+        CrossSingle
+        CrossDouble
+        BackSingle
+        BackDouble
+        KnotSingle
+        KnotDouble
+    End Enum
+    Friend Enum PageType
+        DesignPage
+        KeyPage
+    End Enum
+#End Region
 #Region "constants"
     Public Const PRINT_DPI As Integer = 300.0F
     Public Const FONT_PPI As Integer = 72.0F
@@ -106,8 +126,8 @@ Module ModPrint
         oFooterHeight = oPageFooterHeight
     End Sub
     Friend Sub CalculatePrintGridSpace(pDesignSize As Size)
-        oAvailablePixelWidth = oPrintablePageWidth - oLeftMargin - oRightMargin
-        oAvailablePixelHeight = oPrintablePageHeight - oTopMargin - oBottomMargin
+        oAvailablePixelWidth = oPrintablePageWidth - oLeftMargin - oRightMargin - oPagePixelsPerCell
+        oAvailablePixelHeight = oPrintablePageHeight - oTopMargin - oBottomMargin - (oPagePixelsPerCell * 2)
         oAvailableCellsWidth = oAvailablePixelWidth / oPagePixelsPerCell
         oAvailableCellsHeight = oAvailablePixelHeight / oPagePixelsPerCell
         oPrintGridOrigin = New Point(oPageLeftMargin, oPageTopMargin + oPageTitleHeight)
@@ -132,8 +152,13 @@ Module ModPrint
         oPrintDoc.DefaultPageSettings.Margins.Right = 0
         oPrintDoc.DefaultPageSettings.Margins.Top = 0
         oPrintDoc.DefaultPageSettings.Margins.Bottom = 0
-        oPrinterHardMarginX = oPageSettings.HardMarginX / 100 * PRINT_DPI
-        oPrinterHardMarginY = oPageSettings.HardMarginY / 100 * PRINT_DPI
+        If isLandscape Then
+            oPrinterHardMarginY = oPageSettings.HardMarginX / 100 * PRINT_DPI
+            oPrinterHardMarginX = oPageSettings.HardMarginY / 100 * PRINT_DPI
+        Else
+            oPrinterHardMarginX = oPageSettings.HardMarginX / 100 * PRINT_DPI
+            oPrinterHardMarginY = oPageSettings.HardMarginY / 100 * PRINT_DPI
+        End If
         oPrintablePageWidth = oPagesize.Width - (oPrinterHardMarginX * 2)
         oPrintablePageHeight = oPagesize.Height - (oPrinterHardMarginY * 2)
     End Sub
@@ -170,8 +195,8 @@ Module ModPrint
         Next
 
     End Sub
-    Friend Sub InitialiseTable()
-        oTableWidth = oAvailablePixelWidth / 2
+    Friend Sub InitialiseTable(pColumnsPerPage As Integer)
+        oTableWidth = oAvailablePixelWidth / pColumnsPerPage
         oRowHeight = oPageTextHeight + 40
         oColumn1Width = oTableWidth / 8
         oColumn2Width = oTableWidth * 4 / 8
