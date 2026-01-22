@@ -389,6 +389,9 @@ Public Class FrmPrintProject
         If oKnotSingleThreadList.Count > 0 Then
             DrawGroup(oKnotSingleThreadList, GroupType.KnotSingle, pPageGraphics, oCurrentTopLeft, pTableAreaSize)
         End If
+        If oBeadList.Count > 0 Then
+            DrawGroup(oBeadList, GroupType.Bead, pPageGraphics, oCurrentTopLeft, pTableAreaSize)
+        End If
     End Sub
     Private Sub DrawGroup(pThreadCollection As ProjectThreadCollection, pGroupType As GroupType, pPageGraphics As Graphics, ByRef pCurrentTopLeft As Point, pTableAreaSize As Size)
         Dim headerText As String = String.Empty
@@ -410,6 +413,8 @@ Public Class FrmPrintProject
                 headerText = KNOT_SINGLE_STRAND_HEADER
             Case GroupType.KnotDouble
                 headerText = KNOT_DOUBLE_STRAND_HEADER
+            Case GroupType.Bead
+                headerText = BEAD_HEADER
         End Select
         oTableHeight = oRowHeight * (pThreadCollection.Count + 1)
         If pCurrentTopLeft.Y + (oRowHeight * 3) >= pTableAreaSize.Height Then
@@ -462,6 +467,10 @@ Public Class FrmPrintProject
             End If
             If pGrouptype = GroupType.KnotSingle Then
                 pPageGraphics.FillEllipse(oColourBrush, New Rectangle(New Point(pCurrentTopLeft.X + ((oColumn1Width - oSmallKnotWidth) / 2), pCurrentTopLeft.Y + (oRowHeight - oSmallKnotWidth) / 2), New Size(oSmallKnotWidth, oSmallKnotWidth)))
+            End If
+            If pGrouptype = GroupType.Bead Then
+                pPageGraphics.FillEllipse(oColourBrush, New Rectangle(New Point(pCurrentTopLeft.X + ((oColumn1Width - oSmallKnotWidth) / 2), pCurrentTopLeft.Y + (oRowHeight - oSmallKnotWidth) / 2), New Size(oSmallKnotWidth, oSmallKnotWidth)))
+                pPageGraphics.DrawEllipse(oPrintKeyPen, New Rectangle(New Point(pCurrentTopLeft.X + ((oColumn1Width - oSmallKnotWidth) / 2), pCurrentTopLeft.Y + (oRowHeight - oSmallKnotWidth) / 2), New Size(oSmallKnotWidth, oSmallKnotWidth)))
             End If
             pPageGraphics.DrawRectangle(oPrintKeyPen, New Rectangle(New Point(pCurrentTopLeft.X + ((oColumn1Width - oBoxWidth) / 2), pCurrentTopLeft.Y + (oRowHeight - oBoxWidth) / 2), New Size(oBoxWidth, oBoxWidth)))
             pPageGraphics.DrawString(_thread.Thread.ColourName, oPrintTextfont, oPrintKeyBrush, New Point(pCurrentTopLeft.X + 3 + oColumn1Width, pCurrentTopLeft.Y + 3))

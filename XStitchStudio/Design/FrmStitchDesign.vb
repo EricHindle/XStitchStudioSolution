@@ -711,7 +711,9 @@ Public Class FrmStitchDesign
         OpenProjectThreadsForm()
     End Sub
     Private Sub MnuRemoveUnused_Click(sender As Object, e As EventArgs) Handles MnuRemoveUnused.Click
+        DetermineUsedThreads()
         RemoveUnusedThreads()
+        SaveDesign()
         InitialisePalette()
     End Sub
     Private Sub MnuSavePalette_Click(sender As Object, e As EventArgs) Handles MnuSavePalette.Click
@@ -1455,6 +1457,7 @@ Public Class FrmStitchDesign
                 _projthreads.UsedThreads = DetermineUsedThreads()
                 _projthreads.ShowDialog()
             End Using
+            SaveDesign()
             InitialisePalette()
         End If
     End Sub

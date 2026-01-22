@@ -23,6 +23,7 @@ Module ModPrint
         BackDouble
         KnotSingle
         KnotDouble
+        Bead
     End Enum
     Friend Enum PageType
         DesignPage
@@ -42,6 +43,7 @@ Module ModPrint
     Public Const BACK_SINGLE_STRAND_HEADER As String = "BackStitch in one strand"
     Public Const KNOT_SINGLE_STRAND_HEADER As String = "French Knot in one strand"
     Public Const KNOT_DOUBLE_STRAND_HEADER As String = "French Knot in two strands"
+    Public Const BEAD_HEADER As String = "Beads"
 #End Region
 #Region "variables"
     Friend oPagesize As Size
@@ -93,6 +95,7 @@ Module ModPrint
     Friend oBackSingleThreadList As New ProjectThreadCollection
     Friend oKnotDoubleThreadList As New ProjectThreadCollection
     Friend oKnotSingleThreadList As New ProjectThreadCollection
+    Friend oBeadList As New ProjectThreadCollection
     Friend oRowHeight As Integer
     Friend oTableWidth As Integer
     Friend oTableHeight As Integer
@@ -169,6 +172,7 @@ Module ModPrint
         oBackSingleThreadList = New ProjectThreadCollection
         oKnotDoubleThreadList = New ProjectThreadCollection
         oKnotSingleThreadList = New ProjectThreadCollection
+        oBeadList = New ProjectThreadCollection
         For Each _blockstitch As BlockStitch In oProjectDesign.BlockStitches
             If _blockstitch.Strands = 2 AndAlso Not oCrossDoubleThreadList.Exists(_blockstitch.ThreadId) Then
                 oCrossDoubleThreadList.Add(_blockstitch.ProjThread)
@@ -186,11 +190,16 @@ Module ModPrint
             End If
         Next
         For Each _knot As Knot In oProjectDesign.Knots
-            If _knot.Strands = 2 AndAlso Not oKnotDoubleThreadList.Exists(_knot.ThreadId) Then
-                oKnotDoubleThreadList.Add(_knot.ProjThread)
+            If _knot.IsBead AndAlso Not oBeadList.Exists(_knot.ThreadId) Then
+                oBeadList.Add(_knot.ProjThread)
             End If
-            If _knot.Strands = 1 AndAlso Not oKnotSingleThreadList.Exists(_knot.ThreadId) Then
-                oKnotSingleThreadList.Add(_knot.ProjThread)
+            If Not _knot.IsBead Then
+                If _knot.Strands = 2 AndAlso Not oKnotDoubleThreadList.Exists(_knot.ThreadId) Then
+                    oKnotDoubleThreadList.Add(_knot.ProjThread)
+                End If
+                If _knot.Strands = 1 AndAlso Not oKnotSingleThreadList.Exists(_knot.ThreadId) Then
+                    oKnotSingleThreadList.Add(_knot.ProjThread)
+                End If
             End If
         Next
 

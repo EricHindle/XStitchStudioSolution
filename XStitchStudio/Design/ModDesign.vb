@@ -876,6 +876,7 @@ Module ModDesign
             End If
         Next
         For Each _bead As ProjectBead In pProjectBeads.Beads
+            _bead.IsUsed = False
             Dim _knot As Knot = pProjectDesign.Knots.Find(Function(p) p.ThreadId = _bead.ThreadId)
             If _knot IsNot Nothing Then
                 _usedThreads.Add(_bead.ThreadId)
