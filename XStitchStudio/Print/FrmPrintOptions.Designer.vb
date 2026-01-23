@@ -476,7 +476,7 @@ Partial Class FrmPrintOptions
         '
         Me.CbKeyOrder.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CbKeyOrder.FormattingEnabled = True
-        Me.CbKeyOrder.Items.AddRange(New Object() {"<none>", "colour name", "DMC"})
+        Me.CbKeyOrder.Items.AddRange(New Object() {"<none>", "colour name", "product code"})
         Me.CbKeyOrder.Location = New System.Drawing.Point(205, 45)
         Me.CbKeyOrder.Margin = New System.Windows.Forms.Padding(5)
         Me.CbKeyOrder.Name = "CbKeyOrder"

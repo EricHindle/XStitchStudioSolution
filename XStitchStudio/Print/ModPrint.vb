@@ -165,7 +165,7 @@ Module ModPrint
         oPrintablePageWidth = oPagesize.Width - (oPrinterHardMarginX * 2)
         oPrintablePageHeight = oPagesize.Height - (oPrinterHardMarginY * 2)
     End Sub
-    Friend Sub SetThreadGroups()
+    Friend Sub SetThreadGroups(pSortOrder As Integer)
         oCrossDoubleThreadList = New ProjectThreadCollection
         oCrossSingleThreadList = New ProjectThreadCollection
         oBackDoubleThreadList = New ProjectThreadCollection
@@ -202,7 +202,26 @@ Module ModPrint
                 End If
             End If
         Next
-
+        SortThreadLists(pSortOrder)
+    End Sub
+    Friend Sub SortThreadLists(pSortOrder As Integer)
+        If pSortOrder = 2 Then
+            oCrossDoubleThreadList.Threads.Sort(Function(x As ProjectThread, y As ProjectThread) x.Thread.SortNumber.CompareTo(y.Thread.SortNumber))
+            oCrossSingleThreadList.Threads.Sort(Function(x As ProjectThread, y As ProjectThread) x.Thread.SortNumber.CompareTo(y.Thread.SortNumber))
+            oBackDoubleThreadList.Threads.Sort(Function(x As ProjectThread, y As ProjectThread) x.Thread.SortNumber.CompareTo(y.Thread.SortNumber))
+            oBackSingleThreadList.Threads.Sort(Function(x As ProjectThread, y As ProjectThread) x.Thread.SortNumber.CompareTo(y.Thread.SortNumber))
+            oKnotDoubleThreadList.Threads.Sort(Function(x As ProjectThread, y As ProjectThread) x.Thread.SortNumber.CompareTo(y.Thread.SortNumber))
+            oKnotSingleThreadList.Threads.Sort(Function(x As ProjectThread, y As ProjectThread) x.Thread.SortNumber.CompareTo(y.Thread.SortNumber))
+            oBeadList.Threads.Sort(Function(x As ProjectThread, y As ProjectThread) x.Thread.SortNumber.CompareTo(y.Thread.SortNumber))
+        Else
+            oCrossDoubleThreadList.Threads.Sort(Function(x As ProjectThread, y As ProjectThread) x.Thread.ColourName.CompareTo(y.Thread.ColourName))
+            oCrossSingleThreadList.Threads.Sort(Function(x As ProjectThread, y As ProjectThread) x.Thread.ColourName.CompareTo(y.Thread.ColourName))
+            oBackDoubleThreadList.Threads.Sort(Function(x As ProjectThread, y As ProjectThread) x.Thread.ColourName.CompareTo(y.Thread.ColourName))
+            oBackSingleThreadList.Threads.Sort(Function(x As ProjectThread, y As ProjectThread) x.Thread.ColourName.CompareTo(y.Thread.ColourName))
+            oKnotDoubleThreadList.Threads.Sort(Function(x As ProjectThread, y As ProjectThread) x.Thread.ColourName.CompareTo(y.Thread.ColourName))
+            oKnotSingleThreadList.Threads.Sort(Function(x As ProjectThread, y As ProjectThread) x.Thread.ColourName.CompareTo(y.Thread.ColourName))
+            oBeadList.Threads.Sort(Function(x As ProjectThread, y As ProjectThread) x.Thread.ColourName.CompareTo(y.Thread.ColourName))
+        End If
     End Sub
     Friend Sub InitialiseTable(pColumnsPerPage As Integer)
         oTableWidth = oAvailablePixelWidth / pColumnsPerPage

@@ -114,11 +114,11 @@ Module ModProject
         Dim _thread As Thread = FindThreadByNumber(pProjectThread.Thread.ThreadNo)
         If _thread.IsLoaded Then
             If _thread.ThreadId <> pProjectThread.ThreadId Then
-                LogUtil.LogInfo("DMC" & pProjectThread.Thread.ThreadNo & " id different", MethodBase.GetCurrentMethod.Name)
+                LogUtil.LogInfo("Product code " & pProjectThread.Thread.ThreadNo & " id different", MethodBase.GetCurrentMethod.Name)
                 pProjectThread.ThreadId = _thread.ThreadId
             End If
         Else
-            LogUtil.LogInfo("New thread DMC" & pProjectThread.Thread.ThreadNo & " found", MethodBase.GetCurrentMethod.Name)
+            LogUtil.LogInfo("New thread Product code " & pProjectThread.Thread.ThreadNo & " found", MethodBase.GetCurrentMethod.Name)
             Dim _newThreadId As Integer = AddNewThread(_thread)
             pProjectThread.ThreadId = _newThreadId
         End If

@@ -261,15 +261,16 @@ Partial Class FrmPrintProject
         'BtnMoreSettings
         '
         Me.BtnMoreSettings.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.BtnMoreSettings.BackColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(21, Byte), Integer))
-        Me.BtnMoreSettings.FlatAppearance.BorderColor = System.Drawing.Color.Black
-        Me.BtnMoreSettings.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.BtnMoreSettings.Font = New System.Drawing.Font("Tahoma", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnMoreSettings.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.BtnMoreSettings.BackColor = System.Drawing.Color.IndianRed
+        Me.BtnMoreSettings.FlatAppearance.BorderColor = System.Drawing.Color.Brown
+        Me.BtnMoreSettings.FlatAppearance.BorderSize = 2
+        Me.BtnMoreSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnMoreSettings.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnMoreSettings.ForeColor = System.Drawing.Color.White
         Me.BtnMoreSettings.Location = New System.Drawing.Point(35, 563)
         Me.BtnMoreSettings.Margin = New System.Windows.Forms.Padding(5)
         Me.BtnMoreSettings.Name = "BtnMoreSettings"
-        Me.BtnMoreSettings.Size = New System.Drawing.Size(89, 28)
+        Me.BtnMoreSettings.Size = New System.Drawing.Size(98, 28)
         Me.BtnMoreSettings.TabIndex = 29
         Me.BtnMoreSettings.Text = "More settings"
         Me.BtnMoreSettings.UseVisualStyleBackColor = False
@@ -344,15 +345,16 @@ Partial Class FrmPrintProject
         'BtnSaveSettings
         '
         Me.BtnSaveSettings.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BtnSaveSettings.BackColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(21, Byte), Integer))
-        Me.BtnSaveSettings.FlatAppearance.BorderColor = System.Drawing.Color.Black
-        Me.BtnSaveSettings.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.BtnSaveSettings.Font = New System.Drawing.Font("Tahoma", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnSaveSettings.BackColor = System.Drawing.Color.IndianRed
+        Me.BtnSaveSettings.FlatAppearance.BorderColor = System.Drawing.Color.Brown
+        Me.BtnSaveSettings.FlatAppearance.BorderSize = 2
+        Me.BtnSaveSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnSaveSettings.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnSaveSettings.ForeColor = System.Drawing.Color.WhiteSmoke
         Me.BtnSaveSettings.Location = New System.Drawing.Point(219, 564)
         Me.BtnSaveSettings.Margin = New System.Windows.Forms.Padding(5)
         Me.BtnSaveSettings.Name = "BtnSaveSettings"
-        Me.BtnSaveSettings.Size = New System.Drawing.Size(89, 28)
+        Me.BtnSaveSettings.Size = New System.Drawing.Size(98, 28)
         Me.BtnSaveSettings.TabIndex = 25
         Me.BtnSaveSettings.Text = "Save Settings"
         Me.BtnSaveSettings.UseVisualStyleBackColor = False
@@ -705,7 +707,7 @@ Partial Class FrmPrintProject
         'CbKeyOrder
         '
         Me.CbKeyOrder.FormattingEnabled = True
-        Me.CbKeyOrder.Items.AddRange(New Object() {"<none>", "colour name", "DMC"})
+        Me.CbKeyOrder.Items.AddRange(New Object() {"<none>", "colour name", "product code"})
         Me.CbKeyOrder.Location = New System.Drawing.Point(180, 21)
         Me.CbKeyOrder.Margin = New System.Windows.Forms.Padding(4)
         Me.CbKeyOrder.Name = "CbKeyOrder"
