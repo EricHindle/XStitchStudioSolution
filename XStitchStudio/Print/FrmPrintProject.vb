@@ -789,6 +789,7 @@ Public Class FrmPrintProject
                 _keyPage.MidCol = pGroupType
                 oPageList.Add(_keyPage)
                 rowsavailable = _rowsavailable
+                pCol = 1
             End If
             If rowct > rowsavailable Then
                 If rowct > 3 Then
