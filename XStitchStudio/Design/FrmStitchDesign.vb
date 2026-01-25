@@ -834,17 +834,14 @@ Public Class FrmStitchDesign
     End Sub
     Private Sub Btn3QtrsTL_Click(sender As Object, e As EventArgs) Handles Btn3QtrsTL.Click
         oCurrentStitchType = DesignAction.ThreeQuarterBlockstitchTopLeft
-        RbDouble.Checked = True
         StitchButtonSelected(Btn3QtrsTL)
     End Sub
     Private Sub Btn3QtrsTR_Click(sender As Object, e As EventArgs) Handles Btn3QtrsTR.Click
         oCurrentStitchType = DesignAction.ThreeQuarterBlockstitchTopRight
-        RbDouble.Checked = True
         StitchButtonSelected(Btn3QtrsTR)
     End Sub
     Private Sub Btn3QtrsBR_Click(sender As Object, e As EventArgs) Handles Btn3QtrsBR.Click
         oCurrentStitchType = DesignAction.ThreeQuarterBlockstitchBottomRight
-        RbDouble.Checked = True
         StitchButtonSelected(Btn3QtrsBR)
     End Sub
     Private Sub Btn3QtrsBL_Click(sender As Object, e As EventArgs) Handles Btn3QtrsBL.Click
@@ -853,37 +850,30 @@ Public Class FrmStitchDesign
     End Sub
     Private Sub BtnHalfForward_Click(sender As Object, e As EventArgs) Handles BtnHalfForward.Click
         oCurrentStitchType = DesignAction.HalfBlockstitchForward
-        RbDouble.Checked = True
         StitchButtonSelected(BtnHalfForward)
     End Sub
     Private Sub BtnHalfBack_Click(sender As Object, e As EventArgs) Handles BtnHalfBack.Click
         oCurrentStitchType = DesignAction.HalfBlockstitchBack
-        RbDouble.Checked = True
         StitchButtonSelected(BtnHalfBack)
     End Sub
     Private Sub BtnQtrTL_Click(sender As Object, e As EventArgs) Handles BtnQtrTL.Click
         oCurrentStitchType = DesignAction.QuarterBlockstitchTopLeft
-        RbDouble.Checked = True
         StitchButtonSelected(BtnQtrTL)
     End Sub
     Private Sub BtnQWtrTR_Click(sender As Object, e As EventArgs) Handles BtnQtrTR.Click
         oCurrentStitchType = DesignAction.QuarterBlockstitchTopRight
-        RbDouble.Checked = True
         StitchButtonSelected(BtnQtrTR)
     End Sub
     Private Sub BtnQtrBR_Click(sender As Object, e As EventArgs) Handles BtnQtrBR.Click
         oCurrentStitchType = DesignAction.QuarterBlockstitchBottomRight
-        RbDouble.Checked = True
         StitchButtonSelected(BtnQtrBR)
     End Sub
     Private Sub BtnQtrBL_Click(sender As Object, e As EventArgs) Handles BtnQtrBL.Click
         oCurrentStitchType = DesignAction.QuarterBlockstitchBottonLeft
-        RbDouble.Checked = True
         StitchButtonSelected(BtnQtrBL)
     End Sub
     Private Sub BtnQuarters_Click(sender As Object, e As EventArgs) Handles BtnQuarters.Click
         oCurrentStitchType = DesignAction.BlockstitchQuarters
-        RbDouble.Checked = True
         StitchButtonSelected(BtnQuarters)
     End Sub
     Private Sub BtnFullBackstitchThin_Click(sender As Object, e As EventArgs) Handles BtnFullBackstitch.Click
@@ -898,7 +888,6 @@ Public Class FrmStitchDesign
     End Sub
     Private Sub BtnKnot_Click(sender As Object, e As EventArgs) Handles BtnKnot.Click
         oCurrentStitchType = DesignAction.Knot
-        RbDouble.Checked = True
         StitchButtonSelected(BtnKnot)
     End Sub
     Private Sub BtnBead_Click(sender As Object, e As EventArgs) Handles BtnBead.Click
@@ -912,7 +901,6 @@ Public Class FrmStitchDesign
     End Sub
     Private Sub SelectFullBlockstitch()
         oCurrentStitchType = DesignAction.FullBlockstitch
-        RbDouble.Checked = True
         StitchButtonSelected(BtnFullStitch)
     End Sub
     Private Sub StitchButtonSelected()
@@ -1348,14 +1336,14 @@ Public Class FrmStitchDesign
         If RbDouble.Checked Then
             If _projectThread.DoubleThreadSymbolId > 0 Then
                 _image = FindSymbolById(_projectThread.DoubleThreadSymbolId).SymbolImage
+            Else
+                _image = New Bitmap(1, 1)
             End If
         Else
             If _projectThread.SingleThreadSymbolId > 0 Then
                 _image = FindSymbolById(_projectThread.SingleThreadSymbolId).SymbolImage
             Else
-                If _projectThread.DoubleThreadSymbolId > 0 Then
-                    _image = FindSymbolById(_projectThread.DoubleThreadSymbolId).SymbolImage
-                End If
+                _image = New Bitmap(1, 1)
             End If
         End If
 
@@ -2046,11 +2034,21 @@ Public Class FrmStitchDesign
         _fromCellLocation_y = (oInProgressAnchor.Y + iOriginY + iYOffset - topcorner.Y) * iPixelsPerCell
         _toCellLocation_x = (oInProgressTerminus.X + iOriginX + iXOffset - topcorner.X) * iPixelsPerCell
         _toCellLocation_y = (oInProgressTerminus.Y + iOriginY + iYOffset - topcorner.Y) * iPixelsPerCell
+
+
         PicDesign.Invalidate()
     End Sub
     Private Sub AdjustTerminusForShape(pCursorPosition As Point)
         Dim _iWidth As Integer = oInProgressTerminus.X - oInProgressAnchor.X + 1
         Dim _iHeight As Integer = oInProgressTerminus.Y - oInProgressAnchor.Y + 1
+        If _iWidth < 1 Then
+            oInProgressTerminus.X = oInProgressAnchor.X + 1
+            _iWidth = 1
+        End If
+        If _iHeight < 1 Then
+            oInProgressTerminus.Y = -oInProgressAnchor.Y + 1
+            _iHeight = 1
+        End If
         Dim _pasteColumns As Integer = oCurrentMotif.Columns + 1
         Dim _pasteRows As Integer = oCurrentMotif.Rows + 1
         Dim _hct As Integer = Math.Floor(_iWidth / (_pasteColumns))
