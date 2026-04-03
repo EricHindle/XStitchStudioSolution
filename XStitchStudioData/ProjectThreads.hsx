@@ -26,59 +26,105 @@
       </xs:unique>
     </xs:element>
   </xs:schema>
-  <ProjectThreads>
+<ProjectThreads>
     <project_id>1</project_id>
-    <thread_id>361</thread_id>
+    <thread_id>327</thread_id>
     <backstitch_count>0</backstitch_count>
     <blockstitch_count>0</blockstitch_count>
     <knot_count>0</knot_count>
-    <symbol_id>149</symbol_id>
-    <is_used>1</is_used>
+    <symbol_id>161</symbol_id>
+    <is_used>0</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
   </ProjectThreads>
   <ProjectThreads>
     <project_id>1</project_id>
-    <thread_id>358</thread_id>
+    <thread_id>123</thread_id>
     <backstitch_count>0</backstitch_count>
     <blockstitch_count>0</blockstitch_count>
     <knot_count>0</knot_count>
-    <symbol_id>58</symbol_id>
+    <symbol_id>73</symbol_id>
     <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
   </ProjectThreads>
   <ProjectThreads>
     <project_id>1</project_id>
-    <thread_id>19</thread_id>
+    <thread_id>159</thread_id>
     <backstitch_count>0</backstitch_count>
     <blockstitch_count>0</blockstitch_count>
     <knot_count>0</knot_count>
-    <symbol_id>70</symbol_id>
+    <symbol_id>146</symbol_id>
     <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
   </ProjectThreads>
   <ProjectThreads>
     <project_id>1</project_id>
-    <thread_id>219</thread_id>
+    <thread_id>380</thread_id>
     <backstitch_count>0</backstitch_count>
     <blockstitch_count>0</blockstitch_count>
     <knot_count>0</knot_count>
-    <symbol_id>33</symbol_id>
+    <symbol_id>25</symbol_id>
     <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
   </ProjectThreads>
   <ProjectThreads>
     <project_id>1</project_id>
-    <thread_id>13</thread_id>
+    <thread_id>453</thread_id>
     <backstitch_count>0</backstitch_count>
     <blockstitch_count>0</blockstitch_count>
     <knot_count>0</knot_count>
-    <symbol_id>72</symbol_id>
+    <symbol_id>37</symbol_id>
     <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
   </ProjectThreads>
   <ProjectThreads>
     <project_id>1</project_id>
-    <thread_id>275</thread_id>
+    <thread_id>274</thread_id>
     <backstitch_count>0</backstitch_count>
     <blockstitch_count>0</blockstitch_count>
     <knot_count>0</knot_count>
-    <symbol_id>7</symbol_id>
+    <symbol_id>126</symbol_id>
     <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>264</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>55</symbol_id>
+    <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>124</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>118</symbol_id>
+    <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>5</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>152</symbol_id>
+    <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>104</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>101</symbol_id>
+    <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
   </ProjectThreads>
   <ProjectThreads>
     <project_id>1</project_id>
@@ -86,70 +132,188 @@
     <backstitch_count>0</backstitch_count>
     <blockstitch_count>0</blockstitch_count>
     <knot_count>0</knot_count>
-    <symbol_id>62</symbol_id>
+    <symbol_id>149</symbol_id>
     <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
   </ProjectThreads>
   <ProjectThreads>
     <project_id>1</project_id>
-    <thread_id>127</thread_id>
+    <thread_id>13</thread_id>
     <backstitch_count>0</backstitch_count>
     <blockstitch_count>0</blockstitch_count>
     <knot_count>0</knot_count>
-    <symbol_id>104</symbol_id>
+    <symbol_id>22</symbol_id>
     <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
   </ProjectThreads>
   <ProjectThreads>
     <project_id>1</project_id>
-    <thread_id>52</thread_id>
+    <thread_id>106</thread_id>
     <backstitch_count>0</backstitch_count>
     <blockstitch_count>0</blockstitch_count>
     <knot_count>0</knot_count>
-    <symbol_id>150</symbol_id>
+    <symbol_id>121</symbol_id>
     <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
   </ProjectThreads>
   <ProjectThreads>
     <project_id>1</project_id>
-    <thread_id>137</thread_id>
+    <thread_id>105</thread_id>
     <backstitch_count>0</backstitch_count>
     <blockstitch_count>0</blockstitch_count>
     <knot_count>0</knot_count>
-    <symbol_id>39</symbol_id>
+    <symbol_id>88</symbol_id>
     <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
   </ProjectThreads>
   <ProjectThreads>
     <project_id>1</project_id>
-    <thread_id>373</thread_id>
+    <thread_id>27</thread_id>
     <backstitch_count>0</backstitch_count>
     <blockstitch_count>0</blockstitch_count>
     <knot_count>0</knot_count>
-    <symbol_id>12</symbol_id>
+    <symbol_id>155</symbol_id>
     <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
   </ProjectThreads>
   <ProjectThreads>
     <project_id>1</project_id>
-    <thread_id>83</thread_id>
+    <thread_id>416</thread_id>
     <backstitch_count>0</backstitch_count>
     <blockstitch_count>0</blockstitch_count>
     <knot_count>0</knot_count>
-    <symbol_id>67</symbol_id>
+    <symbol_id>151</symbol_id>
     <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
   </ProjectThreads>
   <ProjectThreads>
     <project_id>1</project_id>
-    <thread_id>81</thread_id>
+    <thread_id>318</thread_id>
     <backstitch_count>0</backstitch_count>
     <blockstitch_count>0</blockstitch_count>
     <knot_count>0</knot_count>
-    <symbol_id>66</symbol_id>
+    <symbol_id>86</symbol_id>
     <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
   </ProjectThreads>
   <ProjectThreads>
     <project_id>1</project_id>
-    <thread_id>328</thread_id>
+    <thread_id>25</thread_id>
     <backstitch_count>0</backstitch_count>
     <blockstitch_count>0</blockstitch_count>
     <knot_count>0</knot_count>
-    <symbol_id>105</symbol_id>
+    <symbol_id>106</symbol_id>
     <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>138</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>27</symbol_id>
+    <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>434</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>47</symbol_id>
+    <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>376</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>46</symbol_id>
+    <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>379</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>35</symbol_id>
+    <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>18</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>157</symbol_id>
+    <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>359</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>182</symbol_id>
+    <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>129</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>175</symbol_id>
+    <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>275</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>129</symbol_id>
+    <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>282</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>114</symbol_id>
+    <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>361</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>99</symbol_id>
+    <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
+  </ProjectThreads>
+  <ProjectThreads>
+    <project_id>1</project_id>
+    <thread_id>67</thread_id>
+    <backstitch_count>0</backstitch_count>
+    <blockstitch_count>0</blockstitch_count>
+    <knot_count>0</knot_count>
+    <symbol_id>77</symbol_id>
+    <is_used>1</is_used>
+    <single_thread_symbol_id>-1</single_thread_symbol_id>
   </ProjectThreads>
 </NewDataSet>

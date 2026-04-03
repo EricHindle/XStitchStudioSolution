@@ -112,10 +112,10 @@ Partial Class FrmProject
         Me.MnuPrintSettings = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuGlobalSettings = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuHousekeeping = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MnuProjectInfo = New System.Windows.Forms.ToolStripMenuItem()
         Me.PnlButtons = New System.Windows.Forms.Panel()
         Me.LblInstruction = New System.Windows.Forms.Label()
         Me.PnlInstruction = New System.Windows.Forms.Panel()
-        Me.MnuProjectInfo = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.DgvProjects, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PnlForm.SuspendLayout()
@@ -913,6 +913,12 @@ Partial Class FrmProject
         Me.MnuHousekeeping.Size = New System.Drawing.Size(193, 22)
         Me.MnuHousekeeping.Text = "Housekeeping"
         '
+        'MnuProjectInfo
+        '
+        Me.MnuProjectInfo.Name = "MnuProjectInfo"
+        Me.MnuProjectInfo.Size = New System.Drawing.Size(193, 22)
+        Me.MnuProjectInfo.Text = "Project Information"
+        '
         'PnlButtons
         '
         Me.PnlButtons.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -951,12 +957,6 @@ Partial Class FrmProject
         Me.PnlInstruction.Size = New System.Drawing.Size(368, 40)
         Me.PnlInstruction.TabIndex = 133
         '
-        'MnuProjectInfo
-        '
-        Me.MnuProjectInfo.Name = "MnuProjectInfo"
-        Me.MnuProjectInfo.Size = New System.Drawing.Size(193, 22)
-        Me.MnuProjectInfo.Text = "Project Information"
-        '
         'FrmProject
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 18.0!)
@@ -977,7 +977,7 @@ Partial Class FrmProject
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.MinimumSize = New System.Drawing.Size(711, 692)
         Me.Name = "FrmProject"
-        Me.Text = "CrossStitch Studio"
+        Me.Text = "XStitch Studio"
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
         CType(Me.DgvProjects, System.ComponentModel.ISupportInitialize).EndInit()

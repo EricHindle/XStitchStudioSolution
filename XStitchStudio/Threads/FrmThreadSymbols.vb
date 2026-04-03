@@ -227,19 +227,27 @@ Public Class FrmThreadSymbols
             Dim _symbolId = _row.Cells(threadsymbolid.Name).Value
             If _symbolId <= 0 Then
                 _symbolId = FindRandomAvailableSymbol()
-                _row.Cells(threadsymbolid.Name).Value = _symbolId
-                SetThreadImageInRow(_symbolId, threadsymbol.Name, _row)
-                SetSymbolColours()
+                If _symbolId > 0 Then
+                    _row.Cells(threadsymbolid.Name).Value = _symbolId
+                    SetThreadImageInRow(_symbolId, threadsymbol.Name, _row)
+                    SetSymbolColours()
+                Else
+                    LogUtil.ShowStatus("Not enough symbols for all threads", LblStatus, True)
+                    Exit For
+                End If
             End If
         Next
     End Sub
-
     Private Function FindRandomAvailableSymbol() As Integer
         Dim _list As List(Of PictureBox) = GetAvailableSymbols()
-        Dim index As Integer = CInt(Math.Floor((_list.Count) * Rnd()))
-        Return CInt(_list(index).Name)
+        Dim index As Integer
+        Dim _symbolIndex As Integer = -1
+        If _list.Count > 0 Then
+            index = CInt(Math.Floor((_list.Count) * Rnd()))
+            _symbolIndex = CInt(_list(index).Name)
+        End If
+        Return _symbolIndex
     End Function
-
     Private Function GetAvailableSymbols() As List(Of PictureBox)
         Dim _list As New List(Of PictureBox)
         For Each _ctrl As Control In FlpSymbols.Controls

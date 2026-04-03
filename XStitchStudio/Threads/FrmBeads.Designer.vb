@@ -266,17 +266,20 @@ Partial Class FrmBeads
         'StatusStrip1
         '
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LblStatus})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 502)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 500)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Padding = New System.Windows.Forms.Padding(1, 0, 19, 0)
-        Me.StatusStrip1.Size = New System.Drawing.Size(809, 22)
+        Me.StatusStrip1.Size = New System.Drawing.Size(809, 24)
         Me.StatusStrip1.TabIndex = 141
         Me.StatusStrip1.Text = "StatusStrip1"
         '
         'LblStatus
         '
+        Me.LblStatus.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right
+        Me.LblStatus.BorderStyle = System.Windows.Forms.Border3DStyle.Etched
         Me.LblStatus.Name = "LblStatus"
-        Me.LblStatus.Size = New System.Drawing.Size(0, 17)
+        Me.LblStatus.Size = New System.Drawing.Size(23, 19)
+        Me.LblStatus.Text = "    "
         '
         'BtnClose
         '

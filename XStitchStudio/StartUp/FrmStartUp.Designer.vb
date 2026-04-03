@@ -45,12 +45,12 @@ Partial Class FrmStartUp
         Me.Label3 = New System.Windows.Forms.Label()
         Me.BtnExit = New System.Windows.Forms.Button()
         Me.PnlSplash = New System.Windows.Forms.Panel()
-        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.ApplicationTitle = New System.Windows.Forms.Label()
-        Me.Version = New System.Windows.Forms.Label()
-        Me.LblCompany = New System.Windows.Forms.Label()
         Me.Copyright = New System.Windows.Forms.Label()
+        Me.LblCompany = New System.Windows.Forms.Label()
+        Me.Version = New System.Windows.Forms.Label()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.ApplicationTitle = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.PnlSplash.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -210,9 +210,9 @@ Partial Class FrmStartUp
         'PnlSplash
         '
         Me.PnlSplash.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.PnlSplash.Controls.Add(Me.ApplicationTitle)
         Me.PnlSplash.Controls.Add(Me.Copyright)
         Me.PnlSplash.Controls.Add(Me.LblCompany)
-        Me.PnlSplash.Controls.Add(Me.ApplicationTitle)
         Me.PnlSplash.Controls.Add(Me.Version)
         Me.PnlSplash.Controls.Add(Me.PictureBox1)
         Me.PnlSplash.Location = New System.Drawing.Point(58, 12)
@@ -220,33 +220,28 @@ Partial Class FrmStartUp
         Me.PnlSplash.Size = New System.Drawing.Size(522, 287)
         Me.PnlSplash.TabIndex = 16
         '
-        'Timer1
+        'Copyright
         '
-        Me.Timer1.Interval = 2000
+        Me.Copyright.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Copyright.AutoSize = True
+        Me.Copyright.BackColor = System.Drawing.Color.Transparent
+        Me.Copyright.Font = New System.Drawing.Font("Courier New", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Copyright.Location = New System.Drawing.Point(289, 235)
+        Me.Copyright.Name = "Copyright"
+        Me.Copyright.Size = New System.Drawing.Size(98, 15)
+        Me.Copyright.TabIndex = 11
+        Me.Copyright.Text = "copyright {0}"
         '
-        'PictureBox1
+        'LblCompany
         '
-        Me.PictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.PictureBox1.Image = Global.XStitchStudio.My.Resources.Resources.cross_stitch
-        Me.PictureBox1.Location = New System.Drawing.Point(3, 3)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(271, 271)
-        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.PictureBox1.TabIndex = 4
-        Me.PictureBox1.TabStop = False
-        '
-        'ApplicationTitle
-        '
-        Me.ApplicationTitle.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.ApplicationTitle.BackColor = System.Drawing.Color.Transparent
-        Me.ApplicationTitle.Font = New System.Drawing.Font("Tahoma", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ApplicationTitle.ForeColor = System.Drawing.Color.FromArgb(CType(CType(5, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(60, Byte), Integer))
-        Me.ApplicationTitle.Location = New System.Drawing.Point(297, 27)
-        Me.ApplicationTitle.Name = "ApplicationTitle"
-        Me.ApplicationTitle.Size = New System.Drawing.Size(193, 75)
-        Me.ApplicationTitle.TabIndex = 5
-        Me.ApplicationTitle.Text = "Application Title"
-        Me.ApplicationTitle.TextAlign = System.Drawing.ContentAlignment.BottomLeft
+        Me.LblCompany.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LblCompany.AutoSize = True
+        Me.LblCompany.Font = New System.Drawing.Font("Courier New", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblCompany.Location = New System.Drawing.Point(289, 190)
+        Me.LblCompany.Name = "LblCompany"
+        Me.LblCompany.Size = New System.Drawing.Size(49, 15)
+        Me.LblCompany.TabIndex = 10
+        Me.LblCompany.Text = "by {0}"
         '
         'Version
         '
@@ -260,28 +255,32 @@ Partial Class FrmStartUp
         Me.Version.TabIndex = 9
         Me.Version.Text = "version {0}.{1}.{2}"
         '
-        'LblCompany
+        'PictureBox1
         '
-        Me.LblCompany.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.LblCompany.AutoSize = True
-        Me.LblCompany.Font = New System.Drawing.Font("Courier New", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblCompany.Location = New System.Drawing.Point(289, 190)
-        Me.LblCompany.Name = "LblCompany"
-        Me.LblCompany.Size = New System.Drawing.Size(49, 15)
-        Me.LblCompany.TabIndex = 10
-        Me.LblCompany.Text = "by {0}"
+        Me.PictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.PictureBox1.Image = Global.XStitchStudio.My.Resources.Resources.cross_stitch
+        Me.PictureBox1.Location = New System.Drawing.Point(3, 3)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(271, 271)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.PictureBox1.TabIndex = 4
+        Me.PictureBox1.TabStop = False
         '
-        'Copyright
+        'Timer1
         '
-        Me.Copyright.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Copyright.AutoSize = True
-        Me.Copyright.BackColor = System.Drawing.Color.Transparent
-        Me.Copyright.Font = New System.Drawing.Font("Courier New", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Copyright.Location = New System.Drawing.Point(289, 235)
-        Me.Copyright.Name = "Copyright"
-        Me.Copyright.Size = New System.Drawing.Size(98, 15)
-        Me.Copyright.TabIndex = 11
-        Me.Copyright.Text = "copyright {0}"
+        Me.Timer1.Interval = 2000
+        '
+        'ApplicationTitle
+        '
+        Me.ApplicationTitle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.ApplicationTitle.Font = New System.Drawing.Font("Cambria", 32.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ApplicationTitle.ForeColor = System.Drawing.Color.MidnightBlue
+        Me.ApplicationTitle.Location = New System.Drawing.Point(308, 45)
+        Me.ApplicationTitle.Name = "ApplicationTitle"
+        Me.ApplicationTitle.Size = New System.Drawing.Size(186, 110)
+        Me.ApplicationTitle.TabIndex = 12
+        Me.ApplicationTitle.Text = "XStitch" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Studio" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.ApplicationTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'FrmStartUp
         '
@@ -328,8 +327,8 @@ Partial Class FrmStartUp
     Friend WithEvents PnlSplash As Panel
     Friend WithEvents Timer1 As Timer
     Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents ApplicationTitle As Label
     Friend WithEvents Copyright As Label
     Friend WithEvents LblCompany As Label
     Friend WithEvents Version As Label
+    Friend WithEvents ApplicationTitle As Label
 End Class

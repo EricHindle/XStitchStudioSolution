@@ -50,12 +50,6 @@ Partial Class FrmDesignInfo
         Me.SplitContainer2 = New System.Windows.Forms.SplitContainer()
         Me.DgvQuarters = New System.Windows.Forms.DataGridView()
         Me.DgvBlock = New System.Windows.Forms.DataGridView()
-        Me.block_pos_x = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.block_pos_y = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.block_thread_id = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.block_thread_no = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.block_symbol_id = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.block_type = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.SplitContainer3 = New System.Windows.Forms.SplitContainer()
         Me.DgvBack = New System.Windows.Forms.DataGridView()
         Me.back_from_x = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -128,6 +122,13 @@ Partial Class FrmDesignInfo
         Me.ChkShowBlock = New System.Windows.Forms.CheckBox()
         Me.ChkShowBack = New System.Windows.Forms.CheckBox()
         Me.ChkShowKnots = New System.Windows.Forms.CheckBox()
+        Me.block_pos_x = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.block_pos_y = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.block_thread_id = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.block_thread_no = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.block_symbol_id = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.block_type = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.strands = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.qtrlocation = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.qtrthreadid = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.qtrsymbolid = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -213,7 +214,7 @@ Partial Class FrmDesignInfo
         Me.DgvThreads.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.White
         Me.DgvThreads.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black
         Me.DgvThreads.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvThreads.Size = New System.Drawing.Size(669, 129)
+        Me.DgvThreads.Size = New System.Drawing.Size(658, 129)
         Me.DgvThreads.TabIndex = 156
         '
         'threadId
@@ -379,11 +380,11 @@ Partial Class FrmDesignInfo
         Me.DgvQuarters.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(239, Byte), Integer), CType(CType(230, Byte), Integer), CType(CType(230, Byte), Integer))
         Me.DgvQuarters.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DgvQuarters.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.qtrlocation, Me.qtrthreadid, Me.qtrsymbolid})
-        Me.DgvQuarters.Location = New System.Drawing.Point(520, 32)
+        Me.DgvQuarters.Location = New System.Drawing.Point(517, 32)
         Me.DgvQuarters.Name = "DgvQuarters"
         Me.DgvQuarters.ReadOnly = True
         Me.DgvQuarters.RowHeadersVisible = False
-        Me.DgvQuarters.Size = New System.Drawing.Size(199, 126)
+        Me.DgvQuarters.Size = New System.Drawing.Size(190, 126)
         Me.DgvQuarters.TabIndex = 159
         '
         'DgvBlock
@@ -395,61 +396,13 @@ Partial Class FrmDesignInfo
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DgvBlock.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(239, Byte), Integer), CType(CType(230, Byte), Integer), CType(CType(230, Byte), Integer))
         Me.DgvBlock.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DgvBlock.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.block_pos_x, Me.block_pos_y, Me.block_thread_id, Me.block_thread_no, Me.block_symbol_id, Me.block_type})
+        Me.DgvBlock.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.block_pos_x, Me.block_pos_y, Me.block_thread_id, Me.block_thread_no, Me.block_symbol_id, Me.block_type, Me.strands})
         Me.DgvBlock.Location = New System.Drawing.Point(9, 32)
         Me.DgvBlock.Name = "DgvBlock"
-        Me.DgvBlock.ReadOnly = True
         Me.DgvBlock.RowHeadersVisible = False
         Me.DgvBlock.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DgvBlock.Size = New System.Drawing.Size(505, 126)
+        Me.DgvBlock.Size = New System.Drawing.Size(502, 126)
         Me.DgvBlock.TabIndex = 158
-        '
-        'block_pos_x
-        '
-        Me.block_pos_x.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.block_pos_x.HeaderText = "X"
-        Me.block_pos_x.Name = "block_pos_x"
-        Me.block_pos_x.ReadOnly = True
-        Me.block_pos_x.Width = 50
-        '
-        'block_pos_y
-        '
-        Me.block_pos_y.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.block_pos_y.HeaderText = "Y"
-        Me.block_pos_y.Name = "block_pos_y"
-        Me.block_pos_y.ReadOnly = True
-        Me.block_pos_y.Width = 50
-        '
-        'block_thread_id
-        '
-        Me.block_thread_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.block_thread_id.HeaderText = "Thread Id"
-        Me.block_thread_id.Name = "block_thread_id"
-        Me.block_thread_id.ReadOnly = True
-        Me.block_thread_id.Width = 90
-        '
-        'block_thread_no
-        '
-        Me.block_thread_no.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.block_thread_no.HeaderText = "Thread No"
-        Me.block_thread_no.Name = "block_thread_no"
-        Me.block_thread_no.ReadOnly = True
-        Me.block_thread_no.Width = 90
-        '
-        'block_symbol_id
-        '
-        Me.block_symbol_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.block_symbol_id.HeaderText = "Symbol Id"
-        Me.block_symbol_id.Name = "block_symbol_id"
-        Me.block_symbol_id.ReadOnly = True
-        Me.block_symbol_id.Width = 90
-        '
-        'block_type
-        '
-        Me.block_type.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.block_type.HeaderText = "Type"
-        Me.block_type.Name = "block_type"
-        Me.block_type.ReadOnly = True
         '
         'SplitContainer3
         '
@@ -485,7 +438,7 @@ Partial Class FrmDesignInfo
         Me.DgvBack.Name = "DgvBack"
         Me.DgvBack.ReadOnly = True
         Me.DgvBack.RowHeadersVisible = False
-        Me.DgvBack.Size = New System.Drawing.Size(709, 153)
+        Me.DgvBack.Size = New System.Drawing.Size(698, 153)
         Me.DgvBack.TabIndex = 159
         '
         'back_from_x
@@ -577,8 +530,8 @@ Partial Class FrmDesignInfo
         '
         Me.SplitContainer4.Panel2.Controls.Add(Me.Label24)
         Me.SplitContainer4.Panel2.Controls.Add(Me.DgvBead)
-        Me.SplitContainer4.Size = New System.Drawing.Size(715, 123)
-        Me.SplitContainer4.SplitterDistance = 355
+        Me.SplitContainer4.Size = New System.Drawing.Size(704, 123)
+        Me.SplitContainer4.SplitterDistance = 297
         Me.SplitContainer4.TabIndex = 161
         '
         'DgvKnot
@@ -595,7 +548,7 @@ Partial Class FrmDesignInfo
         Me.DgvKnot.Name = "DgvKnot"
         Me.DgvKnot.ReadOnly = True
         Me.DgvKnot.RowHeadersVisible = False
-        Me.DgvKnot.Size = New System.Drawing.Size(332, 98)
+        Me.DgvKnot.Size = New System.Drawing.Size(269, 98)
         Me.DgvKnot.TabIndex = 160
         '
         'knot_pos_x
@@ -671,7 +624,7 @@ Partial Class FrmDesignInfo
         Me.DgvBead.Name = "DgvBead"
         Me.DgvBead.ReadOnly = True
         Me.DgvBead.RowHeadersVisible = False
-        Me.DgvBead.Size = New System.Drawing.Size(350, 98)
+        Me.DgvBead.Size = New System.Drawing.Size(391, 98)
         Me.DgvBead.TabIndex = 161
         '
         'bead_pos_x
@@ -1223,6 +1176,54 @@ Partial Class FrmDesignInfo
         Me.ChkShowKnots.Text = "Show"
         Me.ChkShowKnots.UseVisualStyleBackColor = True
         '
+        'block_pos_x
+        '
+        Me.block_pos_x.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.block_pos_x.HeaderText = "X"
+        Me.block_pos_x.Name = "block_pos_x"
+        Me.block_pos_x.Width = 30
+        '
+        'block_pos_y
+        '
+        Me.block_pos_y.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.block_pos_y.HeaderText = "Y"
+        Me.block_pos_y.Name = "block_pos_y"
+        Me.block_pos_y.Width = 30
+        '
+        'block_thread_id
+        '
+        Me.block_thread_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.block_thread_id.HeaderText = "Thread Id"
+        Me.block_thread_id.Name = "block_thread_id"
+        Me.block_thread_id.Width = 90
+        '
+        'block_thread_no
+        '
+        Me.block_thread_no.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.block_thread_no.HeaderText = "Thread No"
+        Me.block_thread_no.Name = "block_thread_no"
+        Me.block_thread_no.Width = 90
+        '
+        'block_symbol_id
+        '
+        Me.block_symbol_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.block_symbol_id.HeaderText = "Symbol Id"
+        Me.block_symbol_id.Name = "block_symbol_id"
+        Me.block_symbol_id.Width = 90
+        '
+        'block_type
+        '
+        Me.block_type.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.block_type.HeaderText = "Type"
+        Me.block_type.Name = "block_type"
+        '
+        'strands
+        '
+        Me.strands.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.strands.HeaderText = "Strands"
+        Me.strands.Name = "strands"
+        Me.strands.Width = 50
+        '
         'qtrlocation
         '
         Me.qtrlocation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
@@ -1244,7 +1245,7 @@ Partial Class FrmDesignInfo
         Me.qtrsymbolid.HeaderText = "Symbol"
         Me.qtrsymbolid.Name = "qtrsymbolid"
         Me.qtrsymbolid.ReadOnly = True
-        Me.qtrsymbolid.Width = 60
+        Me.qtrsymbolid.Width = 50
         '
         'FrmDesignInfo
         '
@@ -1402,12 +1403,6 @@ Partial Class FrmDesignInfo
     Friend WithEvents ChkShowBlock As CheckBox
     Friend WithEvents ChkShowBack As CheckBox
     Friend WithEvents ChkShowKnots As CheckBox
-    Friend WithEvents block_pos_x As DataGridViewTextBoxColumn
-    Friend WithEvents block_pos_y As DataGridViewTextBoxColumn
-    Friend WithEvents block_thread_id As DataGridViewTextBoxColumn
-    Friend WithEvents block_thread_no As DataGridViewTextBoxColumn
-    Friend WithEvents block_symbol_id As DataGridViewTextBoxColumn
-    Friend WithEvents block_type As DataGridViewTextBoxColumn
     Friend WithEvents threadNo As DataGridViewTextBoxColumn
     Friend WithEvents SplitContainer4 As SplitContainer
     Friend WithEvents DgvBead As DataGridView
@@ -1433,6 +1428,13 @@ Partial Class FrmDesignInfo
     Friend WithEvents back_thread_no As DataGridViewTextBoxColumn
     Friend WithEvents back_strands As DataGridViewTextBoxColumn
     Friend WithEvents DgvQuarters As DataGridView
+    Friend WithEvents block_pos_x As DataGridViewTextBoxColumn
+    Friend WithEvents block_pos_y As DataGridViewTextBoxColumn
+    Friend WithEvents block_thread_id As DataGridViewTextBoxColumn
+    Friend WithEvents block_thread_no As DataGridViewTextBoxColumn
+    Friend WithEvents block_symbol_id As DataGridViewTextBoxColumn
+    Friend WithEvents block_type As DataGridViewTextBoxColumn
+    Friend WithEvents strands As DataGridViewTextBoxColumn
     Friend WithEvents qtrlocation As DataGridViewTextBoxColumn
     Friend WithEvents qtrthreadid As DataGridViewTextBoxColumn
     Friend WithEvents qtrsymbolid As DataGridViewTextBoxColumn

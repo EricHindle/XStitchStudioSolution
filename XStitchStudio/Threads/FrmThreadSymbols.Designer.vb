@@ -57,8 +57,10 @@ Partial Class FrmThreadSymbols
         Me.RbDouble = New System.Windows.Forms.RadioButton()
         Me.LblColourName = New System.Windows.Forms.Label()
         Me.GrpSelectedColour = New System.Windows.Forms.GroupBox()
+        Me.LblStatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.PnlThreads.SuspendLayout()
         CType(Me.DgvThreads, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.StatusStrip1.SuspendLayout()
         CType(Me.PicSingle, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PicDouble, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GrpSelectedColour.SuspendLayout()
@@ -262,9 +264,10 @@ Partial Class FrmThreadSymbols
         '
         'StatusStrip1
         '
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 605)
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LblStatus})
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 603)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(930, 22)
+        Me.StatusStrip1.Size = New System.Drawing.Size(930, 24)
         Me.StatusStrip1.TabIndex = 162
         Me.StatusStrip1.Text = "StatusStrip1"
         '
@@ -365,6 +368,14 @@ Partial Class FrmThreadSymbols
         Me.GrpSelectedColour.TabIndex = 170
         Me.GrpSelectedColour.TabStop = False
         '
+        'LblStatus
+        '
+        Me.LblStatus.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right
+        Me.LblStatus.BorderStyle = System.Windows.Forms.Border3DStyle.Etched
+        Me.LblStatus.Name = "LblStatus"
+        Me.LblStatus.Size = New System.Drawing.Size(23, 19)
+        Me.LblStatus.Text = "    "
+        '
         'FrmThreadSymbols
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -385,6 +396,8 @@ Partial Class FrmThreadSymbols
         Me.PnlThreads.ResumeLayout(False)
         Me.PnlThreads.PerformLayout()
         CType(Me.DgvThreads, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.StatusStrip1.ResumeLayout(False)
+        Me.StatusStrip1.PerformLayout()
         CType(Me.PicSingle, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PicDouble, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GrpSelectedColour.ResumeLayout(False)
@@ -419,4 +432,5 @@ Partial Class FrmThreadSymbols
     Friend WithEvents RbDouble As RadioButton
     Friend WithEvents LblColourName As Label
     Friend WithEvents GrpSelectedColour As GroupBox
+    Friend WithEvents LblStatus As ToolStripStatusLabel
 End Class

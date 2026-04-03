@@ -10,9 +10,15 @@ Imports System.IO
 Imports System.IO.Compression
 Imports System.Reflection
 Imports HindlewareLib.Logging
+Imports XStitchStudio.MyStitchDataSet
 Public NotInheritable Class FrmStartUp
 #Region "variables"
     Private oInstallationLogFolder As String
+    Private oInstallationPath As String
+    Private oDataInstallationPath As String
+    Private oDesignInstallationPath As String
+    Private oMotifInstallationPath As String
+    Private oApplicationDataPath As String
 #End Region
 #Region "form control handlers"
     Private Sub FrmStartUp_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -40,15 +46,12 @@ Public NotInheritable Class FrmStartUp
             SaveFolderSettings()
             LoadPathSettings()
             CheckAppPaths()
-            Dim oFromFolder As String = Path.Combine(My.Application.Info.DirectoryPath, "Data")
             Dim oToFolder As String = My.Settings.DataFilePath
-            Dim oTempDesignFolder As String = Path.Combine(GetFolderPath(SpecialFolder.Desktop), "XStitchStudioTempFolder")
-            Dim oTempMotifFolder As String = Path.Combine(oTempDesignFolder, "Motifs")
             Dim oToDesignFolder As String = My.Settings.DesignFilePath
             Dim oToMotifFolder As String = Path.Combine(My.Settings.DesignFilePath, "Motifs")
-            InstallDataArchive(oFromFolder, oToFolder)
-            InstallSampleDesign(oTempDesignFolder, oToDesignFolder)
-            InstallSampleDesign(oTempMotifFolder, oToMotifFolder)
+            InstallDataArchive(oDataInstallationPath, oToFolder)
+            InstallSampleDesign(oDesignInstallationPath, oToDesignFolder)
+            InstallSampleDesign(oMotifInstallationPath, oToMotifFolder)
             My.Settings.isInstallationComplete = True
             My.Settings.Save()
             LogUtil.LogInfo("Installation complete", MethodBase.GetCurrentMethod.Name)
@@ -94,13 +97,17 @@ Public NotInheritable Class FrmStartUp
         LogUtil.LogFolder = oInstallationLogFolder
         LogUtil.StartLogging()
         LogUtil.LogInfo("Completing installation", MethodBase.GetCurrentMethod.Name)
-        Dim UserDataPath As String = Path.Combine(GetFolderPath(SpecialFolder.CommonApplicationData), Path.Combine(My.Application.Info.CompanyName, My.Application.Info.AssemblyName))
         '    LoadDefaultPaths
-        TxtBackupPath.Text = Path.Combine(UserDataPath, "Backup")
-        TxtDataPath.Text = Path.Combine(UserDataPath, "Data")
-        TxtDesignFilePath.Text = Path.Combine(UserDataPath, "Designs")
-        TxtImagePath.Text = Path.Combine(UserDataPath, "Images")
-        TxtLogFilePath.Text = Path.Combine(UserDataPath, "Logs")
+        oApplicationDataPath = Path.Combine(GetFolderPath(SpecialFolder.CommonApplicationData), Path.Combine(My.Application.Info.CompanyName, My.Application.Info.AssemblyName))
+        oInstallationPath = My.Application.Info.DirectoryPath
+        oDataInstallationPath = Path.Combine(oInstallationPath, "Data")
+        oDesignInstallationPath = Path.Combine(oDataInstallationPath, "DesignInstallation")
+        oMotifInstallationPath = Path.Combine(oDesignInstallationPath, "Motifs")
+        TxtBackupPath.Text = Path.Combine(oApplicationDataPath, "Backup")
+        TxtDataPath.Text = Path.Combine(oApplicationDataPath, "Data")
+        TxtDesignFilePath.Text = Path.Combine(oApplicationDataPath, "Designs")
+        TxtImagePath.Text = Path.Combine(oApplicationDataPath, "Images")
+        TxtLogFilePath.Text = Path.Combine(oApplicationDataPath, "Logs")
         BtnExit.Enabled = True
         btnSave.Enabled = True
     End Sub

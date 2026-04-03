@@ -190,6 +190,7 @@ Partial Class FrmStitchDesign
         Me.MnuCheckDesign = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuShowLog = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuBackup = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MnuTemplateImage = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.ScDesign, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ScDesign.Panel1.SuspendLayout()
         Me.ScDesign.Panel2.SuspendLayout()
@@ -1318,7 +1319,7 @@ Partial Class FrmStitchDesign
         '
         'MnuDesign
         '
-        Me.MnuDesign.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuOpenDesign, Me.MnuSaveDesign, Me.MnuSaveDesignAs, Me.ToolStripSeparator10, Me.MnuErase, Me.ToolStripSeparator18, Me.MnuCropDesign, Me.MnuExtendDesign, Me.ToolStripSeparator17, Me.MnuPrint, Me.ExportImageToolStripMenuItem, Me.ToolStripSeparator8, Me.MnuExit})
+        Me.MnuDesign.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuOpenDesign, Me.MnuSaveDesign, Me.MnuSaveDesignAs, Me.ToolStripSeparator10, Me.MnuErase, Me.ToolStripSeparator18, Me.MnuCropDesign, Me.MnuExtendDesign, Me.MnuTemplateImage, Me.ToolStripSeparator17, Me.MnuPrint, Me.ExportImageToolStripMenuItem, Me.ToolStripSeparator8, Me.MnuExit})
         Me.MnuDesign.Name = "MnuDesign"
         Me.MnuDesign.Size = New System.Drawing.Size(55, 20)
         Me.MnuDesign.Text = "Design"
@@ -1837,6 +1838,13 @@ Partial Class FrmStitchDesign
         Me.MnuBackup.Size = New System.Drawing.Size(218, 22)
         Me.MnuBackup.Text = "Backup"
         '
+        'MnuTemplateImage
+        '
+        Me.MnuTemplateImage.Name = "MnuTemplateImage"
+        Me.MnuTemplateImage.Size = New System.Drawing.Size(194, 22)
+        Me.MnuTemplateImage.Text = "Template Image"
+        Me.MnuTemplateImage.Visible = False
+        '
         'FrmStitchDesign
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 16.0!)
@@ -2052,4 +2060,5 @@ Partial Class FrmStitchDesign
     Friend WithEvents DrawMotifToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MnuDrawMotifLine As ToolStripMenuItem
     Friend WithEvents MnuDrawMotifBorder As ToolStripMenuItem
+    Friend WithEvents MnuTemplateImage As ToolStripMenuItem
 End Class

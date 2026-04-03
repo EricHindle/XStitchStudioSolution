@@ -151,6 +151,9 @@ Module ModDesign
     Friend isPrintCentreOn As Boolean
     Friend isPrintGridOn As Boolean
     Friend oStitchDisplayStyle As StitchDisplayStyle
+
+    Friend oImageFilename As String
+    Friend oImage As Image
 #End Region
 #Region "functions"
     Friend Function SetStitchPenWidth(pIsDouble As Boolean, pPixelCellWidth As Integer) As Integer
@@ -285,6 +288,10 @@ Module ModDesign
         pDesignGraphics = Graphics.FromImage(pDesignBitmap)
         pDesignGraphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
         pDesignGraphics.FillRectangle(oFabricBrush, New Rectangle(0, 0, pDesignBitmap.Width, pDesignBitmap.Height))
+        ImageUtil.ResizeImage(oImage, pDesignBitmap.Width, pDesignBitmap.Height)
+        If oImage IsNot Nothing Then
+            pDesignGraphics.DrawImage(oImage, New Point(0, 0))
+        End If
         FillBeforeGrid(pProjectDesign)
         DrawGrid(pProjectDesign, pIsGridOn, pIsCentreOn, pIsCentreMarks)
         FillAfterGrid()

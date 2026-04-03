@@ -252,6 +252,7 @@ Public Class FrmDesignInfo
             oRow.Cells(block_thread_no.Name).Value = .ProjThread.Thread.ThreadNo
             oRow.Cells(block_symbol_id.Name).Value = .ProjThread.DoubleThreadSymbolId
             oRow.Cells(block_type.Name).Value = .StitchType.ToString()
+            oRow.Cells(strands.Name).Value = .Strands
         End With
         Return oRow
     End Function
@@ -326,5 +327,6 @@ Public Class FrmDesignInfo
             oRow.Cells(qtrlocation.Name).Value = .BlockQuarter.ToString
         End With
     End Sub
+
 #End Region
 End Class

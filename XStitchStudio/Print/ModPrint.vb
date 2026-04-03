@@ -36,11 +36,11 @@ Module ModPrint
     Public Const SCREEN_DPI As Integer = 93.0F
     Public Const A4_WIDTH As Integer = 2480
     Public Const A4_HEIGHT As Integer = 3508
-    Public Const PRODUCT_TEXT As String = "created using CrossStitch Studio [@ XStitch-Studio.co.uk]"
-    Public Const CROSS_DOUBLE_STRAND_HEADER As String = "CrossStitch in two strands"
-    Public Const CROSS_SINGLE_STRAND_HEADER As String = "CrossStitch in one strand"
-    Public Const BACK_DOUBLE_STRAND_HEADER As String = "BackStitch in two strands"
-    Public Const BACK_SINGLE_STRAND_HEADER As String = "BackStitch in one strand"
+    Public Const PRODUCT_TEXT As String = "created using XStitch Studio [@ XStitch-Studio.co.uk]"
+    Public Const CROSS_DOUBLE_STRAND_HEADER As String = "Cross Stitch in two strands"
+    Public Const CROSS_SINGLE_STRAND_HEADER As String = "Cross Stitch in one strand"
+    Public Const BACK_DOUBLE_STRAND_HEADER As String = "Back Stitch in two strands"
+    Public Const BACK_SINGLE_STRAND_HEADER As String = "Back Stitch in one strand"
     Public Const KNOT_SINGLE_STRAND_HEADER As String = "French Knot in one strand"
     Public Const KNOT_DOUBLE_STRAND_HEADER As String = "French Knot in two strands"
     Public Const BEAD_HEADER As String = "Beads"

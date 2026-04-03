@@ -1304,12 +1304,12 @@ Public Class FrmStitchDesign
                     Case StitchDisplayStyle.ColouredSymbols
                         _image = FindSymbolImage(_projectThread, _image)
                         If _image IsNot Nothing Then
-                                Dim _symbolColour As Color = _thread.Colour
-                                Dim _imageAttributes As ImageAttributes = MakeColourChangeAttributes(_thread)
-                                Using _graphics As Graphics = Graphics.FromImage(_image)
-                                    _graphics.DrawImage(_image, New Rectangle(New Point(0, 0), _image.Size), 0, 0, _image.Width, _image.Height, GraphicsUnit.Pixel, _imageAttributes)
-                                End Using
-                            End If
+                            Dim _symbolColour As Color = _thread.Colour
+                            Dim _imageAttributes As ImageAttributes = MakeColourChangeAttributes(_thread)
+                            Using _graphics As Graphics = Graphics.FromImage(_image)
+                                _graphics.DrawImage(_image, New Rectangle(New Point(0, 0), _image.Size), 0, 0, _image.Width, _image.Height, GraphicsUnit.Pixel, _imageAttributes)
+                            End Using
+                        End If
 
                 End Select
                 If _projectThread.IsUsed Then
@@ -1324,7 +1324,11 @@ Public Class FrmStitchDesign
                 .Image = _image
                 _pen.Dispose()
             End With
-            ThreadLayoutPanel.Controls.Add(_picThread)
+            Try
+                ThreadLayoutPanel.Controls.Add(_picThread)
+            Catch ex As Exception
+                LogUtil.DisplayException(ex, "Error adding Thread to Palette Panel", MyBase.Name)
+            End Try
             _firstPicThread = If(_firstPicThread, _picThread)
         Next
         If _firstPicThread IsNot Nothing Then
@@ -1557,6 +1561,7 @@ Public Class FrmStitchDesign
                     LblSelection.Text = "Click to place..."
                 Case 9
                     LblSelection.Text = String.Empty
+                Case Else
             End Select
         End If
     End Sub
@@ -2152,17 +2157,22 @@ Public Class FrmStitchDesign
         isLoading = True
         Dim _selwidth As Integer = (oCurrentSelection(1).X - oCurrentSelection(0).X) * PIXELS_PER_CELL
         Dim _selheight As Integer = (oCurrentSelection(1).Y - oCurrentSelection(0).Y) * PIXELS_PER_CELL
-        Dim _widthRatio As Decimal = Math.Round(PicDesign.Width / _selwidth, 2, MidpointRounding.AwayFromZero)
-        Dim _heightRatio As Decimal = Math.Round(PicDesign.Height / _selheight, 2, MidpointRounding.AwayFromZero)
-        ChangeMagnification(Math.Min(_widthRatio, _heightRatio))
-        topcorner = oCurrentSelection(0)
-        iXOffset = 0
-        iYOffset = 0
-        HScrollBar1.Value = HScrollBar1.Maximum - oProjectDesign.Columns + topcorner.X - 8
-        VScrollBar1.Value = VScrollBar1.Maximum - oProjectDesign.Rows + topcorner.Y - 8
-        iOldHScrollbarValue = HScrollBar1.Value
-        iOldVScrollbarValue = VScrollBar1.Value
-        RedrawDesign(False)
+        If _selwidth < 1 Or _selheight < 0 Then
+            Dim _response As New ActionResponse("No area selected", ResponseType.Warning)
+            ShowStatus(_response)
+        Else
+            Dim _widthRatio As Decimal = Math.Round(PicDesign.Width / _selwidth, 2, MidpointRounding.AwayFromZero)
+            Dim _heightRatio As Decimal = Math.Round(PicDesign.Height / _selheight, 2, MidpointRounding.AwayFromZero)
+            ChangeMagnification(Math.Min(_widthRatio, _heightRatio))
+            topcorner = oCurrentSelection(0)
+            iXOffset = 0
+            iYOffset = 0
+            HScrollBar1.Value = HScrollBar1.Maximum - oProjectDesign.Columns + topcorner.X - 8
+            VScrollBar1.Value = VScrollBar1.Maximum - oProjectDesign.Rows + topcorner.Y - 8
+            iOldHScrollbarValue = HScrollBar1.Value
+            iOldVScrollbarValue = VScrollBar1.Value
+            RedrawDesign(False)
+        End If
         isLoading = False
     End Sub
     Private Sub ToggleSingleColour()
@@ -3096,6 +3106,17 @@ Public Class FrmStitchDesign
         If isComponentInitialised Then
             InitialisePalette()
         End If
+    End Sub
+
+    Private Sub MnuTemplateImage_Click(sender As Object, e As EventArgs) Handles MnuTemplateImage.Click
+        oImageFilename = ImageUtil.GetImageFileName(ImageUtil.OpenOrSave.Open, ImageUtil.ImageType.ALL)
+        If Not String.IsNullOrEmpty(oImageFilename) Then
+            oImage = Image.FromFile(oImageFilename)
+            oImage = ImageUtil.MakeImageOpaque(oImage, 90)
+        Else
+            oImage = Nothing
+        End If
+        RedrawDesign()
     End Sub
 
 #End Region
