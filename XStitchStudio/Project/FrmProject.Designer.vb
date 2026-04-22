@@ -113,6 +113,7 @@ Partial Class FrmProject
         Me.MnuGlobalSettings = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuHousekeeping = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuProjectInfo = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DonateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PnlButtons = New System.Windows.Forms.Panel()
         Me.LblInstruction = New System.Windows.Forms.Label()
         Me.PnlInstruction = New System.Windows.Forms.Panel()
@@ -655,7 +656,7 @@ Partial Class FrmProject
         'MenuStrip1
         '
         Me.MenuStrip1.AutoSize = False
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuButton, Me.ToolStripMenuItem1, Me.ToolStripMenuItem4, Me.ToolStripMenuItem10, Me.ToolStripMenuItem13, Me.MnuImportImage, Me.SettingsToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuButton, Me.ToolStripMenuItem1, Me.ToolStripMenuItem4, Me.ToolStripMenuItem10, Me.ToolStripMenuItem13, Me.MnuImportImage, Me.SettingsToolStripMenuItem, Me.DonateToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Size = New System.Drawing.Size(695, 28)
@@ -919,6 +920,12 @@ Partial Class FrmProject
         Me.MnuProjectInfo.Size = New System.Drawing.Size(193, 22)
         Me.MnuProjectInfo.Text = "Project Information"
         '
+        'DonateToolStripMenuItem
+        '
+        Me.DonateToolStripMenuItem.Name = "DonateToolStripMenuItem"
+        Me.DonateToolStripMenuItem.Size = New System.Drawing.Size(57, 24)
+        Me.DonateToolStripMenuItem.Text = "Donate"
+        '
         'PnlButtons
         '
         Me.PnlButtons.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -977,7 +984,7 @@ Partial Class FrmProject
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.MinimumSize = New System.Drawing.Size(711, 692)
         Me.Name = "FrmProject"
-        Me.Text = "XStitch Studio"
+        Me.Text = "X Stitch Studio"
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
         CType(Me.DgvProjects, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1084,4 +1091,5 @@ Partial Class FrmProject
     Friend WithEvents OpenDesignFromArchiveToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MnuHousekeeping As ToolStripMenuItem
     Friend WithEvents MnuProjectInfo As ToolStripMenuItem
+    Friend WithEvents DonateToolStripMenuItem As ToolStripMenuItem
 End Class

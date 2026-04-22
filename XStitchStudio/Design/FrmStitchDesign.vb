@@ -1982,8 +1982,8 @@ Public Class FrmStitchDesign
     Private Function AdjustCellOntoDesign(pCell As Cell) As Cell
         Dim pos_x As Integer = Math.Max(pCell.Position.X, -iOriginX)
         Dim pos_y As Integer = Math.Max(pCell.Position.Y, -iOriginY)
-        pos_x = Math.Min(pos_x, oProjectDesign.Columns)
-        pos_y = Math.Min(pos_y, oProjectDesign.Rows)
+        pos_x = Math.Min(pos_x, oProjectDesign.Columns - iOriginX)
+        pos_y = Math.Min(pos_y, oProjectDesign.Rows - iOriginY)
         Dim loc_x As Integer = (pos_x + iXOffset - topcorner.X) * iPixelsPerCell
         Dim loc_y As Integer = (pos_y + iYOffset - topcorner.Y) * iPixelsPerCell
         pCell.Position = New Point(pos_x, pos_y)
@@ -2671,7 +2671,7 @@ Public Class FrmStitchDesign
     End Sub
     Private Sub AddBlockStitchToDesign(pBlockstitch As BlockStitch)
         Dim _blockstitch As BlockStitch = BlockStitchBuilder.ABlockStitch.StartingWith(pBlockstitch).Build
-        If pBlockstitch.BlockPosition.X < oProjectDesign.Columns And pBlockstitch.BlockPosition.Y < oProjectDesign.Rows Then
+        If pBlockstitch.BlockPosition.X < (oProjectDesign.Columns - iOriginX) And pBlockstitch.BlockPosition.Y < (oProjectDesign.Rows - iOriginY) Then
             oProjectDesign.BlockStitches.Add(pBlockstitch)
             AddToCurrentUndoList(_blockstitch, UndoAction.Add)
         End If

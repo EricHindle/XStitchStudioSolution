@@ -53,9 +53,11 @@ Public Class FrmDesignSize
     Private Sub FrmDesignSize_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         GetFormPos(Me, My.Settings.DesignSizeFormPos)
         If IsExtend Then
+            Text = "Extend Design"
             LblColumns.Text = ADD_COLUMNS
             LblRows.Text = ADD_ROWS
         Else
+            Text = "Crop Design"
             NudLeft.Maximum = _project.DesignWidth - 1
             NudRight.Maximum = _project.DesignWidth - 1
             NudTop.Maximum = _project.DesignHeight - 1

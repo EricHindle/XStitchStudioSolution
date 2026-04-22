@@ -1565,6 +1565,18 @@ Namespace My
                 Me("ProjectInfoFormPos") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("https://xstitch-studio.co.uk/donate.html")>  _
+        Public Property DonationPage() As String
+            Get
+                Return CType(Me("DonationPage"),String)
+            End Get
+            Set
+                Me("DonationPage") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

@@ -14,8 +14,8 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("XStitch Studio")>
-<Assembly: AssemblyDescription("XStitch Design Studio")>
+<Assembly: AssemblyTitle("X Stitch Studio")>
+<Assembly: AssemblyDescription("Cross Stitch Design Studio")>
 <Assembly: AssemblyCompany("hindleware")>
 <Assembly: AssemblyProduct("XStitchStudio")>
 <Assembly: AssemblyCopyright("© 2025-26 eric hindle")>
@@ -34,5 +34,5 @@ Imports System.Runtime.InteropServices
 '      Revision
 '
 
-<Assembly: AssemblyVersion("2.19.15.*")>
-<Assembly: AssemblyFileVersion("2.19.15.0")>
+<Assembly: AssemblyVersion("2.19.18.*")>
+<Assembly: AssemblyFileVersion("2.19.18.0")>

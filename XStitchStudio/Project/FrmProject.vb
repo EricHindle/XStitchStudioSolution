@@ -581,5 +581,9 @@ Public Class FrmProject
             ShowProjectInfo(_selectedProject)
         End If
     End Sub
+
+    Private Sub DonateToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DonateToolStripMenuItem.Click
+        Process.Start(My.Settings.DonationPage)
+    End Sub
 #End Region
 End Class

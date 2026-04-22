@@ -217,7 +217,7 @@ Public Class FrmRestore
     End Sub
     Private Sub FillMotifTree()
         Dim _topNode As TreeNode = Nothing
-        If My.Computer.FileSystem.DirectoryExists(oSourceDesignPath) Then
+        If My.Computer.FileSystem.DirectoryExists(oSourceMotifPath) Then
             _topNode = TvDesigns.Nodes.Add("Motifs")
             LoadTree(_topNode, MOTIF_TAG, oSourceMotifPath, MOTIF_EXT)
             _topNode.Expand()
