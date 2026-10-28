@@ -1,5 +1,5 @@
 ﻿' Hindleware
-' Copyright (c) 2025-6 Eric Hindle
+' Copyright (c) 2025-26 eric hindle
 ' All rights reserved.
 '
 ' Author Eric Hindle
@@ -2039,7 +2039,6 @@ Public Class FrmStitchDesign
         _fromCellLocation_y = (oInProgressAnchor.Y + iOriginY + iYOffset - topcorner.Y) * iPixelsPerCell
         _toCellLocation_x = (oInProgressTerminus.X + iOriginX + iXOffset - topcorner.X) * iPixelsPerCell
         _toCellLocation_y = (oInProgressTerminus.Y + iOriginY + iYOffset - topcorner.Y) * iPixelsPerCell
-
 
         PicDesign.Invalidate()
     End Sub

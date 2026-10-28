@@ -1,5 +1,5 @@
 ﻿' Hindleware
-' Copyright (c) 2025-6 Eric Hindle
+' Copyright (c) 2025-26 eric hindle
 ' All rights reserved.
 '
 ' Author Eric Hindle
@@ -90,7 +90,7 @@ Public Class FrmColourCapture
         ImageUtil.SaveImage(Piccolour.Image, My.Settings.ImagePath, "")
     End Sub
     Private Sub BtnLoad_Click(sender As Object, e As EventArgs) Handles BtnLoad.Click
-        Dim pFilename As String = ImageUtil.GetImageFileName(ImageUtil.OpenOrSave.Open,, My.Settings.ImagePath)
+        Dim pFilename As String = ImageUtil.GetImageFileName(ImageUtil.OpenOrSave.Open, ImageUtil.ImageType.ALL, My.Settings.ImagePath)
         If Not String.IsNullOrWhiteSpace(pFilename) Then
             Try
                 Piccolour.Image = Image.FromFile(pFilename)

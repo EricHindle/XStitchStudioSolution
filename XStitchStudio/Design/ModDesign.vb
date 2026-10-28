@@ -1,5 +1,5 @@
 ﻿' Hindleware
-' Copyright (c) 2025-6 Eric Hindle
+' Copyright (c) 2025-26 eric hindle
 ' All rights reserved.
 '
 ' Author Eric Hindle
@@ -713,9 +713,9 @@ Module ModDesign
             If pstrands = 1 Then
                 _symbol = FindSymbolById(_projectThread.SingleThreadSymbolId)
             Else
-            _symbol = FindSymbolById(_projectThread.DoubleThreadSymbolId)
-        End If
-        _image = ImageUtil.ResizeImage(_symbol.SymbolImage, pPixels, pPixels)
+                _symbol = FindSymbolById(_projectThread.DoubleThreadSymbolId)
+            End If
+            _image = ImageUtil.ResizeImage(_symbol.SymbolImage, pPixels, pPixels)
         End If
         Return _image
     End Function
