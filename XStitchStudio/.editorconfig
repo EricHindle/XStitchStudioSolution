@@ -16,6 +16,11 @@ dotnet_naming_rule.non_field_members_should_be_pascal_case.severity = suggestion
 dotnet_naming_rule.non_field_members_should_be_pascal_case.symbols = non_field_members
 dotnet_naming_rule.non_field_members_should_be_pascal_case.style = pascal_case
 
+
+dotnet_naming_rule.constants_must_be_upper_case.severity = suggestion
+dotnet_naming_rule.constants_must_be_upper_case.symbols = constants
+dotnet_naming_rule.constants_must_be_upper_case.style = upper_case
+
 # Symbol specifications
 
 dotnet_naming_symbols.interface.applicable_kinds = interface

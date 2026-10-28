@@ -118,6 +118,7 @@ Partial Class FrmStitchDesign
         Me.ToolStripSeparator18 = New System.Windows.Forms.ToolStripSeparator()
         Me.MnuCropDesign = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuExtendDesign = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MnuTemplateImage = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator17 = New System.Windows.Forms.ToolStripSeparator()
         Me.MnuPrint = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExportImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -190,7 +191,6 @@ Partial Class FrmStitchDesign
         Me.MnuCheckDesign = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuShowLog = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuBackup = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MnuTemplateImage = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.ScDesign, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ScDesign.Panel1.SuspendLayout()
         Me.ScDesign.Panel2.SuspendLayout()
@@ -1371,6 +1371,13 @@ Partial Class FrmStitchDesign
         Me.MnuExtendDesign.Size = New System.Drawing.Size(194, 22)
         Me.MnuExtendDesign.Text = "Extend Design"
         '
+        'MnuTemplateImage
+        '
+        Me.MnuTemplateImage.Name = "MnuTemplateImage"
+        Me.MnuTemplateImage.Size = New System.Drawing.Size(194, 22)
+        Me.MnuTemplateImage.Text = "Template Image"
+        Me.MnuTemplateImage.Visible = False
+        '
         'ToolStripSeparator17
         '
         Me.ToolStripSeparator17.Name = "ToolStripSeparator17"
@@ -1837,13 +1844,6 @@ Partial Class FrmStitchDesign
         Me.MnuBackup.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.B), System.Windows.Forms.Keys)
         Me.MnuBackup.Size = New System.Drawing.Size(218, 22)
         Me.MnuBackup.Text = "Backup"
-        '
-        'MnuTemplateImage
-        '
-        Me.MnuTemplateImage.Name = "MnuTemplateImage"
-        Me.MnuTemplateImage.Size = New System.Drawing.Size(194, 22)
-        Me.MnuTemplateImage.Text = "Template Image"
-        Me.MnuTemplateImage.Visible = False
         '
         'FrmStitchDesign
         '

@@ -49,7 +49,17 @@ Partial Class FrmDesignInfo
         Me.ChkShowStock = New System.Windows.Forms.CheckBox()
         Me.SplitContainer2 = New System.Windows.Forms.SplitContainer()
         Me.DgvQuarters = New System.Windows.Forms.DataGridView()
+        Me.qtrlocation = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.qtrthreadid = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.qtrsymbolid = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DgvBlock = New System.Windows.Forms.DataGridView()
+        Me.block_pos_x = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.block_pos_y = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.block_thread_id = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.block_thread_no = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.block_symbol_id = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.block_type = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.strands = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.SplitContainer3 = New System.Windows.Forms.SplitContainer()
         Me.DgvBack = New System.Windows.Forms.DataGridView()
         Me.back_from_x = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -122,16 +132,6 @@ Partial Class FrmDesignInfo
         Me.ChkShowBlock = New System.Windows.Forms.CheckBox()
         Me.ChkShowBack = New System.Windows.Forms.CheckBox()
         Me.ChkShowKnots = New System.Windows.Forms.CheckBox()
-        Me.block_pos_x = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.block_pos_y = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.block_thread_id = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.block_thread_no = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.block_symbol_id = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.block_type = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.strands = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.qtrlocation = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.qtrthreadid = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.qtrsymbolid = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.DgvThreads, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
@@ -387,6 +387,29 @@ Partial Class FrmDesignInfo
         Me.DgvQuarters.Size = New System.Drawing.Size(190, 126)
         Me.DgvQuarters.TabIndex = 159
         '
+        'qtrlocation
+        '
+        Me.qtrlocation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.qtrlocation.HeaderText = "Qtr"
+        Me.qtrlocation.Name = "qtrlocation"
+        Me.qtrlocation.ReadOnly = True
+        '
+        'qtrthreadid
+        '
+        Me.qtrthreadid.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.qtrthreadid.HeaderText = "Thread"
+        Me.qtrthreadid.Name = "qtrthreadid"
+        Me.qtrthreadid.ReadOnly = True
+        Me.qtrthreadid.Width = 60
+        '
+        'qtrsymbolid
+        '
+        Me.qtrsymbolid.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.qtrsymbolid.HeaderText = "Symbol"
+        Me.qtrsymbolid.Name = "qtrsymbolid"
+        Me.qtrsymbolid.ReadOnly = True
+        Me.qtrsymbolid.Width = 50
+        '
         'DgvBlock
         '
         Me.DgvBlock.AllowUserToAddRows = False
@@ -403,6 +426,54 @@ Partial Class FrmDesignInfo
         Me.DgvBlock.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DgvBlock.Size = New System.Drawing.Size(502, 126)
         Me.DgvBlock.TabIndex = 158
+        '
+        'block_pos_x
+        '
+        Me.block_pos_x.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.block_pos_x.HeaderText = "X"
+        Me.block_pos_x.Name = "block_pos_x"
+        Me.block_pos_x.Width = 30
+        '
+        'block_pos_y
+        '
+        Me.block_pos_y.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.block_pos_y.HeaderText = "Y"
+        Me.block_pos_y.Name = "block_pos_y"
+        Me.block_pos_y.Width = 30
+        '
+        'block_thread_id
+        '
+        Me.block_thread_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.block_thread_id.HeaderText = "Thread Id"
+        Me.block_thread_id.Name = "block_thread_id"
+        Me.block_thread_id.Width = 90
+        '
+        'block_thread_no
+        '
+        Me.block_thread_no.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.block_thread_no.HeaderText = "Thread No"
+        Me.block_thread_no.Name = "block_thread_no"
+        Me.block_thread_no.Width = 90
+        '
+        'block_symbol_id
+        '
+        Me.block_symbol_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.block_symbol_id.HeaderText = "Symbol Id"
+        Me.block_symbol_id.Name = "block_symbol_id"
+        Me.block_symbol_id.Width = 90
+        '
+        'block_type
+        '
+        Me.block_type.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.block_type.HeaderText = "Type"
+        Me.block_type.Name = "block_type"
+        '
+        'strands
+        '
+        Me.strands.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.strands.HeaderText = "Strands"
+        Me.strands.Name = "strands"
+        Me.strands.Width = 50
         '
         'SplitContainer3
         '
@@ -1175,77 +1246,6 @@ Partial Class FrmDesignInfo
         Me.ChkShowKnots.TabIndex = 204
         Me.ChkShowKnots.Text = "Show"
         Me.ChkShowKnots.UseVisualStyleBackColor = True
-        '
-        'block_pos_x
-        '
-        Me.block_pos_x.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.block_pos_x.HeaderText = "X"
-        Me.block_pos_x.Name = "block_pos_x"
-        Me.block_pos_x.Width = 30
-        '
-        'block_pos_y
-        '
-        Me.block_pos_y.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.block_pos_y.HeaderText = "Y"
-        Me.block_pos_y.Name = "block_pos_y"
-        Me.block_pos_y.Width = 30
-        '
-        'block_thread_id
-        '
-        Me.block_thread_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.block_thread_id.HeaderText = "Thread Id"
-        Me.block_thread_id.Name = "block_thread_id"
-        Me.block_thread_id.Width = 90
-        '
-        'block_thread_no
-        '
-        Me.block_thread_no.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.block_thread_no.HeaderText = "Thread No"
-        Me.block_thread_no.Name = "block_thread_no"
-        Me.block_thread_no.Width = 90
-        '
-        'block_symbol_id
-        '
-        Me.block_symbol_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.block_symbol_id.HeaderText = "Symbol Id"
-        Me.block_symbol_id.Name = "block_symbol_id"
-        Me.block_symbol_id.Width = 90
-        '
-        'block_type
-        '
-        Me.block_type.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.block_type.HeaderText = "Type"
-        Me.block_type.Name = "block_type"
-        '
-        'strands
-        '
-        Me.strands.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.strands.HeaderText = "Strands"
-        Me.strands.Name = "strands"
-        Me.strands.Width = 50
-        '
-        'qtrlocation
-        '
-        Me.qtrlocation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.qtrlocation.HeaderText = "Qtr"
-        Me.qtrlocation.Name = "qtrlocation"
-        Me.qtrlocation.ReadOnly = True
-        '
-        'qtrthreadid
-        '
-        Me.qtrthreadid.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.qtrthreadid.HeaderText = "Thread"
-        Me.qtrthreadid.Name = "qtrthreadid"
-        Me.qtrthreadid.ReadOnly = True
-        Me.qtrthreadid.Width = 60
-        '
-        'qtrsymbolid
-        '
-        Me.qtrsymbolid.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.qtrsymbolid.HeaderText = "Symbol"
-        Me.qtrsymbolid.Name = "qtrsymbolid"
-        Me.qtrsymbolid.ReadOnly = True
-        Me.qtrsymbolid.Width = 50
         '
         'FrmDesignInfo
         '

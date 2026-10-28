@@ -258,7 +258,7 @@ Partial Class FrmStartUp
         'PictureBox1
         '
         Me.PictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.PictureBox1.Image = Global.XStitchStudio.My.Resources.Resources.cross_stitch
+        Me.PictureBox1.Image = Global.XStitchStudio.My.Resources.Resources.cross_stitch_x
         Me.PictureBox1.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(271, 271)

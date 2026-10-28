@@ -71,7 +71,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>MyStitch.ico</ApplicationIcon>
+    <ApplicationIcon>XStitchStudio.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
@@ -419,6 +419,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Design\FrmImportImage.resx">
       <DependentUpon>FrmImportImage.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Design\FrmStitchDesign.resx">
       <DependentUpon>FrmStitchDesign.vb</DependentUpon>
@@ -554,6 +555,8 @@
     <Content Include="Resources\copy.png" />
     <Content Include="Resources\copyicon.png" />
     <Content Include="Resources\critical.png" />
+    <Content Include="XStitchStudio.ico" />
+    <None Include="Resources\cross-stitch-x.png" />
     <Content Include="Resources\cross-stitch.png" />
     <Content Include="Resources\cut.png" />
     <Content Include="Resources\down24.png" />

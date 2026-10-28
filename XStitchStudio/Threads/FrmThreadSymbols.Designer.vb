@@ -49,6 +49,7 @@ Partial Class FrmThreadSymbols
         Me.threadsymbol1id = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
+        Me.LblStatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.LblProjectName = New System.Windows.Forms.Label()
         Me.BtnClearSymbol = New System.Windows.Forms.Button()
         Me.PicSingle = New System.Windows.Forms.PictureBox()
@@ -57,7 +58,6 @@ Partial Class FrmThreadSymbols
         Me.RbDouble = New System.Windows.Forms.RadioButton()
         Me.LblColourName = New System.Windows.Forms.Label()
         Me.GrpSelectedColour = New System.Windows.Forms.GroupBox()
-        Me.LblStatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.PnlThreads.SuspendLayout()
         CType(Me.DgvThreads, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
@@ -271,6 +271,14 @@ Partial Class FrmThreadSymbols
         Me.StatusStrip1.TabIndex = 162
         Me.StatusStrip1.Text = "StatusStrip1"
         '
+        'LblStatus
+        '
+        Me.LblStatus.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right
+        Me.LblStatus.BorderStyle = System.Windows.Forms.Border3DStyle.Etched
+        Me.LblStatus.Name = "LblStatus"
+        Me.LblStatus.Size = New System.Drawing.Size(23, 19)
+        Me.LblStatus.Text = "    "
+        '
         'LblProjectName
         '
         Me.LblProjectName.AutoSize = True
@@ -367,14 +375,6 @@ Partial Class FrmThreadSymbols
         Me.GrpSelectedColour.Size = New System.Drawing.Size(430, 69)
         Me.GrpSelectedColour.TabIndex = 170
         Me.GrpSelectedColour.TabStop = False
-        '
-        'LblStatus
-        '
-        Me.LblStatus.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right
-        Me.LblStatus.BorderStyle = System.Windows.Forms.Border3DStyle.Etched
-        Me.LblStatus.Name = "LblStatus"
-        Me.LblStatus.Size = New System.Drawing.Size(23, 19)
-        Me.LblStatus.Text = "    "
         '
         'FrmThreadSymbols
         '
