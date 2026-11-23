@@ -517,7 +517,8 @@
     <None Include="Domain\MyStitchDataSet.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput></LastGenOutput>
+      <LastGenOutput>
+      </LastGenOutput>
     </None>
     <None Include="Domain\MyStitchDataSet.xss">
       <DependentUpon>MyStitchDataSet.xsd</DependentUpon>
