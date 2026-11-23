@@ -20,6 +20,12 @@ Namespace Domain.Builders
             _threadid = -1
             Return Me
         End Function
+        Public Function StartingWith(pStitchQuarter As BlockStitchQuarter) As BlockStitchQuarterBuilder
+            _blockQuarter = pStitchQuarter.BlockQuarter
+            _strandCount = pStitchQuarter.StrandCount
+            _threadid = pStitchQuarter.ThreadId
+            Return Me
+        End Function
         Public Function StartingWith(pQuarterString As String) As BlockStitchQuarterBuilder
             Dim _parts As String() = pQuarterString.Split(POINT_DELIM)
             _threadid = _parts(0)

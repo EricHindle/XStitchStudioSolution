@@ -2383,6 +2383,11 @@ Public Class FrmStitchDesign
             If oCurrentSelectedBlockStitch.Count > 0 Then
                 For Each _bs As BlockStitch In oCurrentSelectedBlockStitch
                     _bs.BlockLocation = New Point(_bs.BlockLocation.X, _sum - _bs.BlockLocation.Y)
+                    If _bs.StitchType <> BlockStitchType.Full Then
+                        Dim _newbs As BlockStitch = FlipBlockStitch(_bs)
+                        _bs.BlockQuarter = _newbs.BlockQuarter
+                        _bs.Quarters = _newbs.Quarters
+                    End If
                 Next
             End If
             If oCurrentSelectedKnot.Count > 0 Then
@@ -2403,6 +2408,11 @@ Public Class FrmStitchDesign
             If oCurrentSelectedBlockStitch.Count > 0 Then
                 For Each _bs As BlockStitch In oCurrentSelectedBlockStitch
                     _bs.BlockLocation = New Point(_sum - _bs.BlockLocation.X, _bs.BlockLocation.Y)
+                    If _bs.StitchType <> BlockStitchType.Full Then
+                        Dim _newbs As BlockStitch = MirrorBlockStitch(_bs)
+                        _bs.BlockQuarter = _newbs.BlockQuarter
+                        _bs.Quarters = _newbs.Quarters
+                    End If
                 Next
             End If
             If oCurrentSelectedKnot.Count > 0 Then
@@ -2417,6 +2427,73 @@ Public Class FrmStitchDesign
         End If
         oCurrentAction = DesignAction.none
     End Sub
+    Private Function MirrorBlockStitch(ByVal pBs As BlockStitch) As BlockStitch
+        Dim _newBs As BlockStitchBuilder = BlockStitchBuilder.ABlockStitch.StartingWith(pBs)
+        If pBs.StitchType = BlockStitchType.Quarter Or
+            pBs.StitchType = BlockStitchType.Half Or
+            pBs.StitchType = BlockStitchType.ThreeQuarter Then
+            Select Case pBs.BlockQuarter
+                Case BlockQuarter.TopLeft
+                    _newBs.WithQuarter(BlockQuarter.TopRight)
+                Case BlockQuarter.TopRight
+                    _newBs.WithQuarter(BlockQuarter.TopLeft)
+                Case BlockQuarter.BottomLeft
+                    _newBs.WithQuarter(BlockQuarter.BottomRight)
+                Case BlockQuarter.BottomRight
+                    _newBs.WithQuarter(BlockQuarter.BottomLeft)
+            End Select
+        End If
+        Dim _blockStitchQtrList As New List(Of BlockStitchQuarter)
+        For Each _bQtr As BlockStitchQuarter In pBs.Quarters
+            Dim _newQtr As BlockQuarter = BlockQuarter.TopLeft
+            Select Case _bQtr.BlockQuarter
+                Case BlockQuarter.TopLeft
+                    _newQtr = BlockQuarter.TopRight
+                Case BlockQuarter.TopRight
+                    _newQtr = BlockQuarter.TopLeft
+                Case BlockQuarter.BottomLeft
+                    _newQtr = BlockQuarter.BottomRight
+                Case BlockQuarter.BottomRight
+                    _newQtr = BlockQuarter.BottomLeft
+            End Select
+            _blockStitchQtrList.Add(BlockStitchQuarterBuilder.ABlockStitchQuarter.StartingWith(_bQtr).WithQuarter(_newQtr).Build)
+        Next
+        Return _newBs.WithQuarters(_blockStitchQtrList).Build
+    End Function
+    Private Function FlipBlockStitch(ByVal pBs As BlockStitch) As BlockStitch
+        Dim _newBs As BlockStitchBuilder = BlockStitchBuilder.ABlockStitch.StartingWith(pBs)
+        If pBs.StitchType = BlockStitchType.Quarter Or
+            pBs.StitchType = BlockStitchType.Half Or
+            pBs.StitchType = BlockStitchType.ThreeQuarter Then
+            Select Case pBs.BlockQuarter
+                Case BlockQuarter.TopLeft
+                    _newBs.WithQuarter(BlockQuarter.BottomLeft)
+                Case BlockQuarter.TopRight
+                    _newBs.WithQuarter(BlockQuarter.BottomRight)
+                Case BlockQuarter.BottomLeft
+                    _newBs.WithQuarter(BlockQuarter.TopLeft)
+                Case BlockQuarter.BottomRight
+                    _newBs.WithQuarter(BlockQuarter.TopRight)
+            End Select
+        End If
+        Dim _blockStitchQtrList As New List(Of BlockStitchQuarter)
+        For Each _bQtr As BlockStitchQuarter In pBs.Quarters
+            Dim _newQtr As BlockQuarter = BlockQuarter.TopLeft
+            Select Case _bQtr.BlockQuarter
+                Case BlockQuarter.TopLeft
+                    _newQtr = BlockQuarter.BottomLeft
+                Case BlockQuarter.TopRight
+                    _newQtr = BlockQuarter.BottomRight
+                Case BlockQuarter.BottomLeft
+                    _newQtr = BlockQuarter.TopLeft
+                Case BlockQuarter.BottomRight
+                    _newQtr = BlockQuarter.TopRight
+            End Select
+            _blockStitchQtrList.Add(BlockStitchQuarterBuilder.ABlockStitchQuarter.StartingWith(_bQtr).WithQuarter(_newQtr).Build)
+        Next
+        Return _newBs.WithQuarters(_blockStitchQtrList).Build
+    End Function
+
     Private Sub RotateAndPasteSelectedCells(pCellPosition As Point)
         If oCurrentSelection.Length > 0 Then
             If oCurrentSelectedBlockStitch.Count > 0 Then
