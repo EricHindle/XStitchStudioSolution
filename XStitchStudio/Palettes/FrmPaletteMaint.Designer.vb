@@ -125,12 +125,12 @@ Partial Class FrmPaletteMaint
         Me.Label44.BackColor = System.Drawing.SystemColors.Control
         Me.Label44.Font = New System.Drawing.Font("Felix Titling", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label44.ForeColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(21, Byte), Integer))
-        Me.Label44.Location = New System.Drawing.Point(119, 9)
+        Me.Label44.Location = New System.Drawing.Point(46, 9)
         Me.Label44.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Label44.Name = "Label44"
-        Me.Label44.Size = New System.Drawing.Size(94, 23)
+        Me.Label44.Size = New System.Drawing.Size(176, 23)
         Me.Label44.TabIndex = 19
-        Me.Label44.Text = "PALETTES"
+        Me.Label44.Text = "STORED PALETTES"
         '
         'DgvPalettes
         '
@@ -873,7 +873,6 @@ Partial Class FrmPaletteMaint
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "FrmPaletteMaint"
-        Me.Text = "Stored Palettes"
         CType(Me.DgvPalettes, System.ComponentModel.ISupportInitialize).EndInit()
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()

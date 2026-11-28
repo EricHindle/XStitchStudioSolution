@@ -206,10 +206,7 @@ Public Class FrmProjectThreads
         If _selectedProject Is Nothing OrElse Not _selectedProject.IsLoaded Then
             LogUtil.ShowStatus("No project selected", LblStatus, False, MyBase.Name, True)
         Else
-            UpdateThreadList()
-            UpdateBeadList
-            LoadThreadList()
-            LoadBeadList()
+            ApplyThreadListChanges()
         End If
     End Sub
 
@@ -419,6 +416,7 @@ Public Class FrmProjectThreads
                             SelectThreadInTable(DgvThreads, oThread.Thread.ThreadNo)
                         End If
                     Next
+                    ApplyThreadListChanges()
                 End If
             Else
                 LogUtil.ShowStatus("No threads in palette", LblStatus, True)
@@ -428,10 +426,22 @@ Public Class FrmProjectThreads
         End If
     End Sub
 
-    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
-
+    Private Sub BtnStorePalette_Click(sender As Object, e As EventArgs) Handles BtnStorePalette.Click
+        StorePalette()
+        FillPaletteList(CbPalettes)
     End Sub
-
+    Private Sub StorePalette()
+        ApplyThreadListChanges()
+        Dim _paletteThreadList As List(Of Thread) = FindThreadsForProject(_selectedProject.ProjectId)
+        Dim _paletteBeadList As List(Of Bead) = FindBeadsForProject(_selectedProject.ProjectId)
+        CreatePalette(_selectedProject.ProjectName, _paletteThreadList, _paletteBeadList, LblStatus)
+    End Sub
+    Private Sub ApplyThreadListChanges()
+        UpdateThreadList()
+        UpdateBeadList()
+        LoadThreadList()
+        LoadBeadList()
+    End Sub
 #End Region
 
 End Class

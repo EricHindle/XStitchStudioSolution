@@ -89,7 +89,7 @@ Partial Class FrmPaletteName
         Me.LblProjectName.AutoSize = True
         Me.LblProjectName.BackColor = System.Drawing.SystemColors.Control
         Me.LblProjectName.Font = New System.Drawing.Font("Felix Titling", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblProjectName.ForeColor = System.Drawing.Color.RoyalBlue
+        Me.LblProjectName.ForeColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(21, Byte), Integer))
         Me.LblProjectName.Location = New System.Drawing.Point(9, 9)
         Me.LblProjectName.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.LblProjectName.Name = "LblProjectName"
@@ -102,13 +102,13 @@ Partial Class FrmPaletteName
         Me.Label2.AutoSize = True
         Me.Label2.BackColor = System.Drawing.SystemColors.Control
         Me.Label2.Font = New System.Drawing.Font("Felix Titling", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.ForeColor = System.Drawing.Color.RoyalBlue
-        Me.Label2.Location = New System.Drawing.Point(45, 34)
+        Me.Label2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(21, Byte), Integer))
+        Me.Label2.Location = New System.Drawing.Point(44, 40)
         Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(151, 16)
+        Me.Label2.Size = New System.Drawing.Size(161, 16)
         Me.Label2.TabIndex = 20
-        Me.Label2.Text = "SAVING THE PALETTE"
+        Me.Label2.Text = "STORING THE PALETTE"
         '
         'FrmPaletteName
         '

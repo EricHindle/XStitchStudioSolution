@@ -1185,7 +1185,7 @@ Namespace Domain
                 Dim oPaletteRows = From Palette In oPalettesDataTable.AsEnumerable()
                                    Select Palette
                                    Where Palette.palette_id = pPaletteId
-                If oPaletteRows.Count = 1 Then
+                If oPaletteRows.Count > 0 Then
                     oPaletteRow = oPaletteRows.First
                 End If
             Catch ex As Exception
@@ -1194,7 +1194,30 @@ Namespace Domain
             Return oPaletteRow
         End Function
         Public Function FindPaletteById(pPaletteId As Integer) As Palette
-            Return PaletteBuilder.APalette.StartingWith(GetPaletteRow(pPaletteId)).Build
+            Dim _paletteRow As PalettesRow = GetPaletteRow(pPaletteId)
+            Dim _palette As Palette = Nothing
+            If _paletteRow IsNot Nothing Then
+                _palette = PaletteBuilder.APalette.StartingWith(_paletteRow).Build
+            End If
+            Return _palette
+        End Function
+        Public Function FindPaletteByName(pPaletteName As String) As Palette
+            Dim oPaletteRow As PalettesRow = Nothing
+            Dim _palette As Palette = Nothing
+            Try
+                Dim oPaletteRows = From Palette In oPalettesDataTable.AsEnumerable()
+                                   Select Palette
+                                   Where Palette.palette_name.ToLower = pPaletteName.ToLower
+                If oPaletteRows.Count > 0 Then
+                    oPaletteRow = oPaletteRows.First
+                End If
+            Catch ex As Exception
+                LogUtil.DisplayException(ex, PALETTE_TABLE, MethodBase.GetCurrentMethod.Name)
+            End Try
+            If oPaletteRow IsNot Nothing Then
+                _palette = PaletteBuilder.APalette.StartingWith(oPaletteRow).Build
+            End If
+            Return _palette
         End Function
         Public Function FindPaletteThreadsByPaletteId(pPaletteId As Integer) As List(Of PaletteThread)
             Dim oThreads As New List(Of PaletteThread)
@@ -1283,8 +1306,10 @@ Namespace Domain
                 Try
                     RemovePaletteThreads(pPalette.PaletteId)
                     Dim oPaletteRow As PalettesRow = GetPaletteRow(pPalette.PaletteId)
-                    oPalettesDataTable.Rows.Remove(oPaletteRow)
-                    WriteXmlFromTable(oPalettesDataTable)
+                    If oPaletteRow IsNot Nothing Then
+                        oPalettesDataTable.Rows.Remove(oPaletteRow)
+                        WriteXmlFromTable(oPalettesDataTable)
+                    End If
                 Catch ex As Exception
                     LogUtil.DisplayException(ex, PALETTE_TABLE, MethodBase.GetCurrentMethod.Name)
                 End Try
@@ -1299,6 +1324,7 @@ Namespace Domain
                         .Where(Function(aRow As PaletteThreadsRow) aRow.palette_id = pPaletteId) _
                         .ToList _
                         .ForEach(Sub(x) x.Delete())
+                WriteXmlFromTable(oPaletteThreadsDataTable)
             Catch ex As Exception
                 LogUtil.DisplayException(ex, PALETTE_THREAD_TABLE, MethodBase.GetCurrentMethod.Name)
             End Try

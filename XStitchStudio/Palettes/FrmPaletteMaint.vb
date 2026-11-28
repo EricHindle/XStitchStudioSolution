@@ -42,7 +42,7 @@ Class FrmPaletteMaint
         DgvPalettes.ClearSelection()
     End Sub
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
-        CreatePalette()
+        InsertPalette()
     End Sub
     Private Sub BtnDeleteThreads_Click(sender As Object, e As EventArgs) Handles BtnDeleteThreads.Click
         DgvPaletteBeads.Rows.Clear()
@@ -110,10 +110,8 @@ Class FrmPaletteMaint
 #Region "subroutines"
     Private Sub InitialiseForm()
         RestoreFormLayout()
-        isLoading = True
         LoadPaletteList(DgvPalettes, MyBase.Name)
         ShowSelectedPalette()
-        isLoading = False
     End Sub
     Private Sub SaveFormLayout()
         If SplitContainer1.SplitterDistance > 0 Then My.Settings.SplitDistPalette1 = SplitContainer1.SplitterDistance
@@ -161,7 +159,11 @@ Class FrmPaletteMaint
     Private Sub ShowSelectedPalette()
         If DgvPalettes.SelectedRows.Count = 1 Then
             _selectedPalette = FindPaletteById(DgvPalettes.SelectedRows(0).Cells(paletteId.Name).Value)
-            LblPaletteName.Text = _selectedPalette.PaletteName
+            If _selectedPalette Is Nothing Then
+                LblPaletteName.Text = "Palette Not Found"
+            Else
+                LblPaletteName.Text = _selectedPalette.PaletteName
+            End If
         Else
             _selectedPalette = PaletteBuilder.APalette.StartingWithNothing.Build
             LblPaletteName.Text = String.Empty
@@ -169,49 +171,59 @@ Class FrmPaletteMaint
         LoadThreadList()
         LogUtil.ClearStatus(LblStatus)
     End Sub
-    Private Sub AddPalette(pName As String)
-        Dim _paletteId As Integer = AddNewPalette(pName.Trim)
-        For Each oRow As DataGridViewRow In DgvPaletteThreads.Rows
-            Dim _paletteThread As PaletteThread = PaletteThreadBuilder.APaletteThread.StartingWithNothing _
-                                    .WithThreadId(oRow.Cells(palettethreadid.Name).Value) _
-                                    .WithPaletteId(_paletteId) _
-                                    .WithIsBead(False) _
-                                    .Build
-            AddNewPaletteThread(_paletteThread)
-        Next
-        For Each oRow As DataGridViewRow In DgvPaletteBeads.Rows
-            Dim _paletteThread As PaletteThread = PaletteThreadBuilder.APaletteThread.StartingWithNothing _
-                                    .WithThreadId(oRow.Cells(PaletteBeadId.Name).Value) _
-                                    .WithPaletteId(_paletteId) _
-                                    .WithIsBead(True) _
-                                    .Build
-            AddNewPaletteThread(_paletteThread)
-        Next
-    End Sub
-    Private Sub CreatePalette()
+    Private Sub InsertPalette()
         If DgvPaletteThreads.Rows.Count > 0 OrElse DgvPaletteBeads.Rows.Count > 0 Then
             Dim _name As String = GetPaletteName(String.Empty)
             If Not String.IsNullOrEmpty(_name) Then
                 LogUtil.ShowStatus("Adding new Palette", LblStatus)
-                InsertPalette(_name)
+                AddPalette(_name)
             Else
                 LogUtil.ShowStatus("Palette name missing. Palette not added.", LblStatus, True)
             End If
         Else
             LogUtil.ShowStatus("No threads selected. Palette not added.", LblStatus, True)
         End If
-    End Sub
-    Private Sub InsertPalette(pName As String)
-        AddPalette(pName)
         LoadPaletteList(DgvPalettes, MyBase.Name)
         LogUtil.ShowStatus("Palette added", LblStatus, MyBase.Name)
     End Sub
+
+    Private Function AddPalette(pName As String) As Integer
+        Dim _paletteId As Integer = AddNewPalette(pName.Trim)
+        Dim _paletteThreadList As List(Of PaletteThread) = CreateThreadlist(_paletteId)
+        For Each _paletteThread As PaletteThread In _paletteThreadList
+            AddNewPaletteThread(_paletteThread)
+        Next
+        Return _paletteId
+    End Function
+
+    Private Function CreateThreadlist(pPaletteId As Integer) As List(Of PaletteThread)
+        Dim _threadList As New List(Of PaletteThread)
+        For Each oRow As DataGridViewRow In DgvPaletteThreads.Rows
+            Dim _paletteThread As PaletteThread = PaletteThreadBuilder.APaletteThread.StartingWithNothing _
+                                    .WithThreadId(oRow.Cells(palettethreadid.Name).Value) _
+                                    .WithPaletteId(pPaletteId) _
+                                    .WithIsBead(False) _
+                                    .Build
+            _threadList.Add(_paletteThread)
+        Next
+        For Each oRow As DataGridViewRow In DgvPaletteBeads.Rows
+            Dim _paletteThread As PaletteThread = PaletteThreadBuilder.APaletteThread.StartingWithNothing _
+                                    .WithThreadId(oRow.Cells(PaletteBeadId.Name).Value) _
+                                    .WithPaletteId(pPaletteId) _
+                                    .WithIsBead(True) _
+                                    .Build
+            _threadList.Add(_paletteThread)
+        Next
+        Return _threadList
+    End Function
     Private Sub UpdateSelectedPalette()
         If _selectedPalette.PaletteId >= 0 Then
             If DgvPaletteThreads.Rows.Count > 0 OrElse DgvPaletteBeads.Rows.Count > 0 Then
                 LogUtil.LogInfo("Updating Palette", MyBase.Name)
                 RemovePalette(_selectedPalette)
-                InsertPalette(_selectedPalette.PaletteName)
+                Dim _newPaletteId As Integer = AddPalette(_selectedPalette.PaletteName)
+                LoadPaletteList(DgvPalettes, MyBase.Name)
+                SelectPaletteInList(DgvPalettes, paletteId.Name, _newPaletteId)
             Else
                 LogUtil.ShowStatus("No threads selected. Palette not updated.", LblStatus, True)
             End If
@@ -231,10 +243,12 @@ Class FrmPaletteMaint
     End Sub
     Private Sub LoadPaletteList(ByRef pDgv As DataGridView, pBaseName As String)
         LogUtil.Debug("Loading palette list", pBaseName)
+        isLoading = True
         pDgv.Rows.Clear()
         For Each oPalette As Palette In GetPaletteList()
             AddPaletteRow(pDgv, oPalette)
         Next
+        isLoading = False
         pDgv.ClearSelection()
     End Sub
     Private Sub AddPaletteRow(ByRef pDgv As DataGridView, oPalette As Palette)

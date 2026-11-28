@@ -5,6 +5,8 @@
 ' Author Eric Hindle
 '
 
+Imports XStitchStudio.Domain.Objects
+Imports XStitchStudio.Domain
 Public Class FrmPaletteName
 #Region "properties"
     Private _paletteName As String
@@ -23,11 +25,18 @@ Public Class FrmPaletteName
     End Sub
     Private Sub BtnSavePalette_Click(sender As Object, e As EventArgs) Handles BtnSavePalette.Click
         _paletteName = TxtPaletteName.Text
-        DialogResult = DialogResult.OK
+        Dim _palette As Palette = FindPaletteByName(_paletteName)
+        If _palette Is Nothing Then
+            DialogResult = DialogResult.OK
+            Me.Close()
+        Else
+            ShowMessage("A palette with this name already exists", False, False, 2, MyBase.Name)
+        End If
     End Sub
     Private Sub BtnCancelPalette_Click(sender As Object, e As EventArgs) Handles BtnCancelPalette.Click
         _paletteName = String.Empty
         DialogResult = DialogResult.Cancel
+        Me.Close()
     End Sub
 #End Region
 End Class
